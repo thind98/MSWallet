@@ -22,11 +22,11 @@ public class CategoryDto
         this.categoryName = categoryName;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryDto{" +
-                "category=" + category +
-                ", categoryName='" + categoryName + '\'' +
-                '}';
+    public CategoryDto(long category, String categoryName) {
+        this.category = category;
+        this.categoryName = categoryName;
+    }
+
+    public CategoryDto() {
     }
 }

@@ -41,13 +41,13 @@ public class UserWalletDto
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "UserWalletDto{" +
-                "userWalletId=" + userWalletId +
-                ", userId=" + userId +
-                ", walletId=" + walletId +
-                ", role=" + role +
-                '}';
+    public UserWalletDto() {
+    }
+
+    public UserWalletDto(long userWalletId, long userId, long walletId, long role) {
+        this.userWalletId = userWalletId;
+        this.userId = userId;
+        this.walletId = walletId;
+        this.role = role;
     }
 }

@@ -42,13 +42,13 @@ public class PasswordResetTokenDto
         this.userId = userId;
     }
 
-    @Override
-    public String toString() {
-        return "PasswordResetTokenDto{" +
-                "tokenId=" + tokenId +
-                ", token='" + token + '\'' +
-                ", expiryDate=" + expiryDate +
-                ", userId=" + userId +
-                '}';
+    public PasswordResetTokenDto() {
+    }
+
+    public PasswordResetTokenDto(long tokenId, String token, Date expiryDate, long userId) {
+        this.tokenId = tokenId;
+        this.token = token;
+        this.expiryDate = expiryDate;
+        this.userId = userId;
     }
 }

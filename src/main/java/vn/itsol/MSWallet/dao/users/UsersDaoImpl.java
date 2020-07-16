@@ -20,11 +20,26 @@ public class UsersDaoImpl implements UsersDao
     private EntityManager entityManager;
 
     @Override
-    public List<Users> GetAllUser()
+    public List<Users> GetUsers()
     {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Users> query = currentSession.createQuery("From Users u",Users.class);
         log.info("UserDaoImpl: " + query.getResultList());
         return  query.getResultList();
+    }
+
+    @Override
+    public Users GetUser(int user_id) {
+        return null;
+    }
+
+    @Override
+    public void save(Users user) {
+
+    }
+
+    @Override
+    public void delete(int User_id) {
+
     }
 }
