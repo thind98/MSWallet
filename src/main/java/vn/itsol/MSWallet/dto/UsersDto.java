@@ -68,16 +68,16 @@ public class UsersDto
         this.pathAva = pathAva;
     }
 
-    @Override
-    public String toString() {
-        return "UsersDto{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", name='" + name + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", gender='" + gender + '\'' +
-                ", pathAva='" + pathAva + '\'' +
-                '}';
+    public UsersDto() {
+    }
+
+    public UsersDto(long userId, String userName, String name, String passWord, long phoneNumber, String gender, String pathAva) {
+        this.userId = userId;
+        this.userName = userName;
+        this.name = name;
+        this.passWord = passWord;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.pathAva = pathAva;
     }
 }

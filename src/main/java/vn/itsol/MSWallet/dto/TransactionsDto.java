@@ -78,17 +78,17 @@ public class TransactionsDto
         this.categoryId = categoryId;
     }
 
-    @Override
-    public String toString() {
-        return "TransactionsDto{" +
-                "transId=" + transId +
-                ", amount=" + amount +
-                ", transType=" + transType +
-                ", date=" + date +
-                ", note='" + note + '\'' +
-                ", userId=" + userId +
-                ", walletId=" + walletId +
-                ", categoryId=" + categoryId +
-                '}';
+    public TransactionsDto(long transId, long amount, long transType, Date date, String note, long userId, long walletId, long categoryId) {
+        this.transId = transId;
+        this.amount = amount;
+        this.transType = transType;
+        this.date = date;
+        this.note = note;
+        this.userId = userId;
+        this.walletId = walletId;
+        this.categoryId = categoryId;
+    }
+
+    public TransactionsDto() {
     }
 }
