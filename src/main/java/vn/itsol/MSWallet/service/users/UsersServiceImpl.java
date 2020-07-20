@@ -23,7 +23,7 @@ public class UsersServiceImpl implements UsersService
     @Override
     public List<Users> GetAllUser()
     {
-        List<Users> list = usersDao.GetAllUser();
+        List<Users> list = usersDao.GetUsers();
 
         return list;
     }

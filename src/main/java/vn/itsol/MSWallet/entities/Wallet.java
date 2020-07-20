@@ -1,8 +1,10 @@
 package vn.itsol.MSWallet.entities;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "wallet")
@@ -10,16 +12,19 @@ import javax.persistence.*;
 public class Wallet
 {
     @Id
-    @Column(name = "user_wallet_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long userWalletId;
-
-    @Column(name = "user_id")
-    private long userId;
-
     @Column(name = "wallet_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long walletId;
 
-    @Column(name = "role")
-    private long role;
+    @Column(name = "wallert_name")
+    private String wallertName;
+
+    @Column(name = "balance")
+    private long balance;
+
+    @Column(name = "currency")
+    private long currency;
+
+    @Column(name = "create_date")
+    private Date createDate;
 }

@@ -1,29 +1,15 @@
 package vn.itsol.MSWallet.dto;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 public class WalletDto
 {
-    private long userWalletId;
-    private long userId;
     private long walletId;
-    private long role;
-
-    public long getUserWalletId() {
-        return userWalletId;
-    }
-
-    public void setUserWalletId(long userWalletId) {
-        this.userWalletId = userWalletId;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
+    private String wallertName;
+    private long balance;
+    private long currency;
+    private Date createDate;
 
     public long getWalletId() {
         return walletId;
@@ -33,19 +19,44 @@ public class WalletDto
         this.walletId = walletId;
     }
 
-    public long getRole() {
-        return role;
+    public String getWallertName() {
+        return wallertName;
     }
 
-    public void setRole(long role) {
-        this.role = role;
+    public void setWallertName(String wallertName) {
+        this.wallertName = wallertName;
     }
 
-    public WalletDto(long userWalletId, long userId, long walletId, long role) {
-        this.userWalletId = userWalletId;
-        this.userId = userId;
+    public long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
+
+    public long getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(long currency) {
+        this.currency = currency;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public WalletDto(long walletId, String wallertName, long balance, long currency, Date createDate) {
         this.walletId = walletId;
-        this.role = role;
+        this.wallertName = wallertName;
+        this.balance = balance;
+        this.currency = currency;
+        this.createDate = createDate;
     }
 
     public WalletDto() {

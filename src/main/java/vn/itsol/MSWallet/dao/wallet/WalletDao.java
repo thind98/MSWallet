@@ -9,5 +9,6 @@ public interface WalletDao
     List<Wallet> getWallets();
     Wallet getWallet(int wallet_id);
     void save(Wallet wallet);
+    void update(Wallet wallet);
     void delete(int wallet_id);
 }
