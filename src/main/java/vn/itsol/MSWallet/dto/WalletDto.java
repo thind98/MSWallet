@@ -9,7 +9,7 @@ public class WalletDto
     private String wallertName;
     private long balance;
     private long currency;
-    private Date createDate;
+    private String createDate;
 
     public long getWalletId() {
         return walletId;
@@ -43,15 +43,15 @@ public class WalletDto
         this.currency = currency;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public WalletDto(long walletId, String wallertName, long balance, long currency, Date createDate) {
+    public WalletDto(long walletId, String wallertName, long balance, long currency, String createDate) {
         this.walletId = walletId;
         this.wallertName = wallertName;
         this.balance = balance;

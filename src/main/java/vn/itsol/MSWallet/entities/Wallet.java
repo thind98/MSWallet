@@ -13,7 +13,7 @@ public class Wallet
 {
     @Id
     @Column(name = "wallet_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long walletId;
 
     @Column(name = "wallert_name")
@@ -26,5 +26,5 @@ public class Wallet
     private long currency;
 
     @Column(name = "create_date")
-    private Date createDate;
+    private String createDate;
 }

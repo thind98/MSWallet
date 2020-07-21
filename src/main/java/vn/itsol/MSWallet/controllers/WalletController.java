@@ -32,6 +32,7 @@ public class WalletController
     @PostMapping(path = "/wallet")
     public void saveWallet(@RequestBody WalletDto walletDto)
     {
+        log.info("WalletController.saveWallet.RequestBody: " + walletDto.toString());
         walletService.save(walletDto);
     }
 

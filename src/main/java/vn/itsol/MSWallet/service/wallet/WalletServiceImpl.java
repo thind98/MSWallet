@@ -54,19 +54,21 @@ public class WalletServiceImpl implements WalletService
     @Override
     public void save(WalletDto wallet) {
         Wallet wallet1 = new Wallet();
-
-        wallet1.setBalance(wallet.getBalance());
-        wallet1.setCreateDate(wallet.getCreateDate());
-        wallet1.setCurrency(wallet.getCurrency());
-        wallet1.setWallertName(wallet.getWallertName());
-        wallet1.setWalletId(wallet.getWalletId());
-        log.info("WalletServiceImpl.save.wallet1: " + wallet1.toString());
-        walletDao.save(wallet1);
+        if(wallet != null && wallet.toString() != "") {
+            wallet1.setBalance(wallet.getBalance());
+            wallet1.setCreateDate(wallet.getCreateDate());
+            wallet1.setCurrency(wallet.getCurrency());
+            wallet1.setWallertName(wallet.getWallertName());
+            //wallet1.setWalletId(wallet.getWalletId());
+            log.info("WalletServiceImpl.save.wallet1: " + wallet1.toString());
+            walletDao.save(wallet1);
+        }
     }
 
     @Transactional
     @Override
     public void update(WalletDto wallet) {
+        log.info("WalletServiceImpl.update.wallet: " + wallet.toString());
         Wallet wallet1 = new Wallet();
 
         wallet1.setBalance(wallet.getBalance());
