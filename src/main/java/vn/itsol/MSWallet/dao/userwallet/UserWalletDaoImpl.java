@@ -28,6 +28,11 @@ public class UserWalletDaoImpl implements UserWalletDao
     }
 
     @Override
+    public void update(UserWallet userWallet) {
+
+    }
+
+    @Override
     public void delete(int userwallet_id) {
 
     }

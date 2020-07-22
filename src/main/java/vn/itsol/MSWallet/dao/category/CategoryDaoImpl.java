@@ -60,6 +60,7 @@ public class CategoryDaoImpl implements CategoryDao
             sql = sql + " categoryName = \'" + category.getCategoryName() + "\'";
         }
         sql = sql + "WHERE category_id = " + category.getCategoryid();
+        log.info("update.sql: " + sql);
         Query<Category> query = session.createSQLQuery(sql);
         query.executeUpdate();
     }
@@ -68,6 +69,7 @@ public class CategoryDaoImpl implements CategoryDao
     public void delete(int category_id) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "DELETE FROM Category c WHERE c.category_id = " +  category_id;
+        log.info("delete.sql: " + sql);
         Query<Category> query = session.createSQLQuery(sql);
         query.executeUpdate();
     }

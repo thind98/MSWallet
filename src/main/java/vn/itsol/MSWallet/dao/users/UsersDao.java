@@ -9,5 +9,6 @@ public interface UsersDao
     List<Users> GetUsers();
     Users GetUser(int user_id);
     void save(Users user);
+    void update(Users users);
     void delete(int User_id);
 }

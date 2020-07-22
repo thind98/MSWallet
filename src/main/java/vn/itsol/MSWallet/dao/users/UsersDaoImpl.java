@@ -23,18 +23,35 @@ public class UsersDaoImpl implements UsersDao
     public List<Users> GetUsers()
     {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Users> query = currentSession.createQuery("From Users u",Users.class);
+        String hql = "From Users u";
+        Query<Users> query = currentSession.createQuery(hql, Users.class);
         log.info("UserDaoImpl: " + query.getResultList());
         return  query.getResultList();
     }
 
     @Override
     public Users GetUser(int user_id) {
-        return null;
+        Session session = entityManager.unwrap(Session.class);
+        String sql = "FROM Users u Where u.user_id = " + user_id;
+        Query<Users> query = session.createQuery(sql, Users.class);
+        log.info("GetUser.sql: " + sql);
+        Users user = query.getSingleResult();
+        log.info("GetUser.user: " + user.toString());
+        return user;
     }
 
     @Override
     public void save(Users user) {
+        Session session = entityManager.unwrap(Session.class);
+        String sql = "Insert Into users(user_id, user_name, name, password, phone_number, gender, path_ava) " +
+                    "Values(((SELECT max(user_id) FROM users)+1),\'" + user.getUserName() + "\', \'" + user.getName() + "\', \'" + user.getPassWord() + "\', " + user.getPhoneNumber() + ", \'" + user.getGender() + "\', \'" + user.getPathAva() + "\')";
+        Query<Users> query = session.createSQLQuery(sql);
+        log.info("save.sql: " + sql);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void update(Users users) {
 
     }
 
