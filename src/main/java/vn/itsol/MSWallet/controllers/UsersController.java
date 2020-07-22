@@ -38,4 +38,13 @@ public class UsersController
         usersService.save(usersDto);
     }
 
+    @PutMapping(path = "update")
+    public void updateUser(@RequestBody UsersDto usersDto){
+        usersService.update(usersDto);
+    }
+
+    @DeleteMapping(path = "delete/{user_id}")
+    public void deleteUser(@PathVariable("user_id") int user_id){
+        usersService.delete(user_id);
+    }
 }

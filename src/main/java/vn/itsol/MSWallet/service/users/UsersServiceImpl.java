@@ -71,13 +71,21 @@ public class UsersServiceImpl implements UsersService
 
     @Transactional
     @Override
-    public void update(UsersDto users) {
-
+    public void update(UsersDto user) {
+        Users users = new Users();
+        users.setUserId(user.getUserId());
+        users.setUserName(user.getUserName());
+        users.setName(user.getName());
+        users.setGender(user.getGender());
+        users.setPassWord(user.getPassWord());
+        users.setPhoneNumber(user.getPhoneNumber());
+        users.setPathAva(user.getPathAva());
+        usersDao.update(users);
     }
 
     @Transactional
     @Override
     public void delete(int User_id) {
-
+        usersDao.delete(User_id);
     }
 }
