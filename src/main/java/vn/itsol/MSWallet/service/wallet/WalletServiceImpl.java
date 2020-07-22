@@ -10,6 +10,7 @@ import vn.itsol.MSWallet.dao.wallet.WalletDao;
 import vn.itsol.MSWallet.dto.WalletDto;
 import vn.itsol.MSWallet.entities.Wallet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,19 @@ public class WalletServiceImpl implements WalletService
     @Override
     public List<WalletDto> getWallets() {
         List<Wallet> listResultDao = walletDao.getWallets();
-        ModelMapper modelMapper = new ModelMapper();
-        List<WalletDto> dtos = listResultDao
-                .stream()
-                .map(user -> modelMapper.map(user, WalletDto.class))
-                .collect(Collectors.toList());
-        return dtos;
+        List<WalletDto> walletDtos = new ArrayList<>();
+        for(Wallet w : listResultDao)
+        {
+            WalletDto walletDto = new WalletDto();
+            walletDto.setWalletId(w.getWalletId());
+            walletDto.setWallertName(w.getWallertName());
+            walletDto.setCreateDate(w.getCreateDate());
+            walletDto.setCurrency(w.getCurrency());
+            walletDto.setBalance(w.getBalance());
+            walletDtos.add(walletDto);
+        }
+        log.info("getWallets.walletDtos: " + walletDtos.toString());
+        return walletDtos;
     }
 
     @Transactional
@@ -45,7 +53,7 @@ public class WalletServiceImpl implements WalletService
         walletDto.setCreateDate(wallet.getCreateDate());
         walletDto.setCurrency(wallet.getCurrency());
         walletDto.setWalletId(wallet.getWalletId());
-        log.info("WalletServiceImpl.getWallet.walletDto: " + walletDto.toString() );
+        log.info("getWallet.walletDto: " + walletDto.toString() );
 
         return walletDto;
     }
@@ -60,7 +68,7 @@ public class WalletServiceImpl implements WalletService
             wallet1.setCurrency(wallet.getCurrency());
             wallet1.setWallertName(wallet.getWallertName());
             //wallet1.setWalletId(wallet.getWalletId());
-            log.info("WalletServiceImpl.save.wallet1: " + wallet1.toString());
+            log.info("save.wallet1: " + wallet1.toString());
             walletDao.save(wallet1);
         }
     }
@@ -68,7 +76,6 @@ public class WalletServiceImpl implements WalletService
     @Transactional
     @Override
     public void update(WalletDto wallet) {
-        log.info("WalletServiceImpl.update.wallet: " + wallet.toString());
         Wallet wallet1 = new Wallet();
 
         wallet1.setBalance(wallet.getBalance());
@@ -76,7 +83,7 @@ public class WalletServiceImpl implements WalletService
         wallet1.setCurrency(wallet.getCurrency());
         wallet1.setWallertName(wallet.getWallertName());
         wallet1.setWalletId(wallet.getWalletId());
-        log.info("WalletServiceImpl.update.wallet1: " + wallet1.toString());
+        log.info("update.wallet1: " + wallet1.toString());
         walletDao.update(wallet1);
     }
 

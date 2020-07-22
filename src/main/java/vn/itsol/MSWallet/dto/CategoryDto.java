@@ -4,18 +4,18 @@ import javax.persistence.Column;
 
 public class CategoryDto
 {
-    private long category;
+    private long categoryid;
     private String categoryName;
 
-    public long getCategory() {
-        return category;
+    public long getCategoryid() {
+        return categoryid;
     }
 
     public String getCategoryName() {
         return categoryName;
     }
-    public void setCategory(long category) {
-        this.category = category;
+    public void setCategoryid(long category) {
+        this.categoryid = category;
     }
 
     public void setCategoryName(String categoryName) {
@@ -23,7 +23,7 @@ public class CategoryDto
     }
 
     public CategoryDto(long category, String categoryName) {
-        this.category = category;
+        this.categoryid = category;
         this.categoryName = categoryName;
     }
 

@@ -10,6 +10,7 @@ import vn.itsol.MSWallet.service.wallet.WalletService;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "/wallet")
 public class WalletController
 {
     private static final Logger log = LoggerFactory.getLogger(WalletController.class);
@@ -17,32 +18,31 @@ public class WalletController
     @Autowired
     private WalletService walletService;
 
-    @GetMapping(path = "/wallets")
+    @GetMapping(path = "findall")
     public List<WalletDto> getWallets()
     {
         return walletService.getWallets();
     }
 
-    @GetMapping(path = "/wallet/{wallet_id}")
+    @GetMapping(path = "findbyid/{wallet_id}")
     public WalletDto getWallet(@PathVariable("wallet_id") int wallet_id)
     {
         return walletService.getWallet(wallet_id);
     }
 
-    @PostMapping(path = "/wallet")
+    @PostMapping(path = "save")
     public void saveWallet(@RequestBody WalletDto walletDto)
     {
-        log.info("WalletController.saveWallet.RequestBody: " + walletDto.toString());
         walletService.save(walletDto);
     }
 
-    @PutMapping(path = "/wallet")
+    @PutMapping(path = "update")
     public void updateWallet(@RequestBody WalletDto walletDto)
     {
         walletService.update(walletDto);
     }
 
-    @DeleteMapping(path = "/wallet/{wallet_id}")
+    @DeleteMapping(path = "delete/{wallet_id}")
     public void deleteWallet(@PathVariable("wallet_id") int wallet_id)
     {
         walletService.delete(wallet_id);
