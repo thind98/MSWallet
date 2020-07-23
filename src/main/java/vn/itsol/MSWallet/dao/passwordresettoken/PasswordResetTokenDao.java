@@ -8,5 +8,6 @@ public interface PasswordResetTokenDao {
     List<PasswordResetToken> getPasswordResetTokens();
     PasswordResetToken getPasswordResetToken(int passRT_id);
     void save(PasswordResetToken passwordResetToken);
+    void update(PasswordResetToken passwordResetToken);
     void delete(int passRT_id);
 }

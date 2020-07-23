@@ -7,7 +7,7 @@ public class PasswordResetTokenDto
 {
     private long tokenId;
     private String token;
-    private Date expiryDate;
+    private String expiryDate;
     private long userId;
 
     public long getTokenId() {
@@ -26,11 +26,11 @@ public class PasswordResetTokenDto
         this.token = token;
     }
 
-    public Date getExpiryDate() {
+    public String getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
 
@@ -45,7 +45,7 @@ public class PasswordResetTokenDto
     public PasswordResetTokenDto() {
     }
 
-    public PasswordResetTokenDto(long tokenId, String token, Date expiryDate, long userId) {
+    public PasswordResetTokenDto(long tokenId, String token, String expiryDate, long userId) {
         this.tokenId = tokenId;
         this.token = token;
         this.expiryDate = expiryDate;

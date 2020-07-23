@@ -11,7 +11,7 @@ import java.util.Date;
 public class PasswordResetToken
 {
     @Id
-    @Column(name = "name")
+    @Column(name = "tokenid")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long tokenId;
 
@@ -19,7 +19,7 @@ public class PasswordResetToken
     private String token;
 
     @Column(name = "expiry_date")
-    private Date expiryDate;
+    private String expiryDate;
 
     @Column(name = "user_id")
     private long userId;
