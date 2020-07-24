@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-between">
+  <h4>Chỉnh sửa ví</h4>
+  <button (click)="onClose()">Close</button>
+</div>
+
+<div class="container">
+
+  <form #form="ngForm" (ngSubmit)="addWallet()" autocomplete="off">
+
+    <div class="form-group "> <label for=" ">Tên ví</label>
+      <input type="text " class="form-control" name="name" #name="ngModel" [(ngModel)]="wallet.wallet_name" required
+        minlength="6" maxlength="20">
+
+      <!-- <div *ngIf="wallet_name.invalid && (wallet_name.dirty || wallet_name.touched)" class="alert alert-danger">
+        <div *ngIf="wallet_name.errors.required">
+          Walletname is required.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Walletname must be at least 6 characters long.
+        </div>
+      </div> -->
+    </div>
+
+    <!--balance-->
+    <div class="form-group "> <label for=" ">Số tiền hiện tại</label>
+      <input type="number" class="form-control" name="currency" #currency="ngModel" [(ngModel)]="wallet.currency">
+
+      <!-- <div class="validation-error" *ngIf="phone.errors.required&&phone.touched">
+        Phone numbers is required
+      </div>
+
+      <div class="validation-error" *ngIf="phone.errors?.pattern">
+        Invalid phone numbers.
+      </div> -->
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-outline-primary"> Create </button>
+    <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary"> Reset </button>
+  </form>
+
+</div>
+<!-- [disabled]="form.invalid" -->
