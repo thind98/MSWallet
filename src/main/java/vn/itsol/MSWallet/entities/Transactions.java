@@ -27,12 +27,24 @@ public class Transactions
     @Column(name = "note")
     private String note;
 
-    @Column(name = "user_id")
-    private long userId;
+//    @Column(name = "user_id")
+//    private long userId;
+//
+//    @Column(name = "wallet_id")
+//    private long walletId;
+//
+//    @Column(name = "category_id")
+//    private long categoryId;
 
-    @Column(name = "wallet_id")
-    private long walletId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
 
-    @Column(name = "category_id")
-    private long categoryId;
+    @ManyToOne
+    @JoinColumn(name = "wallet_id")
+    private Wallet wallet;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

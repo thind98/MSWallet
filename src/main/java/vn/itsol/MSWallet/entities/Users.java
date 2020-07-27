@@ -3,6 +3,7 @@ package vn.itsol.MSWallet.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -33,5 +34,11 @@ public class Users
     private String pathAva;
 
     @OneToOne(mappedBy = "users")
-    private Wallet wallet;
+    private PasswordResetToken passwordResetToken;
+
+    @OneToMany(mappedBy = "users")
+    private Collection<UserWallet> userWallet;
+
+    @OneToMany(mappedBy = "users")
+    private Collection<Transactions> transactions;
 }

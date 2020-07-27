@@ -21,6 +21,10 @@ public class PasswordResetToken
     @Column(name = "expiry_date")
     private String expiryDate;
 
-    @Column(name = "user_id")
-    private long userId;
+//    @Column(name = "user_id")
+//    private long userId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
 }

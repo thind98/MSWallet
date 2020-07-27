@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -27,4 +28,10 @@ public class Wallet
 
     @Column(name = "create_date")
     private String createDate;
+
+    @OneToMany(mappedBy = "wallet")
+    private Collection<Transactions> transactions;
+
+    @OneToMany(mappedBy = "wallet")
+    private Collection<UserWallet> userWallet;
 }
