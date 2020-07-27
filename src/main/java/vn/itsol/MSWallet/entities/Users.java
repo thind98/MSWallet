@@ -32,4 +32,6 @@ public class Users
     @Column(name = "Path_ava")
     private String pathAva;
 
+    @OneToOne(mappedBy = "users")
+    private Wallet wallet;
 }

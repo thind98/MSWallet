@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vn.itsol.MSWallet.dao.transactions.TransactionsDao;
 import vn.itsol.MSWallet.dto.TransactionsDto;
 import vn.itsol.MSWallet.entities.Transactions;
@@ -19,6 +20,7 @@ public class TransactionsServiceImpl implements TransactionsService
     @Autowired
     private TransactionsDao transactionsDao;
 
+    @Transactional
     @Override
     public List<TransactionsDto> gettrans() {
         List<Transactions> transactionsList = transactionsDao.getTransactions();
@@ -40,6 +42,7 @@ public class TransactionsServiceImpl implements TransactionsService
         return transactionsDtos;
     }
 
+    @Transactional
     @Override
     public TransactionsDto gettran(int tran_id) {
         Transactions tran = transactionsDao.getTransaction(tran_id);
@@ -58,6 +61,7 @@ public class TransactionsServiceImpl implements TransactionsService
         return transactionsDto;
     }
 
+    @Transactional
     @Override
     public void save(TransactionsDto tran) {
         Transactions transactions = new Transactions();
@@ -73,6 +77,7 @@ public class TransactionsServiceImpl implements TransactionsService
         transactionsDao.save(transactions);
     }
 
+    @Transactional
     @Override
     public void update(TransactionsDto tran) {
         Transactions transactions = new Transactions();
@@ -88,6 +93,7 @@ public class TransactionsServiceImpl implements TransactionsService
         transactionsDao.update(transactions);
     }
 
+    @Transactional
     @Override
     public void delete(int tran_id) {
         transactionsDao.delete(tran_id);
