@@ -22,18 +22,26 @@ public class TransactionsDaoImpl implements TransactionsDao
     @Override
     public List<Transactions> getTransactions() {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From Transactions t";
+        String hql = "select t.transId, t.transType, t.note, t.date, t.amount, t.users.userId, t.category.categoryid, t.wallet.walletId From Transactions t";
+
         Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        log.info("getTransactions.query: " + query.toString());
+
         List<Transactions> list = query.getResultList();
+        log.info("getTransactions.list: " + list.toString());
         return list;
     }
 
     @Override
     public Transactions getTransaction(int tran_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From Transactions t Where t.transId = " + tran_id;
+        String hql = "select t.transId, t.transType, t.note, t.date, t.amount, t.users.userId, t.category.categoryid, t.wallet.walletId From Transactions t Where t.transId = " + tran_id;
+
         Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        log.info("getTransaction.query: " + query.toString());
+
         Transactions result = query.getSingleResult();
+        log.info("getTransaction.list: " + result.toString());
         return result;
     }
 
@@ -42,17 +50,23 @@ public class TransactionsDaoImpl implements TransactionsDao
         Session session = entityManager.unwrap(Session.class);
         String sql = "Insert Into transactions(trans_id, amount, trans_type, datetime, note, user_id, wallet_id, category_id)\n" +
                      "values(((SELECT MAX(trans_id) FROM transactions)+1), " + transactions.getAmount() + ", " + transactions.getTransType()
-                     + ", TO_DATE(\'" + transactions.getDate() + "\', 'dd/mm/yyyy'), '" + transactions.getNote() + "', " + transactions.getUserId()
-                     + ", " + transactions.getWalletId() + ", " + transactions.getCategoryId() + ")";
+                     + ", TO_DATE(\'" + transactions.getDate() + "\', 'dd/mm/yyyy'), '" + transactions.getNote() + "', " + transactions.getUsers().getUserId()
+                     + ", " + transactions.getWallet().getWalletId() + ", " + transactions.getCategory().getCategoryid() + ")";
+
         Query<Transactions> query = session.createSQLQuery(sql);
+        log.info("save.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void update(Transactions transactions) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "update transactions SET amount = " + transactions.getAmount() + ", trans_type = " + transactions.getTransType() + ", datetime = " + transactions.getDate() + ", note = " + transactions.getNote() + ", user_id = " + transactions.getUserId() + ", wallet_id = " + transactions.getWalletId() + ", category_id = "+ transactions.getCategoryId() +" WHERE trans_id = " + transactions.getTransId();
+        String sql = "update transactions SET amount = " + transactions.getAmount() + ", trans_type = " + transactions.getTransType() + ", datetime = " + transactions.getDate() + ", note = " + transactions.getNote() + ", user_id = " + transactions.getUsers().getUserId() + ", wallet_id = " + transactions.getWallet().getWalletId() + ", category_id = "+ transactions.getCategory().getCategoryid() +" WHERE trans_id = " + transactions.getTransId();
+
         Query<Transactions> query = session.createSQLQuery(sql);
+        log.info("update.query: " + query.toString());
+
         query.executeUpdate();
     }
 
@@ -60,7 +74,10 @@ public class TransactionsDaoImpl implements TransactionsDao
     public void delete(int tran_id) {
         Session session = entityManager.unwrap(Session.class);
         String hql = "delete From Transactions t Where t.transId = " + tran_id;
+
         Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        log.info("update.query: " + query.toString());
+
         query.executeUpdate();
     }
 }

@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import vn.itsol.MSWallet.entities.PasswordResetToken;
+import vn.itsol.MSWallet.entities.Users;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
@@ -16,49 +18,78 @@ public class PasswordResetTokenDaoImpl implements PasswordResetTokenDao
 {
     private static final Logger log = LoggerFactory.getLogger(PasswordResetTokenDaoImpl.class);
 
+    @PersistenceContext
     @Autowired
     private EntityManager entityManager;
 
     @Override
     public List<PasswordResetToken> getPasswordResetTokens() {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From PasswordResetToken p";
-        Query<PasswordResetToken> query = session.createQuery(hql, PasswordResetToken.class);
+        String hql = "select p.tokenId, p.token, p.expiryDate, p.users.userId From PasswordResetToken p";
+
+        Query<PasswordResetToken> query = session.createQuery(hql);
+        log.info("getPasswordResetTokens.query: " + query.toString());
+
         List<PasswordResetToken> list = query.getResultList();
+        log.info("getPasswordResetTokens.list: " + list.toString());
         return list;
     }
 
     @Override
     public PasswordResetToken getPasswordResetToken(int passRT_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From PasswordResetToken p Where p.tokenId = " + passRT_id;
-        Query<PasswordResetToken> query = session.createQuery(hql, PasswordResetToken.class);
-        PasswordResetToken results = query.getSingleResult();
-        return results;
+        String hql = "select p.tokenId, p.token, p.expiryDate, p.users.userId From PasswordResetToken p Where p.tokenId = " + passRT_id;
+
+        Query<PasswordResetToken> query = session.createQuery(hql);
+        log.info("getPasswordResetToken.query: " + query.toString());
+
+        List<PasswordResetToken> results = query.list();
+        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        for (PasswordResetToken p : results)
+        {
+            Users users = new Users();
+            users.setUserId(p.getUsers().getUserId());
+            passwordResetToken.setUsers(users);
+            passwordResetToken.setTokenId(p.getTokenId());
+            passwordResetToken.setToken(p.getToken());
+            passwordResetToken.setExpiryDate(p.getExpiryDate());
+        }
+        log.info("getPasswordResetToken.results: " + results);
+        return passwordResetToken;
     }
 
     @Override
     public void save(PasswordResetToken passwordResetToken) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "Insert Into password_reset_token(tokenID, token, expiry_date, user_id) " +
-                     "values(((SELECT MAX(tokenID) FROM password_reset_token)+1), \'" + passwordResetToken.getToken() + "\', TO_DATE(\'" + passwordResetToken.getExpiryDate() + "\', \'dd/mm/yyyy\'), " + passwordResetToken.getUserId() + ")";
+                     "values(((SELECT MAX(tokenID) FROM password_reset_token)+1), \'" + passwordResetToken.getToken() + "\', TO_DATE(\'" + passwordResetToken.getExpiryDate() + "\', \'dd/mm/yyyy\'), " + passwordResetToken.getUsers().getUserId() + ")";
+
         Query<PasswordResetToken> query = session.createSQLQuery(sql);
+        log.info("save.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void update(PasswordResetToken passwordResetToken) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE password_reset_token SET token = \'" + passwordResetToken.getToken() + "\', expiry_date = TO_DATE(\'" + passwordResetToken.getExpiryDate() + "\', \'dd/mm/yyyy\'), user_id = " + passwordResetToken.getUserId() + " WHERE tokenID = " + passwordResetToken.getTokenId() + "" ;
+        String sql = "UPDATE password_reset_token SET token = \'" + passwordResetToken.getToken() + "\', expiry_date = TO_DATE(\'" + passwordResetToken.getExpiryDate() + "\', \'dd/mm/yyyy\'), user_id = " + passwordResetToken.getUsers().getUserId() + " WHERE tokenID = " + passwordResetToken.getTokenId() + "";
+
         Query<PasswordResetToken> query = session.createSQLQuery(sql);
+        log.info("update.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void delete(int passRT_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "DELETE From PasswordResetToken p Where p.tokenId = " + passRT_id;
+        String hql = "DELETE From PasswordResetToken p Where p.tokenId = :tokenId";
+
         Query<PasswordResetToken> query = session.createQuery(hql, PasswordResetToken.class);
+        query.setParameter("tokenId", passRT_id);
+        log.info("delete.query: " + query.toString());
+
         query.executeUpdate();
     }
 }

@@ -23,30 +23,35 @@ public class CategoryDaoImpl implements CategoryDao
     @Override
     public List<Category> getCategories() {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From Category c";
-        Query<Category> query = session.createQuery(hql, Category.class);
+        String hql = "From Category";
+
+        Query<Category> query = session.createQuery(hql);
         log.info("getCategories.hql: " + hql);
-        List<Category> categoryList = query.getResultList();
-        log.info("getCategories.categoryList: " + categoryList.toString());
-        return categoryList;
+        return query.list();
     }
 
     @Override
     public Category getCatetgory(int category_id) {
         Session session = entityManager.unwrap(Session.class);
         String hql = "From Category c where c.categoryid = "+ category_id;
-        Query<Category> query = session.createQuery(hql, Category.class);
+        Query<Category> query = session.createQuery(hql);
         log.info("getCatetgory.hql: " + hql);
-        Category result = query.getSingleResult();
-        log.info("getCatetgory.result: " + result.toString());
-        return result;
+        List<Category> list = query.getResultList();
+        Category category = new Category();
+        for (Category c : list)
+        {
+            category.setCategoryid(c.getCategoryid());
+            category.setCategoryname(c.getCategoryname());
+        }
+        log.info("getCatetgory.result: " + category.toString());
+        return category;
     }
 
     @Override
     public void save(Category category) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "INSERT INTO Category(category_id, categoryName) " +
-                     "VALUES(((SELECT Max(category_id) FROM Category)+1), \'" + category.getCategoryName() + "\')";
+                     "VALUES(((SELECT Max(category_id) FROM Category)+1), \'" + category.getCategoryname() + "\')";
         log.info("save.sql: " + sql);
         Query<Category> query = session.createSQLQuery(sql);
         query.executeUpdate();
@@ -56,13 +61,14 @@ public class CategoryDaoImpl implements CategoryDao
     public void update(Category category) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "UPDATE category SET ";
-        if(category.getCategoryName() != "" && category.getCategoryName() != null){
-            sql = sql + " categoryName = \'" + category.getCategoryName() + "\'";
+        if(category.getCategoryname() != "" && category.getCategoryname() != null){
+            sql = sql + " categoryName = \'" + category.getCategoryname() + "\'";
         }
         sql = sql + "WHERE category_id = " + category.getCategoryid();
         log.info("update.sql: " + sql);
         Query<Category> query = session.createSQLQuery(sql);
         query.executeUpdate();
+        
     }
 
     @Override

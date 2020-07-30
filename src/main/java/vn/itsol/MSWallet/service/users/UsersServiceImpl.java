@@ -29,6 +29,7 @@ public class UsersServiceImpl implements UsersService
         for(Users u : list)
         {
             UsersDto usersDto = new UsersDto();
+
             usersDto.setUserId(u.getUserId());
             usersDto.setUserName(u.getUserName());
             usersDto.setName(u.getName());
@@ -36,6 +37,7 @@ public class UsersServiceImpl implements UsersService
             usersDto.setPassWord(u.getPassWord());
             usersDto.setPhoneNumber(u.getPhoneNumber());
             usersDto.setPathAva(u.getPathAva());
+
             usersDtoList.add(usersDto);
         }
         return usersDtoList;
@@ -46,6 +48,7 @@ public class UsersServiceImpl implements UsersService
     public UsersDto GetUser(int user_id) {
         Users u = usersDao.GetUser(user_id);
         UsersDto usersDto = new UsersDto();
+
         usersDto.setUserId(u.getUserId());
         usersDto.setUserName(u.getUserName());
         usersDto.setName(u.getName());
@@ -53,6 +56,7 @@ public class UsersServiceImpl implements UsersService
         usersDto.setPassWord(u.getPassWord());
         usersDto.setPhoneNumber(u.getPhoneNumber());
         usersDto.setPathAva(u.getPathAva());
+
         return usersDto;
     }
 

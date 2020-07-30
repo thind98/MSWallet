@@ -22,9 +22,11 @@ public class WalletDaoImpl implements WalletDao
     @Override
     public List<Wallet> getWallets() {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From Wallet w";
+        String hql = "Select w.walletId, w.wallertName, w.currency, w.balance, w.createDate From Wallet w";
+
         Query<Wallet> query = session.createQuery(hql, Wallet.class);
         log.info("getWallets.hql: " + hql);
+
         List<Wallet> listResult = query.getResultList();
         log.info("getWallets.listResult: " + listResult.toString());
         return listResult;
@@ -33,9 +35,12 @@ public class WalletDaoImpl implements WalletDao
     @Override
     public Wallet getWallet(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From Wallet w Where w.walletId = " + wallet_id;
+        String hql = "Select w.walletId, w.wallertName, w.currency, w.balance, w.createDate From Wallet w Where w.walletId = :walletId";
+
         Query<Wallet> query = session.createQuery(hql, Wallet.class);
-        log.info("getWallet.hql: " + hql);
+        query.setParameter("walletId", wallet_id);
+        log.info("getWallet.query: " + query.toString());
+
         Wallet result = query.getSingleResult();
         log.info("getWallet.result: " + result);
         return result;
@@ -45,51 +50,36 @@ public class WalletDaoImpl implements WalletDao
     public void save(Wallet wallet) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "INSERT INTO Wallet(wallet_id, wallert_name, balance, currency, create_date) " +
-                "VALUES(((select max(wallet_id) from Wallet)+1), \'" + wallet.getWallertName() + "\'," + wallet.getBalance() + ","+ wallet.getCurrency() +", TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\'))";
-        log.info("save.sql: " + sql);
+                "VALUES(((select max(wallet_id) from Wallet)+1), \'" + wallet.getWallertName() + "\'," + wallet.getBalance()
+                + ","+ wallet.getCurrency() +", TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\'))";
+
         Query<Wallet> query = session.createSQLQuery(sql);
+        log.info("save.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void update(Wallet wallet) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE Wallet SET ";
-        if(wallet.getWallertName() != null || wallet.getWallertName() != ""){
-            sql = sql + "wallert_name = \'" + wallet.getWallertName() + "\',";
-        }
+        String sql = "UPDATE Wallet SET wallert_name = " + wallet.getWallertName() + ", balance = " + wallet.getBalance() + ", currency = " + wallet.getCurrency() + ", create_date = TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\')"
+                + "WHERE wallet_id = :wallet_id";
 
-        if (wallet.getBalance() != 0){
-            sql = sql + "balance = " + wallet.getBalance() + ",";
-        }
+        Query<Wallet> query = session.createSQLQuery(sql);
+        log.info("update.query: " + query.toString());
 
-        if (wallet.getCurrency() != 0){
-            sql = sql + "currency = " + wallet.getCurrency() + ",";
-        }
-        // TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\')
-        if (wallet.getCreateDate() != null){
-            sql = sql + "create_date = TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\')";
-        }
-        sql = sql + "WHERE wallet_id = " + wallet.getWalletId();
-        if (sql.equals(",WHERE")) {
-            sql = sql.replace(",WHERE", "WHERE");
-            Query<Wallet> query = session.createSQLQuery(sql);
-            log.info("update.sql1: " + sql);
-            query.executeUpdate();
-        }
-        else {
-            Query<Wallet> query = session.createSQLQuery(sql);
-            log.info("update.sql2: " + sql);
-            query.executeUpdate();
-        }
+        query.executeUpdate();
     }
 
     @Override
     public void delete(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "DELETE FROM Wallet w Where w.wallet_id = " + wallet_id;
-        Query<Wallet> query = session.createSQLQuery(sql);
-        log.info("delete.sql: " + sql);
+        String sql = "DELETE FROM Wallet w Where w.walletId = :wallet_id";
+
+        Query<Wallet> query = session.createQuery(sql, Wallet.class);
+        query.setParameter("wallet_id", wallet_id);
+        log.info("delete.query: " + query.toString());
+
         query.executeUpdate();
     }
 }

@@ -1,5 +1,6 @@
 package vn.itsol.MSWallet.service.category;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import vn.itsol.MSWallet.entities.Category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService
@@ -28,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService
         for(Category c : categoryList){
             CategoryDto categoryDto = new CategoryDto();
             categoryDto.setCategoryid(c.getCategoryid());
-            categoryDto.setCategoryName(c.getCategoryName());
+            categoryDto.setCategoryName(c.getCategoryname());
             categoryDtos.add(categoryDto);
         }
         log.info("getCategories.categoryDtos: " + categoryDtos.toString());
@@ -41,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService
         Category category = categoryDao.getCatetgory(category_id);
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setCategoryid(category.getCategoryid());
-        categoryDto.setCategoryName(category.getCategoryName());
+        categoryDto.setCategoryName(category.getCategoryname());
         log.info("getCategories.getCategory: " + categoryDto.toString());
         return categoryDto;
     }
@@ -51,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService
     public void save(CategoryDto category) {
         Category category1 = new Category();
 //        category1.setCategoryid(category.getCategoryid());
-        category1.setCategoryName(category.getCategoryName());
+        category1.setCategoryname(category.getCategoryName());
         categoryDao.save(category1);
     }
 
@@ -60,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService
     public void update(CategoryDto category) {
         Category category1 = new Category();
         category1.setCategoryid(category.getCategoryid());
-        category1.setCategoryName(category.getCategoryName());
+        category1.setCategoryname(category.getCategoryName());
         categoryDao.update(category1);
     }
 

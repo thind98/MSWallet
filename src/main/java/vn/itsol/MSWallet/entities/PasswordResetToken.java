@@ -24,7 +24,7 @@ public class PasswordResetToken
 //    @Column(name = "user_id")
 //    private long userId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
 }

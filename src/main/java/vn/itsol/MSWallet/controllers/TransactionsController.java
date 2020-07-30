@@ -44,6 +44,11 @@ public class TransactionsController
 
     @DeleteMapping(path = "delete/{id}")
     public void deleteTransaction(@PathVariable("id") int id){
-        transactionsService.delete(id);
+        try {
+            transactionsService.delete(id);
+        }
+        catch (Exception e){
+            log.error(e.toString());
+        }
     }
 }

@@ -22,18 +22,26 @@ public class UserWalletDaoImpl implements UserWalletDao
     @Override
     public List<UserWallet> getUserWallets() {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From UserWallet u";
+        String hql = "select u.userWalletId, u.role, u.users.userId, u.wallet.walletId From UserWallet u";
+
         Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
-        List<UserWallet> result = query.getResultList();
-        return result;
+        log.info("getUserWallets.query: " + query.toString());
+
+        List<UserWallet> results = query.getResultList();
+        log.info("getUserWallets.results: " + results.toString());
+        return results;
     }
 
     @Override
     public UserWallet getUserWallet(int userwallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "From UserWallet u Where u.userWalletId = " + userwallet_id;
+        String hql = "select u.userWalletId, u.role, u.users.userId, u.wallet.walletId From UserWallet u Where u.userWalletId = " + userwallet_id;
+
         Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
+        log.info("getUserWallet.query: " + query.toString());
+
         UserWallet result = query.getSingleResult();
+        log.info("getUserWallet.result: " + result.toString());
         return result;
     }
 
@@ -41,32 +49,33 @@ public class UserWalletDaoImpl implements UserWalletDao
     public void save(UserWallet userWallet) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "Insert Into user_wallet(user_wallet_id, user_id, wallet_id, role) " +
-                     "values( ((SELECT max(user_wallet_id) from user_wallet)+1), " + userWallet.getUserId() + ", " + userWallet.getWalletId() + ", " + userWallet.getRole() + ")";
+                     "values( ((SELECT max(user_wallet_id) from user_wallet)+1), " + userWallet.getUsers().getUserId() + ", " + userWallet.getWallet().getWalletId() + ", " + userWallet.getRole() + ")";
+
         Query<UserWallet> query = session.createSQLQuery(sql);
+        log.info("save.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void update(UserWallet userWallet) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE user_wallet SET ";
-        if (userWallet.getUserId() != 0){
-            sql = sql + "user_id = " + userWallet.getUserId() + ", ";
-        }
-        if (userWallet.getWalletId() != 0){
-            sql = sql + "wallet_id = " + userWallet.getWalletId() + ", ";
-        }
-        sql = sql + "role = " + userWallet.getRole();
-        sql = sql + "WHERE user_wallet_id = " + userWallet.getUserWalletId();
+        String sql = "UPDATE user_wallet SET user_id = " + userWallet.getUsers().getUserId() + ", wallet_id = " + userWallet.getWallet().getWalletId() + ", role = " + userWallet.getRole() + " WHERE user_wallet_id = "+ userWallet.getUserWalletId() +"";
+
         Query<UserWallet> query = session.createSQLQuery(sql);
+        log.info("update.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void delete(int userwallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "Delete From user_wallet  Where user_wallet_id = " + userwallet_id;
+        String sql = "Delete From user_wallet Where user_wallet_id = " + userwallet_id;
+
         Query<UserWallet> query = session.createSQLQuery(sql);
+        log.info("delete.query: " + query.toString());
+
         query.executeUpdate();
     }
 }

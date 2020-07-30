@@ -6,18 +6,18 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table
+@Table(name = "category")
 @Data
 public class Category
 {
     @Id
     @Column(name = "category_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long categoryid;
 
-    @Column(name = "categoryName")
-    private String categoryName;
+    @Column(name = "categoryname")
+    private String categoryname;
 
-    @OneToMany(mappedBy = "Category")
+    @OneToMany(mappedBy = "category")
     private Collection<Transactions> transactions;
 }

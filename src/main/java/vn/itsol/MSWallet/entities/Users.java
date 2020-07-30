@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,12 +34,12 @@ public class Users
     @Column(name = "Path_ava")
     private String pathAva;
 
-    @OneToOne(mappedBy = "users")
-    private PasswordResetToken passwordResetToken;
+    @OneToMany(mappedBy = "users")
+    private Collection<PasswordResetToken> passwordResetToken;
 
     @OneToMany(mappedBy = "users")
     private Collection<UserWallet> userWallet;
 
     @OneToMany(mappedBy = "users")
-    private Collection<Transactions> transactions;
+    private List<Transactions> transactions;
 }

@@ -24,19 +24,32 @@ public class UsersDaoImpl implements UsersDao
     {
         Session currentSession = entityManager.unwrap(Session.class);
         String hql = "From Users u";
-        Query<Users> query = currentSession.createQuery(hql, Users.class);
-        log.info("UserDaoImpl: " + query.getResultList());
+
+        Query<Users> query = currentSession.createQuery(hql);
+        //log.info("GetUsers.query.getResultList(): " + query.getResultList().toString());
+
         return  query.getResultList();
     }
 
     @Override
     public Users GetUser(int user_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "FROM Users u Where u.user_id = " + user_id;
-        Query<Users> query = session.createQuery(sql, Users.class);
-        log.info("GetUser.sql: " + sql);
-        Users user = query.getSingleResult();
-        log.info("GetUser.user: " + user.toString());
+        Users user = new Users();
+        String hql = "FROM Users u Where u.userId = " + user_id;
+
+        Query<Users> query = session.createQuery(hql, Users.class);
+        log.info("GetUser.query: " + query.toString());
+
+        List<Users> users = query.getResultList();
+        for (Users u : users){
+            user.setUserId(u.getUserId());
+            user.setName(u.getName());
+            user.setPathAva(u.getPathAva());
+            user.setPhoneNumber(u.getPhoneNumber());
+            user.setPassWord(u.getPassWord());
+            user.setUserName(u.getUserName());
+            user.setGender(u.getGender());
+        }
         return user;
     }
 
@@ -45,47 +58,34 @@ public class UsersDaoImpl implements UsersDao
         Session session = entityManager.unwrap(Session.class);
         String sql = "Insert Into users(user_id, user_name, name, password, phone_number, gender, path_ava) " +
                     "Values(((SELECT max(user_id) FROM users)+1),\'" + user.getUserName() + "\', \'" + user.getName() + "\', \'" + user.getPassWord() + "\', " + user.getPhoneNumber() + ", \'" + user.getGender() + "\', \'" + user.getPathAva() + "\')";
+
         Query<Users> query = session.createSQLQuery(sql);
-        log.info("save.sql: " + sql);
+        log.info("save.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void update(Users users) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE Users SET ";
-        if(users.getUserName() != null && users.getUserName() != ""){
-            sql = sql + "user_name = \'" + users.getUserName() + "\', ";
-        }
-        if(users.getName() != null && users.getName() != ""){
-            sql = sql + "name = \'" + users.getName() + "\', ";
-        }
-        if(users.getPassWord() != null && users.getPassWord() != ""){
-            sql = sql + "password = \'" + users.getPassWord() + "\', ";
-        }
-        if(users.getGender() != null && users.getGender() != ""){
-            sql = sql + "gender = \'" + users.getGender() + "\', ";
-        }
-        if(users.getPhoneNumber() != 0){
-            sql = sql + "phone_number = \'" + users.getPhoneNumber() + "\', ";
-        }
-        if(users.getPathAva() != null && users.getPathAva() != ""){
-            sql = sql + "path_ava = \'" + users.getPathAva() + "\', ";
-        }
-        sql = sql + "WHERE user_id = " + users.getUserId();
+        String sql = "UPDATE Users SET user_name = \'" + users.getUserName() + "\', name = \'" + users.getName() + "\', password = \'" + users.getPassWord() + "\', phone_number = " + users.getPhoneNumber() + ", gender = \'" + users.getGender() + "\', path_ava = '" + users.getPathAva() + "\'"
+                    + "WHERE user_id = " + users.getUserId();
 
-        sql = sql.replace(", WHERE", " WHERE");
-        log.info("update.sql: " + sql);
         Query<Users> query = session.createSQLQuery(sql);
+        log.info("update.query: " + query.toString());
+
         query.executeUpdate();
     }
 
     @Override
     public void delete(int User_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "DELETE FROM users Where user_id = " + User_id;
+        String sql = "DELETE FROM users Where user_id = :user_id";
+
         Query<Users> query = session.createSQLQuery(sql);
-        log.info("delete.sql: " + sql);
+        query.setParameter("user_id", User_id);
+        log.info("delete.query: " + query.toString());
+
         query.executeUpdate();
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.itsol.MSWallet.dao.userwallet.UserWalletDao;
 import vn.itsol.MSWallet.dto.UserWalletDto;
 import vn.itsol.MSWallet.entities.UserWallet;
+import vn.itsol.MSWallet.entities.Users;
+import vn.itsol.MSWallet.entities.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,9 @@ public class UserWalletServiceImpl implements UserWalletService
         for(UserWallet u: userWalletList)
         {
             UserWalletDto userWalletDto = new UserWalletDto();
-            userWalletDto.setWalletId(u.getWalletId());
+            userWalletDto.setWalletId(u.getWallet().getWalletId());
             userWalletDto.setRole(u.getRole());
-            userWalletDto.setUserId(u.getUserId());
+            userWalletDto.setUserId(u.getUsers().getUserId());
             userWalletDto.setUserWalletId(u.getUserWalletId());
             userWalletDtos.add(userWalletDto);
         }
@@ -44,9 +46,9 @@ public class UserWalletServiceImpl implements UserWalletService
 
         UserWalletDto userWalletDto = new UserWalletDto();
 
-        userWalletDto.setWalletId(userWallet.getWalletId());
+        userWalletDto.setWalletId(userWallet.getWallet().getWalletId());
         userWalletDto.setUserWalletId(userWallet.getUserWalletId());
-        userWalletDto.setUserId(userWallet.getUserId());
+        userWalletDto.setUserId(userWallet.getUsers().getUserId());
         userWalletDto.setRole(userWallet.getRole());
 
         return userWalletDto;
@@ -57,9 +59,9 @@ public class UserWalletServiceImpl implements UserWalletService
     public void save(UserWalletDto userWalletDto) {
         UserWallet userWallet = new UserWallet();
         userWallet.setRole(userWalletDto.getRole());
-        userWallet.setWalletId(userWalletDto.getWalletId());
+        //userWallet.setWallet(userWalletDto.getWalletId());
         //userWallet.setUserWalletId(userWalletDto.getUserWalletId());
-        userWallet.setUserId(userWalletDto.getUserId());
+        //userWallet.setUsers(userWalletDto.getUserId());
 
         userWalletDao.save(userWallet);
     }
@@ -68,10 +70,16 @@ public class UserWalletServiceImpl implements UserWalletService
     @Override
     public void update(UserWalletDto userWalletDto) {
         UserWallet userWallet = new UserWallet();
+        Wallet wallet = new Wallet();
+        Users users = new Users();
+
+        wallet.setWalletId(userWalletDto.getWalletId());
+        users.setUserId(userWalletDto.getUserId());
+
         userWallet.setRole(userWalletDto.getRole());
-        userWallet.setWalletId(userWalletDto.getWalletId());
+        userWallet.setWallet(wallet);
         userWallet.setUserWalletId(userWalletDto.getUserWalletId());
-        userWallet.setUserId(userWalletDto.getUserId());
+        userWallet.setUsers(users);
 
         userWalletDao.update(userWallet);
     }
