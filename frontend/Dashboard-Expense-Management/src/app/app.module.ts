@@ -28,6 +28,10 @@ import { WalletListComponent } from './pages/wallet/wallet-list/wallet-list.comp
 import { WalletDetailsComponent } from './pages/wallet/wallet-details/wallet-details.component';
 import { WalletAddComponent } from './pages/wallet/wallet-add/wallet-add.component';
 import { WalletUpdateComponent } from './pages/wallet/wallet-update/wallet-update.component';
+import { WalletUserAddComponent } from './pages/wallet/wallet-details/wallet-user-add/wallet-user-add.component';
+import { TransactionListComponent } from './pages/transaction/transaction-list/transaction-list.component';
+import { TransactionAddComponent } from './pages/transaction/transaction-add/transaction-add.component';
+import { TransactionUpdateComponent } from './pages/transaction/transaction-update/transaction-update.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +49,10 @@ import { WalletUpdateComponent } from './pages/wallet/wallet-update/wallet-updat
     WalletDetailsComponent,
     WalletAddComponent,
     WalletUpdateComponent,
+    WalletUserAddComponent,
+    TransactionListComponent,
+    TransactionAddComponent,
+    TransactionUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +68,10 @@ import { WalletUpdateComponent } from './pages/wallet/wallet-update/wallet-updat
   entryComponents: 
   [
     WalletAddComponent,
-    WalletUpdateComponent
+    WalletUpdateComponent,
+    WalletUserAddComponent,
+    TransactionAddComponent,
+    TransactionUpdateComponent
   ]
 })
 export class AppModule { }

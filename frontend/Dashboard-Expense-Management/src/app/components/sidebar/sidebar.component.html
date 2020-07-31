@@ -7,8 +7,8 @@
             </div>
         </div>
         <div class="profile-details text-center pb-4">
-            <p class="mb-0 text-uppercase name">Tiến Thành Nguyễn</p>
-            <small class="text-uppercase role">Administrator</small>
+            <p class="mb-0 text-uppercase name">Hồ Tuấn Anh</p>
+            <small class="text-uppercase role">lakeho</small>
         </div>
     </div>
     <div class="sidebar-search pt-1 pb-1 pl-3 pr-3">
@@ -33,31 +33,27 @@
                 </a>
             </li>
             <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dollar-sign"></i>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                        class="fa fa-dollar-sign"></i>
                     <span>Quản Lý Giao Dịch</span></a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#" routerLink="" routerLinkActive="active"><i class="fa fa-dollar-sign"></i><span>Ví A</span></a>
+                    <li *ngFor="let w of walletList">
+                        <a href="#" routerLink="/transaction/{{w.wallet_id}}" routerLinkActive="active">
+                            <i class="fa fa-dollar-sign"></i><span>{{w.wallet_name}}</span>
+                        </a>
                     </li>
-                    <li>
-                        <a href="#" routerLink="" routerLinkActive="active"><i class="fa fa-dollar-sign"></i><span>Ví B</span></a>
-                    </li>
-                    <li>
-                        <a href="#" routerLink="" routerLinkActive="active"><i class="fa fa-dollar-sign"></i><span>Ví C</span></a>
-                    </li>
-
                 </ul>
             </li>
 
             <li>
-                <a href="#" routerLink="/forms" routerLinkActive="active">
+                <a href="#" routerLink="" routerLinkActive="active">
                     <i class="fas fa-table"></i>
                     <span>Quản Lý Danh Mục</span>
                 </a>
             </li>
 
             <li>
-                <a href="#" routerLink="/forms" routerLinkActive="active">
+                <a href="#" routerLink="" routerLinkActive="active">
                     <i class="fas fa-chart-bar"></i>
                     <span>Thống Kê</span>
                 </a>

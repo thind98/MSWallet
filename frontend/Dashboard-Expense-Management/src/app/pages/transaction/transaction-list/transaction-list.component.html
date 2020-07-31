@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <!-- .left-right-aside-column-->
+      <div class="contact-page-aside">
+        <!-- .left-aside-column-->
+
+        <!-- /.left-aside-column-->
+        <div class="right-aside ">
+          <div class="right-page-header">
+            <div class="d-flex mr-4 ml-4">
+              <div class="align-self-center">
+                <h5>{{walletName}}</h5>
+              </div>
+              <div class="ml-auto">
+                <!-- Nút thêm -->
+                <br>
+                <button type="button" class="btn btn-outline-primary" (click)="newTransDialog()">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="table-responsive">
+            <table id="demo-foo-addrow" class="table no-wrap table-bordered m-t-30 table-hover contact-list text-center"
+              data-paging="true" data-paging-size="7">
+              <thead>
+                <tr>
+                  <th>Ngày giao dịch</th>
+                  <th>Tên giao dịch</th>
+                  <th>Danh mục</th>
+                  <th>Số tiền</th>
+                  <th>Người giao dịch</th>
+                  <th>Chức năng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let t of transList">
+                  <tr>
+                    <td>{{t.date | date: 'dd/MM/yyyy'}}</td>
+                    <td style="font-style: italic;">{{t.trans_name}}</td>
+                    <td>{{t.category_name}}</td>
+                    <td *ngIf="t.trans_type; else green">
+                      <p style="color: red;">
+                        {{t.trans_type ? "-":"+"}}{{t.amount | currency:' ':'code':'4.0-0'}}đ
+                      </p>
+                    </td>
+                    <ng-template #green>
+                      <td style="color: green;">
+                        {{t.trans_type ? "-":"+"}}{{t.amount | currency:' ':'code':'4.0-0'}}đ
+                      </td>
+                    </ng-template>
+                    <td *ngIf="t.role; else italic">
+                      <p style="font-weight: bold;">{{t.user_name}}</p>
+                    </td>
+                    <ng-template #italic>
+                      <td>
+                        <p style="font-style: italic;">{{t.user_name}}</p>
+                      </td>
+                    </ng-template>
+                    <td rowspan="2">
+                      <button class="btn btn-sm btn-outline-lightning rounded-0 mr-2" (click)="updateTransDialog(t)">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-lightning rounded-0 mr-2" (click)="deleteTransaction(t.id)">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- ghi chu -->
+                  <tr>
+                    <td colspan="5" style="text-align: left;"><label style="font-weight: bold;">Ghi chú:&nbsp;</label>{{t.note}}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- .left-aside-column-->
+        </div>
+        <!-- /.left-right-aside-column-->
+      </div>
+    </div>
+  </div>
+</div>

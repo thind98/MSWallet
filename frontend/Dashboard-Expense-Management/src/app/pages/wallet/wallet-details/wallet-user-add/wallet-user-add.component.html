@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-between">
+  <h4>Chia sẻ ví</h4>
+  <button (click)="onClose()">Close</button>
+</div>
+
+<div class="container">
+
+  <form #form="ngForm" (ngSubmit)="addUser()" autocomplete="off">
+
+    <div class="form-group "> <label for=" ">Chia sẻ với</label>
+      <input type="text " class="form-control" name="name" #name="ngModel" 
+      [(ngModel)]="newMembers" required>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-outline-primary"> Mời </button>
+    <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary"> Hủy </button>
+  </form>
+
+</div>
+<!-- [disabled]="form.invalid" -->

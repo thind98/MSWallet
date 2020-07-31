@@ -52,7 +52,8 @@
                       <div class="card-header">
                         <input type="checkbox" [disabled]="w.role==false" />
                         <a href="" routerLink="/wallet/{{w.wallet_id}}"> {{w.wallet_name}}</a>
-                        <button class="btn btn-sm btn-outline-lightning rounded-0 ml-4" [disabled]="w.role==false">
+                        <button class="btn btn-sm btn-outline-lightning rounded-0 ml-4" [disabled]="w.role==false"
+                        (click)="deleteWallet(w.wallet_id)">
                           <i class="far fa-window-close"></i>
                         </button>
                       </div>

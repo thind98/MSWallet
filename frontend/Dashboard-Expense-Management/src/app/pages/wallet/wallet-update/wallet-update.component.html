@@ -5,7 +5,7 @@
 
 <div class="container">
 
-  <form #form="ngForm" (ngSubmit)="addWallet()" autocomplete="off">
+  <form #form="ngForm" (ngSubmit)="updateWallet()" autocomplete="off">
 
     <div class="form-group "> <label for=" ">Tên ví</label>
       <input type="text " class="form-control" name="name" #name="ngModel" [(ngModel)]="wallet.wallet_name" required
@@ -35,8 +35,8 @@
     </div>
 
     <br>
-    <button type="submit" class="btn btn-outline-primary"> Create </button>
-    <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary"> Reset </button>
+    <button type="submit" class="btn btn-outline-primary"> Cập nhật </button>
+    <button style="margin-left: 20px;" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
   </form>
 
 </div>

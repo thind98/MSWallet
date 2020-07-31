@@ -15,7 +15,7 @@ export class WalletUpdateComponent implements OnInit {
 
   constructor(
     public dialog: MatDialogRef<WalletUpdateComponent>,
-    private snackbar: MatSnackBar,
+    private snackBar: MatSnackBar,
     public service: WalletService
   ) { }
 
@@ -26,6 +26,18 @@ export class WalletUpdateComponent implements OnInit {
   onClose(){
     this.dialog.close();
     // this.service.filter('click');
+  }
+
+  updateWallet(){
+    this.service.updateWallet(this.wallet.id, this.wallet).subscribe(data => {
+      console.log('Update Wallet Successfully!');
+      this.onClose();
+      this.snackBar.open("Update Wallet Successfully!","Close",{
+        duration: 3000,
+        verticalPosition: "bottom",
+        horizontalPosition: "center"
+      });
+    })
   }
 
 }

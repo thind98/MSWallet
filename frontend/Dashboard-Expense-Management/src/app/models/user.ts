@@ -1,4 +1,5 @@
 export class User {
+    //user_id
     id: number
     user_name: string
     name: string

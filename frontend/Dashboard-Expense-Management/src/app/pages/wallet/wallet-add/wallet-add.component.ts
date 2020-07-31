@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Wallet } from 'src/app/models/wallet';
+import { User_Wallet } from 'src/app/models/user_wallet';
+import { WalletService } from 'src/app/services/wallet.service';
 
 @Component({
   selector: 'app-wallet-add',
@@ -11,10 +13,12 @@ import { Wallet } from 'src/app/models/wallet';
 export class WalletAddComponent implements OnInit {
 
   wallet: Wallet;
+  user_wallet: User_Wallet;
 
   constructor(
     public dialog: MatDialogRef<WalletAddComponent>,
-    private snackbar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public service: WalletService
   ) { }
 
   ngOnInit() {
@@ -24,6 +28,33 @@ export class WalletAddComponent implements OnInit {
   onClose(){
     this.dialog.close();
     // this.service.filter('click');
+  }
+
+  addWallet(){
+    console.log(this.wallet);
+    this.wallet.currency = this.wallet.balance;
+    this.wallet.create_date = new Date().getFullYear().toString() + "-" + new Date().getMonth() + "-" + new Date().getDate();
+    this.service.addWallet(this.wallet).subscribe(data => {
+      console.log(data)
+      console.log(data.id)
+      console.log('Add Wallet Successfully!');
+      console.log('Adding User_Wallet...');
+      this.user_wallet = {
+        id: null,
+        user_id: 2,
+        wallet_id: data.id,
+        role: true
+      }
+      this.service.addUserWallet(this.user_wallet).subscribe(dota => {
+        console.log('Add User_Wallet Successfully!');
+        this.snackBar.open("Add Successfully!","Close",{
+          duration: 3000,
+          verticalPosition: "bottom",
+          horizontalPosition: "center"
+        });
+      })
+    })
+    this.onClose();
   }
 
 }
