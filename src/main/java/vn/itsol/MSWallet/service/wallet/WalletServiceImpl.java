@@ -6,8 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.itsol.MSWallet.dao.users.UsersDao;
 import vn.itsol.MSWallet.dao.wallet.WalletDao;
+import vn.itsol.MSWallet.dto.UserWalletDisplay;
 import vn.itsol.MSWallet.dto.WalletDto;
+import vn.itsol.MSWallet.entities.UserWallet;
+import vn.itsol.MSWallet.entities.Users;
 import vn.itsol.MSWallet.entities.Wallet;
 
 import java.util.ArrayList;
@@ -21,6 +25,34 @@ public class WalletServiceImpl implements WalletService
 
     @Autowired
     private WalletDao walletDao;
+
+    @Autowired
+    private UsersDao usersDao;
+
+    @Override
+    public List<UserWalletDisplay> findWalletbyuserid(int user_id) {
+        List<UserWallet> userWalletList = walletDao.findWalletbyuserid(user_id);
+        List<UserWalletDisplay> userWalletDisplayList = new ArrayList<>();
+
+        for (UserWallet userWallet : userWalletList){
+            UserWalletDisplay userWalletDisplay = new UserWalletDisplay();
+            Wallet wallet = walletDao.getWallet((int)userWallet.getWallet().getWalletId());
+            Users user = usersDao.GetUser((int)userWallet.getUsers().getUserId());
+
+            userWalletDisplay.setWalletId(wallet.getWalletId());
+            userWalletDisplay.setWallertName(wallet.getWallertName());
+            userWalletDisplay.setUserId(user.getUserId());
+            userWalletDisplay.setCurrency(wallet.getCurrency());
+            userWalletDisplay.setBalance(wallet.getBalance());
+            userWalletDisplay.setName(user.getName());
+            userWalletDisplay.setRole(userWallet.getRole());
+            userWalletDisplay.setUserName(user.getUserName());
+
+            userWalletDisplayList.add(userWalletDisplay);
+        }
+
+        return userWalletDisplayList;
+    }
 
     @Transactional
     @Override

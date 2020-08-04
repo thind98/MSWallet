@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import vn.itsol.MSWallet.dto.UserWalletDisplay;
 import vn.itsol.MSWallet.dto.WalletDto;
 import vn.itsol.MSWallet.service.wallet.WalletService;
 
@@ -17,6 +18,11 @@ public class WalletController
 
     @Autowired
     private WalletService walletService;
+    @GetMapping(path = "findbyuserid/{user_id}")
+    public List<UserWalletDisplay> getByUserId(@PathVariable("user_id") int user_id)
+    {
+        return walletService.findWalletbyuserid(user_id);
+    }
 
     @GetMapping(path = "findbyid/{wallet_id}")
     public WalletDto getWallet(@PathVariable("wallet_id") int wallet_id)

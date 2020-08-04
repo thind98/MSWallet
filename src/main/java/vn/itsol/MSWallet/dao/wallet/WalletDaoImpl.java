@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import vn.itsol.MSWallet.entities.UserWallet;
+import vn.itsol.MSWallet.entities.Users;
 import vn.itsol.MSWallet.entities.Wallet;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,19 @@ public class WalletDaoImpl implements WalletDao
 
     @Autowired
     private EntityManager entityManager;
+
+    @Override
+    public List<UserWallet> findWalletbyuserid(int user_id) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "SELECT uw FROM UserWallet uw where uw.users.userId = " + user_id;
+
+        Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
+        log.info("getWallet.query: " + query.toString());
+
+        List<UserWallet> results = query.getResultList();
+        log.info("getWallet.result: " + results);
+        return results;
+    }
 
     @Override
     public Wallet getWallet(int wallet_id) {
