@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import vn.itsol.MSWallet.dto.TransactionsDisplay;
 import vn.itsol.MSWallet.dto.TransactionsDto;
 import vn.itsol.MSWallet.entities.Transactions;
 import vn.itsol.MSWallet.service.transactions.TransactionsService;
@@ -21,8 +22,8 @@ public class TransactionsController
     private TransactionsService transactionsService;
 
     @GetMapping(path = "findbyuserid/{id}")
-    public List<TransactionsDto> getTransactionByUser(@PathVariable("id") int id){
-        List<TransactionsDto> results = transactionsService.getTransactionsUser(id);
+    public List<TransactionsDisplay> getTransactionByUser(@PathVariable("id") int id){
+        List<TransactionsDisplay> results = transactionsService.getTransactionsUser(id);
         return results;
     }
 

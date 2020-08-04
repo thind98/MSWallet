@@ -20,9 +20,9 @@ public class UserWalletDaoImpl implements UserWalletDao
     private EntityManager entityManager;
 
     @Override
-    public UserWallet getUserWallet(int userwallet_id) {
+    public UserWallet getUserWallet(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "select u From UserWallet u Where u.userWalletId = " + userwallet_id;
+        String hql = "select u From UserWallet u Where u.wallet.walletId = " + wallet_id;
 
         Query<UserWallet> query = session.createQuery(hql);
         log.info("getUserWallet.query: " + query.toString());
