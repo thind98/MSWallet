@@ -20,9 +20,21 @@ public class TransactionsController
     @Autowired
     private TransactionsService transactionsService;
 
-    @GetMapping(path = "findall")
-    public List<TransactionsDto> getTransactions(){
-        List<TransactionsDto> results = transactionsService.gettrans();
+    @GetMapping(path = "findbyuserid/{id}")
+    public List<TransactionsDto> getTransactionByUser(@PathVariable("id") int id){
+        List<TransactionsDto> results = transactionsService.getTransactionsUser(id);
+        return results;
+    }
+
+    @GetMapping(path = "findbycategoryid/{id}")
+    public List<TransactionsDto> getTransactionByCategory(@PathVariable("id") int id){
+        List<TransactionsDto> results = transactionsService.getTransactionsCategory(id);
+        return results;
+    }
+
+    @GetMapping(path = "findbywalletid/{id}")
+    public List<TransactionsDto> getTransactionByWallet(@PathVariable("id") int id){
+        List<TransactionsDto> results = transactionsService.getTransactionsWallet(id);
         return results;
     }
 
@@ -37,7 +49,7 @@ public class TransactionsController
         transactionsService.save(transactionsDto);
     }
 
-    @PutMapping(path = "save")
+    @PutMapping(path = "update")
     public void updateTransaction(@RequestBody TransactionsDto transactionsDto) {
         transactionsService.update(transactionsDto);
     }

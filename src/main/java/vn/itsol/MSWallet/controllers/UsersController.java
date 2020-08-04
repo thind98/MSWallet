@@ -19,13 +19,6 @@ public class UsersController
     @Autowired
     private UsersService usersService;
 
-    @GetMapping(path = "findall")
-    public List<UsersDto> getUsers()
-    {
-        log.info("UsersController: " + usersService.GetUsers());
-        return usersService.GetUsers();
-    }
-
     @GetMapping(path = "findbyid/{user_id}")
     public UsersDto getUser(@PathVariable("user_id") int user_id)
     {
@@ -41,10 +34,5 @@ public class UsersController
     @PutMapping(path = "update")
     public void updateUser(@RequestBody UsersDto usersDto){
         usersService.update(usersDto);
-    }
-
-    @DeleteMapping(path = "delete/{user_id}")
-    public void deleteUser(@PathVariable("user_id") int user_id){
-        usersService.delete(user_id);
     }
 }

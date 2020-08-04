@@ -20,28 +20,54 @@ public class TransactionsDaoImpl implements TransactionsDao
     private EntityManager entityManager;
 
     @Override
-    public List<Transactions> getTransactions() {
+    public List<Transactions> getTransactionsUser(int user_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "select t.transId, t.transType, t.note, t.date, t.amount, t.users.userId, t.category.categoryid, t.wallet.walletId From Transactions t";
+        String hql = "select t From Transactions t Where t.users.userId = " + user_id;
 
-        Query<Transactions> query = session.createQuery(hql, Transactions.class);
-        log.info("getTransactions.query: " + query.toString());
+        Query<Transactions> query = session.createQuery(hql);
+        log.info("getTransactionsUser.query: " + query.toString());
 
-        List<Transactions> list = query.getResultList();
-        log.info("getTransactions.list: " + list.toString());
-        return list;
+        List<Transactions> results = query.getResultList();
+        log.info("getTransactionsUser.results: " + results.toString());
+        return results;
+    }
+
+    @Override
+    public List<Transactions> getTransactionsCategory(int category_id) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "select t From Transactions t Where t.category.categoryid = " + category_id;
+
+        Query<Transactions> query = session.createQuery(hql);
+        log.info("getTransactionsCategory.query: " + query.toString());
+
+        List<Transactions> results = query.getResultList();
+        log.info("getTransactionsCategory.results: " + results.toString());
+        return results;
+    }
+
+    @Override
+    public List<Transactions> getTransactionsWallet(int wallet_id) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "select t From Transactions t Where t.wallet.walletId = " + wallet_id;
+
+        Query<Transactions> query = session.createQuery(hql);
+        log.info("getTransactionsWallet.query: " + query.toString());
+
+        List<Transactions> results = query.getResultList();
+        log.info("getTransactionsWallet.results: " + results.toString());
+        return results;
     }
 
     @Override
     public Transactions getTransaction(int tran_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "select t.transId, t.transType, t.note, t.date, t.amount, t.users.userId, t.category.categoryid, t.wallet.walletId From Transactions t Where t.transId = " + tran_id;
+        String sql = "Select t From Transactions t Where t.transId = " + tran_id;
 
-        Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        Query<Transactions> query = session.createQuery(sql, Transactions.class);
         log.info("getTransaction.query: " + query.toString());
 
         Transactions result = query.getSingleResult();
-        log.info("getTransaction.list: " + result.toString());
+        log.info("getTransaction.result: " + result.toString());
         return result;
     }
 

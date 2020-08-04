@@ -1,13 +1,16 @@
 package vn.itsol.MSWallet.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "password_reset_token")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PasswordResetToken
 {
     @Id
@@ -24,7 +27,7 @@ public class PasswordResetToken
 //    @Column(name = "user_id")
 //    private long userId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private Users users;
 }

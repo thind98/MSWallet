@@ -20,25 +20,11 @@ public class WalletDaoImpl implements WalletDao
     private EntityManager entityManager;
 
     @Override
-    public List<Wallet> getWallets() {
-        Session session = entityManager.unwrap(Session.class);
-        String hql = "Select w.walletId, w.wallertName, w.currency, w.balance, w.createDate From Wallet w";
-
-        Query<Wallet> query = session.createQuery(hql, Wallet.class);
-        log.info("getWallets.hql: " + hql);
-
-        List<Wallet> listResult = query.getResultList();
-        log.info("getWallets.listResult: " + listResult.toString());
-        return listResult;
-    }
-
-    @Override
     public Wallet getWallet(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "Select w.walletId, w.wallertName, w.currency, w.balance, w.createDate From Wallet w Where w.walletId = :walletId";
+        String hql = "Select w From Wallet w Where w.walletId = " + wallet_id;
 
-        Query<Wallet> query = session.createQuery(hql, Wallet.class);
-        query.setParameter("walletId", wallet_id);
+        Query<Wallet> query = session.createQuery(hql);
         log.info("getWallet.query: " + query.toString());
 
         Wallet result = query.getSingleResult();
@@ -62,8 +48,11 @@ public class WalletDaoImpl implements WalletDao
     @Override
     public void update(Wallet wallet) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE Wallet SET wallert_name = " + wallet.getWallertName() + ", balance = " + wallet.getBalance() + ", currency = " + wallet.getCurrency() + ", create_date = TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\')"
-                + "WHERE wallet_id = :wallet_id";
+        String sql = "UPDATE Wallet SET wallert_name = \'" + wallet.getWallertName()
+                        + "\', balance = " + wallet.getBalance()
+                        + ", currency = " + wallet.getCurrency()
+                        + ", create_date = TO_DATE(\'"+ wallet.getCreateDate() +"\', \'dd/mm/yyyy\') "
+                        + "WHERE wallet_id = " + wallet.getWalletId();
 
         Query<Wallet> query = session.createSQLQuery(sql);
         log.info("update.query: " + query.toString());
@@ -74,10 +63,9 @@ public class WalletDaoImpl implements WalletDao
     @Override
     public void delete(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "DELETE FROM Wallet w Where w.walletId = :wallet_id";
+        String sql = "DELETE FROM Wallet w Where w.walletId = " + wallet_id;
 
-        Query<Wallet> query = session.createQuery(sql, Wallet.class);
-        query.setParameter("wallet_id", wallet_id);
+        Query<Wallet> query = session.createQuery(sql);
         log.info("delete.query: " + query.toString());
 
         query.executeUpdate();

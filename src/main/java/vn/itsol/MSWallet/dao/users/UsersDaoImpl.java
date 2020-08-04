@@ -20,18 +20,6 @@ public class UsersDaoImpl implements UsersDao
     private EntityManager entityManager;
 
     @Override
-    public List<Users> GetUsers()
-    {
-        Session currentSession = entityManager.unwrap(Session.class);
-        String hql = "From Users u";
-
-        Query<Users> query = currentSession.createQuery(hql);
-        //log.info("GetUsers.query.getResultList(): " + query.getResultList().toString());
-
-        return  query.getResultList();
-    }
-
-    @Override
     public Users GetUser(int user_id) {
         Session session = entityManager.unwrap(Session.class);
         Users user = new Users();
@@ -73,18 +61,6 @@ public class UsersDaoImpl implements UsersDao
 
         Query<Users> query = session.createSQLQuery(sql);
         log.info("update.query: " + query.toString());
-
-        query.executeUpdate();
-    }
-
-    @Override
-    public void delete(int User_id) {
-        Session session = entityManager.unwrap(Session.class);
-        String sql = "DELETE FROM users Where user_id = :user_id";
-
-        Query<Users> query = session.createSQLQuery(sql);
-        query.setParameter("user_id", User_id);
-        log.info("delete.query: " + query.toString());
 
         query.executeUpdate();
     }

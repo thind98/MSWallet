@@ -1,6 +1,6 @@
 package vn.itsol.MSWallet.entities;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,7 +9,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "wallet")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Wallet
 {
     @Id

@@ -1,17 +1,20 @@
 package vn.itsol.MSWallet.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transactions
 {
     @Id
-    @Column(name = "transId")
+    @Column(name = "trans_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long transId;
 
@@ -21,20 +24,11 @@ public class Transactions
     @Column(name = "trans_type")
     private long transType;
 
-    @Column(name = "date")
+    @Column(name = "datetime")
     private Date date;
 
     @Column(name = "note")
     private String note;
-
-//    @Column(name = "user_id")
-//    private long userId;
-//
-//    @Column(name = "wallet_id")
-//    private long walletId;
-//
-//    @Column(name = "category_id")
-//    private long categoryId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

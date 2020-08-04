@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface TransactionsService
 {
-    List<TransactionsDto> gettrans();
+    List<TransactionsDto> getTransactionsUser(int user_id);
+    List<TransactionsDto> getTransactionsCategory(int category_id);
+    List<TransactionsDto> getTransactionsWallet(int wallet_id);
     TransactionsDto gettran(int tran_id);
     void save(TransactionsDto tran);
     void update(TransactionsDto tran);

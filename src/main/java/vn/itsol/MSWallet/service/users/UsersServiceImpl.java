@@ -22,29 +22,6 @@ public class UsersServiceImpl implements UsersService
 
     @Transactional
     @Override
-    public List<UsersDto> GetUsers()
-    {
-        List<Users> list = usersDao.GetUsers();
-        List<UsersDto> usersDtoList = new ArrayList<>();
-        for(Users u : list)
-        {
-            UsersDto usersDto = new UsersDto();
-
-            usersDto.setUserId(u.getUserId());
-            usersDto.setUserName(u.getUserName());
-            usersDto.setName(u.getName());
-            usersDto.setGender(u.getGender());
-            usersDto.setPassWord(u.getPassWord());
-            usersDto.setPhoneNumber(u.getPhoneNumber());
-            usersDto.setPathAva(u.getPathAva());
-
-            usersDtoList.add(usersDto);
-        }
-        return usersDtoList;
-    }
-
-    @Transactional
-    @Override
     public UsersDto GetUser(int user_id) {
         Users u = usersDao.GetUser(user_id);
         UsersDto usersDto = new UsersDto();
@@ -85,11 +62,5 @@ public class UsersServiceImpl implements UsersService
         users.setPhoneNumber(user.getPhoneNumber());
         users.setPathAva(user.getPathAva());
         usersDao.update(users);
-    }
-
-    @Transactional
-    @Override
-    public void delete(int User_id) {
-        usersDao.delete(User_id);
     }
 }

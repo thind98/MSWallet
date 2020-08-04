@@ -6,9 +6,7 @@ import vn.itsol.MSWallet.dto.WalletDto;
 import java.util.List;
 
 public interface UserWalletService {
-    List<UserWalletDto> getUserWallets();
     UserWalletDto getUserWallet(int wallet_id);
     void save(UserWalletDto userWalletDto);
-    void update(UserWalletDto userWalletDto);
     void delete(int wallet_id);
 }

@@ -18,11 +18,6 @@ public class PasswordResetTokenController
     @Autowired
     private PasswordResetTokenService passwordResetTokenService;
 
-    @GetMapping(path = "findall")
-    public List<PasswordResetTokenDto> getAllPass(){
-        return passwordResetTokenService.getPasswordResetTokens();
-    }
-
     @GetMapping(path = "findbyid/{id}")
     public PasswordResetTokenDto getPass(@PathVariable("id") int id){
         return passwordResetTokenService.getPasswordResetToken(id);
@@ -36,10 +31,5 @@ public class PasswordResetTokenController
     @PutMapping(path = "update")
     public void updatePass(@RequestBody PasswordResetTokenDto passwordResetTokenDto){
         passwordResetTokenService.update(passwordResetTokenDto);
-    }
-
-    @DeleteMapping(path = "delete/{id}")
-    public void deletePass(@PathVariable("id") int id){
-        passwordResetTokenService.delete(id);
     }
 }

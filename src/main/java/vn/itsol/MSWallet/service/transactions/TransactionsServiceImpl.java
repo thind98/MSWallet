@@ -1,5 +1,6 @@
 package vn.itsol.MSWallet.service.transactions;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,42 +26,59 @@ public class TransactionsServiceImpl implements TransactionsService
 
     @Transactional
     @Override
-    public List<TransactionsDto> gettrans() {
-        List<Transactions> transactionsList = transactionsDao.getTransactions();
-        List<TransactionsDto> transactionsDtos = new ArrayList<>();
-        for(Transactions tran : transactionsList){
-            TransactionsDto transactionsDto = new TransactionsDto();
-
-            transactionsDto.setAmount(tran.getAmount());
-            transactionsDto.setCategoryId(tran.getCategory().getCategoryid());
-            transactionsDto.setDate(tran.getDate());
-            transactionsDto.setNote(tran.getNote());
-            transactionsDto.setTransId(tran.getTransId());
-            transactionsDto.setTransType(tran.getTransType());
-            transactionsDto.setUserId(tran.getUsers().getUserId());
-            transactionsDto.setWalletId(tran.getWallet().getWalletId());
-
-            transactionsDtos.add(transactionsDto);
+    public List<TransactionsDto> getTransactionsUser(int user_id) {
+        List<Transactions> transactionsList = transactionsDao.getTransactionsUser(user_id);
+        List<TransactionsDto> transactionsDtoList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        for(Transactions transactions : transactionsList){
+            TransactionsDto  transactionsDto = modelMapper.map(transactions, TransactionsDto.class);
+            transactionsDto.setUserId(transactions.getUsers().getUserId());
+            transactionsDtoList.add(transactionsDto);
         }
-        return transactionsDtos;
+        return transactionsDtoList;
+    }
+
+    @Transactional
+    @Override
+    public List<TransactionsDto> getTransactionsCategory(int category_id) {
+        List<Transactions> transactionsList = transactionsDao.getTransactionsCategory(category_id);
+        List<TransactionsDto> transactionsDtoList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        for(Transactions transactions : transactionsList){
+            TransactionsDto transactionsDto = modelMapper.map(transactions, TransactionsDto.class);
+            transactionsDto.setUserId(transactions.getUsers().getUserId());
+            transactionsDtoList.add(transactionsDto);
+        }
+        return transactionsDtoList;
+    }
+
+    @Transactional
+    @Override
+    public List<TransactionsDto> getTransactionsWallet(int wallet_id) {
+        List<Transactions> transactionsList = transactionsDao.getTransactionsWallet(wallet_id);
+        List<TransactionsDto> transactionsDtoList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        for (Transactions transactions : transactionsList)
+        {
+            TransactionsDto transactionsDto = modelMapper.map(transactions, TransactionsDto.class);
+            transactionsDto.setUserId(transactions.getUsers().getUserId());
+            transactionsDtoList.add(transactionsDto);
+        }
+        return transactionsDtoList;
     }
 
     @Transactional
     @Override
     public TransactionsDto gettran(int tran_id) {
-        Transactions tran = transactionsDao.getTransaction(tran_id);
-
+        Transactions transactions = transactionsDao.getTransaction(tran_id);
         TransactionsDto transactionsDto = new TransactionsDto();
-
-        transactionsDto.setAmount(tran.getAmount());
-        transactionsDto.setCategoryId(tran.getCategory().getCategoryid());
-        transactionsDto.setDate(tran.getDate());
-        transactionsDto.setNote(tran.getNote());
-        transactionsDto.setTransId(tran.getTransId());
-        transactionsDto.setTransType(tran.getTransType());
-        transactionsDto.setUserId(tran.getUsers().getUserId());
-        transactionsDto.setWalletId(tran.getWallet().getWalletId());
-
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        transactionsDto = modelMapper.map(transactions, TransactionsDto.class);
+        transactionsDto.setUserId(transactions.getUsers().getUserId());
         return transactionsDto;
     }
 

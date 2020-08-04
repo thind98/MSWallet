@@ -13,8 +13,7 @@ import vn.itsol.MSWallet.entities.PasswordResetToken;
 import vn.itsol.MSWallet.entities.Users;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,40 +24,18 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
     @Autowired
     private PasswordResetTokenDao passwordResetTokenDao;
 
-
-
     @Transactional
     @Override
-    public List<PasswordResetTokenDto> getPasswordResetTokens() {
-//        List<PasswordResetToken> passwordResetTokens = passwordResetTokenDao.getPasswordResetTokens();
-//        List<PasswordResetTokenDto> passwordResetTokenDtos = new ArrayList<>();
-//        for(PasswordResetToken p : passwordResetTokens){
-//            PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto();
-//            passwordResetTokenDto.setTokenId(p.getTokenId());
-//            passwordResetTokenDto.setUserId(p.getUsers().getUserId());
-//            passwordResetTokenDto.setToken(p.getToken());
-//            passwordResetTokenDto.setExpiryDate(p.getExpiryDate());
-//            passwordResetTokenDtos.add(passwordResetTokenDto);
-//        }
+    public PasswordResetTokenDto getPasswordResetToken(int user_id) {
+        PasswordResetToken passwordResetToken = passwordResetTokenDao.getPasswordResetToken(user_id);
+//        PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto();
+//        passwordResetTokenDto.setTokenId(passwordResetToken.getTokenId());
+//        passwordResetTokenDto.setToken(passwordResetToken.getToken());
+//        passwordResetTokenDto.setExpiryDate(passwordResetToken.getExpiryDate());
+//        return passwordResetTokenDto;
         ModelMapper modelMapper = new ModelMapper();
-
-//        @SuppressWarnings("unchecked")
-        List<PasswordResetToken> passwordResetTokens = passwordResetTokenDao.getPasswordResetTokens();
-        List<PasswordResetTokenDto> passwordResetTokenDtos = new ArrayList<>();
-
-        return passwordResetTokenDtos;
-    }
-
-    @Transactional
-    @Override
-    public PasswordResetTokenDto getPasswordResetToken(int passRT_id) {
-        PasswordResetToken passwordResetToken = passwordResetTokenDao.getPasswordResetToken(passRT_id);
-        PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto();
-        passwordResetTokenDto.setTokenId(passwordResetToken.getTokenId());
-        passwordResetTokenDto.setToken(passwordResetToken.getToken());
-        passwordResetTokenDto.setExpiryDate(passwordResetToken.getExpiryDate());
-        passwordResetTokenDto.setUserId(passwordResetToken.getUsers().getUserId());
-        return passwordResetTokenDto;
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        return modelMapper.map(passwordResetToken, PasswordResetTokenDto.class);
     }
 
     @Transactional
@@ -80,18 +57,11 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
     public void update(PasswordResetTokenDto passwordResetTokenDto) {
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         Users users = new Users();
-
-        users.setUserId(passwordResetTokenDto.getUserId());
+//        users.setUserId(passwordResetTokenDto.getUser().getUserId());
         passwordResetToken.setExpiryDate(passwordResetTokenDto.getExpiryDate());
         passwordResetToken.setToken(passwordResetTokenDto.getToken());
         passwordResetToken.setTokenId(passwordResetTokenDto.getTokenId());
         passwordResetToken.setUsers(users);
         passwordResetTokenDao.update(passwordResetToken);
-    }
-
-    @Transactional
-    @Override
-    public void delete(int passRT_id) {
-        passwordResetTokenDao.delete(passRT_id);
     }
 }

@@ -24,25 +24,6 @@ public class WalletServiceImpl implements WalletService
 
     @Transactional
     @Override
-    public List<WalletDto> getWallets() {
-        List<Wallet> listResultDao = walletDao.getWallets();
-        List<WalletDto> walletDtos = new ArrayList<>();
-        for(Wallet w : listResultDao)
-        {
-            WalletDto walletDto = new WalletDto();
-            walletDto.setWalletId(w.getWalletId());
-            walletDto.setWallertName(w.getWallertName());
-            walletDto.setCreateDate(w.getCreateDate());
-            walletDto.setCurrency(w.getCurrency());
-            walletDto.setBalance(w.getBalance());
-            walletDtos.add(walletDto);
-        }
-        log.info("getWallets.walletDtos: " + walletDtos.toString());
-        return walletDtos;
-    }
-
-    @Transactional
-    @Override
     public WalletDto getWallet(int wallet_id) {
         Wallet wallet = walletDao.getWallet(wallet_id);
 

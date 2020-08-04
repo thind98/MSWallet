@@ -18,12 +18,6 @@ public class WalletController
     @Autowired
     private WalletService walletService;
 
-    @GetMapping(path = "findall")
-    public List<WalletDto> getWallets()
-    {
-        return walletService.getWallets();
-    }
-
     @GetMapping(path = "findbyid/{wallet_id}")
     public WalletDto getWallet(@PathVariable("wallet_id") int wallet_id)
     {

@@ -24,26 +24,8 @@ public class UserWalletServiceImpl implements UserWalletService
 
     @Transactional
     @Override
-    public List<UserWalletDto> getUserWallets() {
-        List<UserWallet> userWalletList = userWalletDao.getUserWallets();
-        List<UserWalletDto> userWalletDtos = new ArrayList<>();
-        for(UserWallet u: userWalletList)
-        {
-            UserWalletDto userWalletDto = new UserWalletDto();
-            userWalletDto.setWalletId(u.getWallet().getWalletId());
-            userWalletDto.setRole(u.getRole());
-            userWalletDto.setUserId(u.getUsers().getUserId());
-            userWalletDto.setUserWalletId(u.getUserWalletId());
-            userWalletDtos.add(userWalletDto);
-        }
-        return userWalletDtos;
-    }
-
-    @Transactional
-    @Override
     public UserWalletDto getUserWallet(int wallet_id) {
         UserWallet userWallet = userWalletDao.getUserWallet(wallet_id);
-
         UserWalletDto userWalletDto = new UserWalletDto();
 
         userWalletDto.setWalletId(userWallet.getWallet().getWalletId());
@@ -58,22 +40,9 @@ public class UserWalletServiceImpl implements UserWalletService
     @Override
     public void save(UserWalletDto userWalletDto) {
         UserWallet userWallet = new UserWallet();
-        userWallet.setRole(userWalletDto.getRole());
-        //userWallet.setWallet(userWalletDto.getWalletId());
-        //userWallet.setUserWalletId(userWalletDto.getUserWalletId());
-        //userWallet.setUsers(userWalletDto.getUserId());
-
-        userWalletDao.save(userWallet);
-    }
-
-    @Transactional
-    @Override
-    public void update(UserWalletDto userWalletDto) {
-        UserWallet userWallet = new UserWallet();
         Wallet wallet = new Wallet();
-        Users users = new Users();
-
         wallet.setWalletId(userWalletDto.getWalletId());
+        Users users = new Users();
         users.setUserId(userWalletDto.getUserId());
 
         userWallet.setRole(userWalletDto.getRole());
@@ -81,7 +50,7 @@ public class UserWalletServiceImpl implements UserWalletService
         userWallet.setUserWalletId(userWalletDto.getUserWalletId());
         userWallet.setUsers(users);
 
-        userWalletDao.update(userWallet);
+        userWalletDao.save(userWallet);
     }
 
     @Transactional

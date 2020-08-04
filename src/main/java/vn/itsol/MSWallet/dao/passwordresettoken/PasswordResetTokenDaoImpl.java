@@ -23,38 +23,15 @@ public class PasswordResetTokenDaoImpl implements PasswordResetTokenDao
     private EntityManager entityManager;
 
     @Override
-    public List<PasswordResetToken> getPasswordResetTokens() {
+    public PasswordResetToken getPasswordResetToken(int user_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "select p.tokenId, p.token, p.expiryDate, p.users.userId From PasswordResetToken p";
-
-        Query<PasswordResetToken> query = session.createQuery(hql);
-        log.info("getPasswordResetTokens.query: " + query.toString());
-
-        List<PasswordResetToken> list = query.getResultList();
-        log.info("getPasswordResetTokens.list: " + list.toString());
-        return list;
-    }
-
-    @Override
-    public PasswordResetToken getPasswordResetToken(int passRT_id) {
-        Session session = entityManager.unwrap(Session.class);
-        String hql = "select p.tokenId, p.token, p.expiryDate, p.users.userId From PasswordResetToken p Where p.tokenId = " + passRT_id;
+        String hql = "select p From PasswordResetToken p Where p.users.userId = " + user_id;
 
         Query<PasswordResetToken> query = session.createQuery(hql);
         log.info("getPasswordResetToken.query: " + query.toString());
 
-        List<PasswordResetToken> results = query.list();
-        PasswordResetToken passwordResetToken = new PasswordResetToken();
-        for (PasswordResetToken p : results)
-        {
-            Users users = new Users();
-            users.setUserId(p.getUsers().getUserId());
-            passwordResetToken.setUsers(users);
-            passwordResetToken.setTokenId(p.getTokenId());
-            passwordResetToken.setToken(p.getToken());
-            passwordResetToken.setExpiryDate(p.getExpiryDate());
-        }
-        log.info("getPasswordResetToken.results: " + results);
+        PasswordResetToken passwordResetToken = query.getSingleResult();
+
         return passwordResetToken;
     }
 
@@ -77,18 +54,6 @@ public class PasswordResetTokenDaoImpl implements PasswordResetTokenDao
 
         Query<PasswordResetToken> query = session.createSQLQuery(sql);
         log.info("update.query: " + query.toString());
-
-        query.executeUpdate();
-    }
-
-    @Override
-    public void delete(int passRT_id) {
-        Session session = entityManager.unwrap(Session.class);
-        String hql = "DELETE From PasswordResetToken p Where p.tokenId = :tokenId";
-
-        Query<PasswordResetToken> query = session.createQuery(hql, PasswordResetToken.class);
-        query.setParameter("tokenId", passRT_id);
-        log.info("delete.query: " + query.toString());
 
         query.executeUpdate();
     }

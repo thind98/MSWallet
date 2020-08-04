@@ -18,11 +18,6 @@ public class UsersWalletController
     @Autowired
     private UserWalletService userWalletService;
 
-    @GetMapping(path = "findall")
-    public List<UserWalletDto> getUserWallets(){
-        return userWalletService.getUserWallets();
-    }
-
     @GetMapping(path = "findbyid/{user_wallet_id}")
     public UserWalletDto getUserWallet(@PathVariable("user_wallet_id") int user_wallet_id){
         return userWalletService.getUserWallet(user_wallet_id);
@@ -32,12 +27,6 @@ public class UsersWalletController
     public void saveUserWallet(@RequestBody UserWalletDto userWalletDto)
     {
         userWalletService.save(userWalletDto);
-    }
-
-    @PutMapping(path = "update")
-    public void updateUserWallet(@RequestBody UserWalletDto userWalletDto)
-    {
-        userWalletService.update(userWalletDto);
     }
 
     @DeleteMapping(path = "delete/{user_wallet_id}")

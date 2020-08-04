@@ -20,24 +20,11 @@ public class UserWalletDaoImpl implements UserWalletDao
     private EntityManager entityManager;
 
     @Override
-    public List<UserWallet> getUserWallets() {
-        Session session = entityManager.unwrap(Session.class);
-        String hql = "select u.userWalletId, u.role, u.users.userId, u.wallet.walletId From UserWallet u";
-
-        Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
-        log.info("getUserWallets.query: " + query.toString());
-
-        List<UserWallet> results = query.getResultList();
-        log.info("getUserWallets.results: " + results.toString());
-        return results;
-    }
-
-    @Override
     public UserWallet getUserWallet(int userwallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "select u.userWalletId, u.role, u.users.userId, u.wallet.walletId From UserWallet u Where u.userWalletId = " + userwallet_id;
+        String hql = "select u From UserWallet u Where u.userWalletId = " + userwallet_id;
 
-        Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
+        Query<UserWallet> query = session.createQuery(hql);
         log.info("getUserWallet.query: " + query.toString());
 
         UserWallet result = query.getSingleResult();
@@ -53,17 +40,6 @@ public class UserWalletDaoImpl implements UserWalletDao
 
         Query<UserWallet> query = session.createSQLQuery(sql);
         log.info("save.query: " + query.toString());
-
-        query.executeUpdate();
-    }
-
-    @Override
-    public void update(UserWallet userWallet) {
-        Session session = entityManager.unwrap(Session.class);
-        String sql = "UPDATE user_wallet SET user_id = " + userWallet.getUsers().getUserId() + ", wallet_id = " + userWallet.getWallet().getWalletId() + ", role = " + userWallet.getRole() + " WHERE user_wallet_id = "+ userWallet.getUserWalletId() +"";
-
-        Query<UserWallet> query = session.createSQLQuery(sql);
-        log.info("update.query: " + query.toString());
 
         query.executeUpdate();
     }

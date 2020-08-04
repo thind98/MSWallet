@@ -1,6 +1,6 @@
 package vn.itsol.MSWallet.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -8,7 +8,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users
 {
     @Id
@@ -34,8 +37,8 @@ public class Users
     @Column(name = "Path_ava")
     private String pathAva;
 
-    @OneToMany(mappedBy = "users")
-    private Collection<PasswordResetToken> passwordResetToken;
+    @OneToOne(mappedBy = "users")
+    private PasswordResetToken passwordResetToken;
 
     @OneToMany(mappedBy = "users")
     private Collection<UserWallet> userWallet;
