@@ -32,6 +32,12 @@ import { WalletUserAddComponent } from './pages/wallet/wallet-details/wallet-use
 import { TransactionListComponent } from './pages/transaction/transaction-list/transaction-list.component';
 import { TransactionAddComponent } from './pages/transaction/transaction-add/transaction-add.component';
 import { TransactionUpdateComponent } from './pages/transaction/transaction-update/transaction-update.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ChartFilterComponent } from './pages/chart/chart-filter/chart-filter.component'
+import { BarChartComponent } from './pages/chart/bar-chart/bar-chart.component';
+import { PieChartComponent } from './pages/chart/pie-chart/pie-chart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +59,9 @@ import { TransactionUpdateComponent } from './pages/transaction/transaction-upda
     TransactionListComponent,
     TransactionAddComponent,
     TransactionUpdateComponent,
+    ChartFilterComponent,
+    BarChartComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +70,14 @@ import { TransactionUpdateComponent } from './pages/transaction/transaction-upda
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot(),
-    HttpClientModule,FormsModule,ReactiveFormsModule,MatDialogModule,MatSnackBarModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
     ],
   providers: [],
   bootstrap: [AppComponent],

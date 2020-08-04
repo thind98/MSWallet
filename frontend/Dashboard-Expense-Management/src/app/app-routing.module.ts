@@ -8,6 +8,7 @@ import { WalletListComponent } from './pages/wallet/wallet-list/wallet-list.comp
 import { WalletDetailsComponent } from './pages/wallet/wallet-details/wallet-details.component';
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { TransactionListComponent } from './pages/transaction/transaction-list/transaction-list.component';
+import { ChartComponent } from './pages/chart/chart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -26,7 +27,8 @@ const routes: Routes = [
       [
         { path: ':wallet_id', component: TransactionListComponent }
       ]
-  }
+  },
+  { path: 'chart', component: ChartComponent }
 ];
 
 @NgModule({

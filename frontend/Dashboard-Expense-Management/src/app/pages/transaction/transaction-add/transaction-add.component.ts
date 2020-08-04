@@ -17,6 +17,7 @@ export class TransactionAddComponent implements OnInit {
 
   transaction: Transaction;
   cateList: Category[];
+  today: Date;
 
   constructor(
     public dialog: MatDialogRef<TransactionAddComponent>,
@@ -29,6 +30,7 @@ export class TransactionAddComponent implements OnInit {
   ngOnInit() {
     this.transaction = new Transaction;
     this.getCateList();
+    this.today = new Date();
   }
 
   onClose(){

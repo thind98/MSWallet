@@ -25,7 +25,7 @@ export class TransService {
     return this.http.get<Transaction[]>(`${this.baseTransUrl}?wallet_id=${id}`);
   }
 
-  //get all transaction_display for listing by wallet_id - TRANSACTION DTO
+  //get all transaction_display by wallet_id - TRANSACTION DTO
   getListByWalletId(id:number): Observable<Transaction_display[]>{
     return this.http.get<Transaction_display[]>(`${this.listTransUrl}?wallet_id=${id}`);
   }
@@ -43,5 +43,19 @@ export class TransService {
   //delete a transaction by id
   deleteById(id:number): Observable<Transaction>{
     return this.http.delete<Transaction>(`${this.baseTransUrl}/${id}`);
+  }
+
+
+
+
+
+  //test get all transaction
+  getAllTrans(): Observable<Transaction[]>{
+    return this.http.get<Transaction[]>(this.baseTransUrl);
+  }
+
+  //test get all transaction display
+  getAllDisTrans(): Observable<Transaction_display[]>{
+    return this.http.get<Transaction_display[]>(this.listTransUrl);
   }
 }

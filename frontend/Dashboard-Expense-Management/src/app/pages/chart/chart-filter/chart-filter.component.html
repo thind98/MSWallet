@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <!-- .left-right-aside-column-->
+      <div class="contact-page-aside">
+        <!-- .left-aside-column-->
+
+        <!-- /.left-aside-column-->
+        <div class="right-aside">
+          <form #form="ngForm" (ngSubmit)="getChart()">
+            <input matInput [matDatepicker]="picker1" name="from" #from="ngModel" [(ngModel)]="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+
+            <input matInput [matDatepicker]="picker2" name="to" #to="ngModel" [(ngModel)]="toDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <br />
+            <select name="wallet" #wallet="ngModel" [(ngModel)]="id">
+              <option *ngFor="let w of wallets" value="{{w.wallet_id}}">{{w.wallet_name}}</option>
+            </select>
+            <button type="submit">Check</button>
+          </form>
+
+          <div class="col-12 col-xl-12 mb-4">
+            <div class="card border-0 rounded-0">
+                <div class="card-title mb-1 p-3 d-flex">
+                    <h6>Chart Bar</h6>
+                    <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative;">
+                        <canvas id="chart-bar" width="2" height="1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <div class="col-12 col-xl-6 mb-6 align-items-stretch">
+            <div class="card h-100 border-0 rounded-0">
+              <div class="card-title mb-1 p-3 d-flex">
+                <h6>Chart Doughnut</h6>
+                <!-- <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a> -->
+              </div>
+              <div class="card-body">
+                <div class="chart-container d-flex h-100 align-items-center justify-content-center"
+                  style="position: relative;">
+                  <canvas id="chart-income" style="height:100%"></canvas>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="legend d-flex just">
+                  <!-- <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #5b6582;"></span><small>Loading...</small></div>
+                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #98a4c7;"></span><small>CatPanda</small></div>
+                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #36a2eb;"></span><small>Loading...</small></div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6 mb-6 align-items-stretch">
+            <div class="card h-100 border-0 rounded-0">
+              <div class="card-title mb-1 p-3 d-flex">
+                <h6>Chart Doughnut</h6>
+                <!-- <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a> -->
+              </div>
+              <div class="card-body">
+                <div class="chart-container d-flex h-100 align-items-center justify-content-center"
+                  style="position: relative;">
+                  <canvas id="chart-expense" style="height:100%"></canvas>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="legend d-flex just">
+                  <!-- <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #5b6582;"></span><small>Loading...</small></div>
+                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #98a4c7;"></span><small>CatPanda</small></div>
+                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
+                      style="background: #36a2eb;"></span><small>Loading...</small></div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.left-right-aside-column-->
+      </div>
+    </div>
+  </div>
+</div>

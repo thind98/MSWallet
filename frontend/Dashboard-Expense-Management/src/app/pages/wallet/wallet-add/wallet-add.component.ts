@@ -33,7 +33,7 @@ export class WalletAddComponent implements OnInit {
   addWallet(){
     console.log(this.wallet);
     this.wallet.currency = this.wallet.balance;
-    this.wallet.create_date = new Date().getFullYear().toString() + "-" + new Date().getMonth() + "-" + new Date().getDate();
+    this.wallet.create_date = new Date().toDateString();
     this.service.addWallet(this.wallet).subscribe(data => {
       console.log(data)
       console.log(data.id)
