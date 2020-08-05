@@ -54,6 +54,7 @@ public class TransactionsServiceImpl implements TransactionsService
             UserWallet userWallet = userWalletDao.getUserWallet((int) transactions.getWallet().getWalletId());
 
             transactionsDisplay.setTrans_id(transactions.getTransId());
+            transactionsDisplay.setTrans_name(transactions.getTransName());
             transactionsDisplay.setAmount(transactions.getAmount());
             transactionsDisplay.setCategory_id(category.getCategoryid());
             transactionsDisplay.setCategory_name(category.getCategoryname());

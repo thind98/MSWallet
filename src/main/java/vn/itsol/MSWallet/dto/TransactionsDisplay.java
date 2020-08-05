@@ -6,6 +6,7 @@ public class TransactionsDisplay {
     //trans_id, trans_name, amount, trans_type, date, note, user_id, user_name, wallet_id
     //    wallet_name, role, category_id, category_name
     private long trans_id;
+    private String trans_name;
     private long amount;
     private long trans_type;
     private Date date;
@@ -21,8 +22,9 @@ public class TransactionsDisplay {
     public TransactionsDisplay() {
     }
 
-    public TransactionsDisplay(long trans_id, long amount, long trans_type, Date date, String note, long user_id, String user_name, long wallet_id, String wallet_name, long role, long category_id, String category_name) {
+    public TransactionsDisplay(long trans_id, String trans_name, long amount, long trans_type, Date date, String note, long user_id, String user_name, long wallet_id, String wallet_name, long role, long category_id, String category_name) {
         this.trans_id = trans_id;
+        this.trans_name = trans_name;
         this.amount = amount;
         this.trans_type = trans_type;
         this.date = date;
@@ -42,6 +44,14 @@ public class TransactionsDisplay {
 
     public void setTrans_id(long trans_id) {
         this.trans_id = trans_id;
+    }
+
+    public String getTrans_name() {
+        return trans_name;
+    }
+
+    public void setTrans_name(String trans_name) {
+        this.trans_name = trans_name;
     }
 
     public long getAmount() {

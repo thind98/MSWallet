@@ -18,6 +18,9 @@ public class Transactions
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long transId;
 
+    @Column(name = "trans_name")
+    private String transName;
+
     @Column(name = "amount")
     private long amount;
 
