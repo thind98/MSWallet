@@ -20,16 +20,16 @@ public class UserWalletDaoImpl implements UserWalletDao
     private EntityManager entityManager;
 
     @Override
-    public UserWallet getUserWallet(int wallet_id) {
+    public List<UserWallet> getUserWallet(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
         String hql = "select u From UserWallet u Where u.wallet.walletId = " + wallet_id;
 
         Query<UserWallet> query = session.createQuery(hql);
         log.info("getUserWallet.query: " + query.toString());
 
-        UserWallet result = query.getSingleResult();
-        log.info("getUserWallet.result: " + result.toString());
-        return result;
+        List<UserWallet> results = query.getResultList();
+        log.info("getUserWallet.result: " + results.toString());
+        return results;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class UserWalletDaoImpl implements UserWalletDao
     }
 
     @Override
-    public void delete(int userwallet_id) {
+    public void delete(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "Delete From user_wallet Where user_wallet_id = " + userwallet_id;
+        String sql = "Delete From UserWallet u Where u.wallet.walletId = " + wallet_id;
 
-        Query<UserWallet> query = session.createSQLQuery(sql);
+        Query<UserWallet> query = session.createQuery(sql);
         log.info("delete.query: " + query.toString());
 
         query.executeUpdate();

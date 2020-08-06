@@ -6,13 +6,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.itsol.MSWallet.dao.transactions.TransactionsDao;
 import vn.itsol.MSWallet.dao.users.UsersDao;
+import vn.itsol.MSWallet.dao.userwallet.UserWalletDao;
 import vn.itsol.MSWallet.dao.wallet.WalletDao;
 import vn.itsol.MSWallet.dto.UserWalletDisplay;
 import vn.itsol.MSWallet.dto.WalletDto;
 import vn.itsol.MSWallet.entities.UserWallet;
 import vn.itsol.MSWallet.entities.Users;
 import vn.itsol.MSWallet.entities.Wallet;
+import vn.itsol.MSWallet.service.userwallet.UserWalletService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +27,16 @@ public class WalletServiceImpl implements WalletService
     private static final Logger log = LoggerFactory.getLogger(WalletServiceImpl.class);
 
     @Autowired
+    private TransactionsDao transactionsDao;
+
+    @Autowired
     private WalletDao walletDao;
 
     @Autowired
     private UsersDao usersDao;
+
+    @Autowired
+    private UserWalletDao userWalletDao;
 
     @Override
     public List<UserWalletDisplay> findWalletbyuserid(int user_id) {
@@ -103,6 +112,12 @@ public class WalletServiceImpl implements WalletService
     @Transactional
     @Override
     public void delete(int wallet_id) {
+        List<UserWallet> userWalletList = userWalletDao.getUserWallet(wallet_id);
+        if (userWalletList.size() != 0)
+        {
+            userWalletDao.delete(wallet_id);
+            transactionsDao.deleteByWalletID(wallet_id);
+        }
         walletDao.delete(wallet_id);
     }
 }

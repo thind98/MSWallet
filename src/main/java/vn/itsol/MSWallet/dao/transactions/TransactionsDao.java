@@ -12,4 +12,5 @@ public interface TransactionsDao {
     void save(Transactions transactions);
     void update(Transactions transactions);
     void delete(int tran_id);
+    void deleteByWalletID(int wallet_id);
 }

@@ -44,5 +44,5 @@ public class Users
     private Collection<UserWallet> userWallet;
 
     @OneToMany(mappedBy = "users")
-    private List<Transactions> transactions;
+    private Collection<Transactions> transactions;
 }

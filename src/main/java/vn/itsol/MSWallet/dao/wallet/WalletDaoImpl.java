@@ -78,9 +78,9 @@ public class WalletDaoImpl implements WalletDao
     @Override
     public void delete(int wallet_id) {
         Session session = entityManager.unwrap(Session.class);
-        String sql = "DELETE FROM Wallet w Where w.walletId = " + wallet_id;
+        String hql = "DELETE FROM Wallet w Where w.walletId = " + wallet_id;
 
-        Query<Wallet> query = session.createQuery(sql);
+        Query<Wallet> query = session.createQuery(hql);
         log.info("delete.query: " + query.toString());
 
         query.executeUpdate();

@@ -18,9 +18,9 @@ public class UsersWalletController
     @Autowired
     private UserWalletService userWalletService;
 
-    @GetMapping(path = "findbyid/{user_wallet_id}")
-    public UserWalletDto getUserWallet(@PathVariable("user_wallet_id") int user_wallet_id){
-        return userWalletService.getUserWallet(user_wallet_id);
+    @GetMapping(path = "findbyid/{wallet_id}")
+    public List<UserWalletDto> getUserWallet(@PathVariable("wallet_id") int wallet_id){
+        return userWalletService.getUserWallet(wallet_id);
     }
 
     @PostMapping(path = "save")

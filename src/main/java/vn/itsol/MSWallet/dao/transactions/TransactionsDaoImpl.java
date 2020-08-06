@@ -102,7 +102,18 @@ public class TransactionsDaoImpl implements TransactionsDao
         String hql = "delete From Transactions t Where t.transId = " + tran_id;
 
         Query<Transactions> query = session.createQuery(hql, Transactions.class);
-        log.info("update.query: " + query.toString());
+        log.info("delete.query: " + query.toString());
+
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deleteByWalletID(int wallet_id) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "delete From Transactions t Where t.wallet.walletId = " + wallet_id;
+
+        Query<Transactions> query = session.createQuery(hql);
+        log.info("deleteByWalletID.query: " + query.toString());
 
         query.executeUpdate();
     }

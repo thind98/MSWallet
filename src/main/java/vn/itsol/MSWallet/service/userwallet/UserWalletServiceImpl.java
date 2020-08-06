@@ -24,16 +24,18 @@ public class UserWalletServiceImpl implements UserWalletService
 
     @Transactional
     @Override
-    public UserWalletDto getUserWallet(int wallet_id) {
-        UserWallet userWallet = userWalletDao.getUserWallet(wallet_id);
-        UserWalletDto userWalletDto = new UserWalletDto();
-
-        userWalletDto.setWalletId(userWallet.getWallet().getWalletId());
-        userWalletDto.setUserWalletId(userWallet.getUserWalletId());
-        userWalletDto.setUserId(userWallet.getUsers().getUserId());
-        userWalletDto.setRole(userWallet.getRole());
-
-        return userWalletDto;
+    public List<UserWalletDto> getUserWallet(int wallet_id) {
+        List<UserWallet> userWalletList = userWalletDao.getUserWallet(wallet_id);
+        List<UserWalletDto> userWalletDtoList = new ArrayList<>();
+        for (UserWallet userWallet: userWalletList) {
+            UserWalletDto userWalletDto = new UserWalletDto();
+            userWalletDto.setWalletId(userWallet.getWallet().getWalletId());
+            userWalletDto.setUserWalletId(userWallet.getUserWalletId());
+            userWalletDto.setUserId(userWallet.getUsers().getUserId());
+            userWalletDto.setRole(userWallet.getRole());
+            userWalletDtoList.add(userWalletDto);
+        }
+        return userWalletDtoList;
     }
 
     @Transactional

@@ -51,22 +51,23 @@ public class TransactionsServiceImpl implements TransactionsService
             Category category = categoryDao.getCatetgory((int)transactions.getCategory().getCategoryid());
             Users user = usersDao.GetUser((int) transactions.getUsers().getUserId());
             Wallet wallet = walletDao.getWallet((int) transactions.getWallet().getWalletId());
-            UserWallet userWallet = userWalletDao.getUserWallet((int) transactions.getWallet().getWalletId());
+            List<UserWallet> userWalletList = userWalletDao.getUserWallet((int) transactions.getWallet().getWalletId());
 
-            transactionsDisplay.setTrans_id(transactions.getTransId());
-            transactionsDisplay.setTrans_name(transactions.getTransName());
-            transactionsDisplay.setAmount(transactions.getAmount());
-            transactionsDisplay.setCategory_id(category.getCategoryid());
-            transactionsDisplay.setCategory_name(category.getCategoryname());
-            transactionsDisplay.setDate(transactions.getDate());
-            transactionsDisplay.setNote(transactions.getNote());
-            transactionsDisplay.setRole(userWallet.getRole());
-            transactionsDisplay.setTrans_type(transactions.getTransType());
-            transactionsDisplay.setUser_id(user.getUserId());
-            transactionsDisplay.setUser_name(user.getUserName());
-            transactionsDisplay.setWallet_id(wallet.getWalletId());
-            transactionsDisplay.setWallet_name(wallet.getWallertName());
-
+            for (UserWallet userWallet : userWalletList) {
+                transactionsDisplay.setTrans_id(transactions.getTransId());
+                transactionsDisplay.setTrans_name(transactions.getTransName());
+                transactionsDisplay.setAmount(transactions.getAmount());
+                transactionsDisplay.setCategory_id(category.getCategoryid());
+                transactionsDisplay.setCategory_name(category.getCategoryname());
+                transactionsDisplay.setDate(transactions.getDate());
+                transactionsDisplay.setNote(transactions.getNote());
+                transactionsDisplay.setRole(userWallet.getRole());
+                transactionsDisplay.setTrans_type(transactions.getTransType());
+                transactionsDisplay.setUser_id(user.getUserId());
+                transactionsDisplay.setUser_name(user.getUserName());
+                transactionsDisplay.setWallet_id(wallet.getWalletId());
+                transactionsDisplay.setWallet_name(wallet.getWallertName());
+            }
             transactionsDtoList.add(transactionsDisplay);
         }
         return transactionsDtoList;

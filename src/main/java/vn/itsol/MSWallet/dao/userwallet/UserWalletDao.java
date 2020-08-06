@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserWalletDao
 {
-    UserWallet getUserWallet(int wallet_id);
+    List<UserWallet> getUserWallet(int wallet_id);
     void save(UserWallet userWallet);
     void delete(int userwallet_id);
 }
