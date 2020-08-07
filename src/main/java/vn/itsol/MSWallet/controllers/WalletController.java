@@ -24,6 +24,12 @@ public class WalletController
         return walletService.findWalletbyuserid(user_id);
     }
 
+    @GetMapping(path = "findbywalletid/{wallet_id}")
+    public List<UserWalletDisplay> getByWalletId(@PathVariable("wallet_id") int wallet_id)
+    {
+        return walletService.findWalletbywalletid(wallet_id);
+    }
+
     @GetMapping(path = "findbyid/{wallet_id}")
     public WalletDto getWallet(@PathVariable("wallet_id") int wallet_id)
     {
@@ -31,20 +37,20 @@ public class WalletController
     }
 
     @PostMapping(path = "save")
-    public void saveWallet(@RequestBody WalletDto walletDto)
+    public String saveWallet(@RequestBody WalletDto walletDto)
     {
-        walletService.save(walletDto);
+        return walletService.save(walletDto);
     }
 
     @PutMapping(path = "update")
-    public void updateWallet(@RequestBody WalletDto walletDto)
+    public String updateWallet(@RequestBody WalletDto walletDto)
     {
-        walletService.update(walletDto);
+        return walletService.update(walletDto);
     }
 
     @DeleteMapping(path = "delete/{wallet_id}")
-    public void deleteWallet(@PathVariable("wallet_id") int wallet_id)
+    public String deleteWallet(@PathVariable("wallet_id") int wallet_id)
     {
-        walletService.delete(wallet_id);
+        return walletService.delete(wallet_id);
     }
 }

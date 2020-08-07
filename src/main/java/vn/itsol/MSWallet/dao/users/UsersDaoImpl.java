@@ -20,6 +20,36 @@ public class UsersDaoImpl implements UsersDao
     private EntityManager entityManager;
 
     @Override
+    public Boolean checkUserName(String user_name) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "Select u From Users u Where u.userName = \'" + user_name + "\'";
+        Query<Users> query = session.createQuery(hql);
+        Users user = query.getSingleResult();
+        if(user.getUserName() == user_name){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Users findByUserName(String user_name) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "Select u From Users u Where u.userName = \'" + user_name + "\'";
+        Query<Users> query = session.createQuery(hql);
+        Users user = query.getSingleResult();
+        return user;
+    }
+
+    @Override
+    public Users findByUserNamePass(String user_name, String password) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "Select u From Users u Where u.userName = \'" + user_name + "\' And u.passWord = \'"+ password + "\'";
+        Query<Users> query = session.createQuery(hql);
+        Users user = query.getSingleResult();
+        return user;
+    }
+
+    @Override
     public Users GetUser(int user_id) {
         Session session = entityManager.unwrap(Session.class);
         Users user = new Users();

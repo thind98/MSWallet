@@ -38,6 +38,21 @@ public class UserWalletServiceImpl implements UserWalletService
         return userWalletDtoList;
     }
 
+    @Override
+    public List<UserWalletDto> getUserWalletByUseridWalletid(int wallet_id, int user_id) {
+        List<UserWallet> userWalletList = userWalletDao.getUserWalletByUseridWalletid(wallet_id, user_id);
+        List<UserWalletDto> userWalletDtoList = new ArrayList<>();
+        for (UserWallet userWallet: userWalletList) {
+            UserWalletDto userWalletDto = new UserWalletDto();
+            userWalletDto.setWalletId(userWallet.getWallet().getWalletId());
+            userWalletDto.setUserWalletId(userWallet.getUserWalletId());
+            userWalletDto.setUserId(userWallet.getUsers().getUserId());
+            userWalletDto.setRole(userWallet.getRole());
+            userWalletDtoList.add(userWalletDto);
+        }
+        return userWalletDtoList;
+    }
+
     @Transactional
     @Override
     public void save(UserWalletDto userWalletDto) {

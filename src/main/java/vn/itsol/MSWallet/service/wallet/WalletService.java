@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface WalletService {
     List<UserWalletDisplay> findWalletbyuserid(int user_id);
+    List<UserWalletDisplay> findWalletbywalletid(int wallet_id);
     WalletDto getWallet(int wallet_id);
-    void save(WalletDto wallet);
-    void update(WalletDto wallet);
-    void delete(int wallet_id);
+    String save(WalletDto wallet);
+    String update(WalletDto wallet);
+    String delete(int wallet_id);
 }

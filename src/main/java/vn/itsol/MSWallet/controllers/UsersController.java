@@ -26,13 +26,29 @@ public class UsersController
         return usersService.GetUser(user_id);
     }
 
+    @GetMapping(path = "findbyusername/{user_name}")
+    public UsersDto getUserName(@PathVariable("user_name") String user_name)
+    {
+        log.info("UsersController: " + usersService.findByUserName(user_name));
+        return usersService.findByUserName(user_name);
+    }
+
+    @GetMapping(path = "findbyusernamepass")
+    public UsersDto getUserNamePass(@RequestBody UsersDto usersDto)
+    {
+        log.info("UsersController: " + usersService.findByUserNamePass(usersDto.getUserName(), usersDto.getPassWord()));
+        return usersService.findByUserNamePass(usersDto.getUserName(), usersDto.getPassWord());
+    }
+
     @PostMapping(path = "save")
-    public void saveUser(@RequestBody UsersDto usersDto){
-        usersService.save(usersDto);
+    public String saveUser(@RequestBody UsersDto usersDto){
+
+        return usersService.save(usersDto);
+
     }
 
     @PutMapping(path = "update")
-    public void updateUser(@RequestBody UsersDto usersDto){
-        usersService.update(usersDto);
+    public String updateUser(@RequestBody UsersDto usersDto){
+        return usersService.update(usersDto);
     }
 }

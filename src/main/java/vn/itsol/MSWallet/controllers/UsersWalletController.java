@@ -23,6 +23,11 @@ public class UsersWalletController
         return userWalletService.getUserWallet(wallet_id);
     }
 
+    @GetMapping(path = "findbyuseridwalletid")
+    public List<UserWalletDto> getUserWalletByUseridWalletid(@RequestBody UserWalletDto userWalletDto){
+        return userWalletService.getUserWalletByUseridWalletid((int) userWalletDto.getWalletId(), (int) userWalletDto.getUserId());
+    }
+
     @PostMapping(path = "save")
     public void saveUserWallet(@RequestBody UserWalletDto userWalletDto)
     {

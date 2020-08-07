@@ -8,6 +8,7 @@ import java.util.List;
 public interface WalletDao
 {
     List<UserWallet> findWalletbyuserid(int user_id);
+    List<UserWallet> findWalletbywalletid(int wallet_id);
     Wallet getWallet(int wallet_id);
     void save(Wallet wallet);
     void update(Wallet wallet);

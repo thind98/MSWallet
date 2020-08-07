@@ -33,6 +33,19 @@ public class UserWalletDaoImpl implements UserWalletDao
     }
 
     @Override
+    public List<UserWallet> getUserWalletByUseridWalletid(int wallet_id, int user_id) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "select u From UserWallet u Where u.wallet.walletId = " + wallet_id + "And u.users.userId =" + user_id ;
+
+        Query<UserWallet> query = session.createQuery(hql, UserWallet.class);
+        log.info("getUserWallet.query: " + query.toString());
+
+        List<UserWallet> results = query.getResultList();
+        log.info("getUserWallet.result: " + results.toString());
+        return results;
+    }
+
+    @Override
     public void save(UserWallet userWallet) {
         Session session = entityManager.unwrap(Session.class);
         String sql = "Insert Into user_wallet(user_wallet_id, user_id, wallet_id, role) " +

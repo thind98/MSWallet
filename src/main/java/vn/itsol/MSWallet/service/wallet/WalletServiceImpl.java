@@ -63,6 +63,31 @@ public class WalletServiceImpl implements WalletService
         return userWalletDisplayList;
     }
 
+    @Override
+    public List<UserWalletDisplay> findWalletbywalletid(int wallet_id) {
+        List<UserWallet> userWalletList = walletDao.findWalletbywalletid(wallet_id);
+        List<UserWalletDisplay> userWalletDisplayList = new ArrayList<>();
+
+        for (UserWallet userWallet : userWalletList){
+            UserWalletDisplay userWalletDisplay = new UserWalletDisplay();
+            Wallet wallet = walletDao.getWallet((int)userWallet.getWallet().getWalletId());
+            Users user = usersDao.GetUser((int)userWallet.getUsers().getUserId());
+
+            userWalletDisplay.setWalletId(wallet.getWalletId());
+            userWalletDisplay.setWallertName(wallet.getWallertName());
+            userWalletDisplay.setUserId(user.getUserId());
+            userWalletDisplay.setCurrency(wallet.getCurrency());
+            userWalletDisplay.setBalance(wallet.getBalance());
+            userWalletDisplay.setName(user.getName());
+            userWalletDisplay.setRole(userWallet.getRole());
+            userWalletDisplay.setUserName(user.getUserName());
+
+            userWalletDisplayList.add(userWalletDisplay);
+        }
+
+        return userWalletDisplayList;
+    }
+
     @Transactional
     @Override
     public WalletDto getWallet(int wallet_id) {
@@ -82,7 +107,7 @@ public class WalletServiceImpl implements WalletService
 
     @Transactional
     @Override
-    public void save(WalletDto wallet) {
+    public String save(WalletDto wallet) {
         Wallet wallet1 = new Wallet();
         if(wallet != null && wallet.toString() != "") {
             wallet1.setBalance(wallet.getBalance());
@@ -92,12 +117,14 @@ public class WalletServiceImpl implements WalletService
             //wallet1.setWalletId(wallet.getWalletId());
             log.info("save.wallet1: " + wallet1.toString());
             walletDao.save(wallet1);
+            return "success";
         }
+        return "false";
     }
 
     @Transactional
     @Override
-    public void update(WalletDto wallet) {
+    public String update(WalletDto wallet) {
         Wallet wallet1 = new Wallet();
 
         wallet1.setBalance(wallet.getBalance());
@@ -107,11 +134,12 @@ public class WalletServiceImpl implements WalletService
         wallet1.setWalletId(wallet.getWalletId());
         log.info("update.wallet1: " + wallet1.toString());
         walletDao.update(wallet1);
+        return "update success";
     }
 
     @Transactional
     @Override
-    public void delete(int wallet_id) {
+    public String delete(int wallet_id) {
         List<UserWallet> userWalletList = userWalletDao.getUserWallet(wallet_id);
         if (userWalletList.size() != 0)
         {
@@ -119,5 +147,6 @@ public class WalletServiceImpl implements WalletService
             transactionsDao.deleteByWalletID(wallet_id);
         }
         walletDao.delete(wallet_id);
+        return "remove success";
     }
 }

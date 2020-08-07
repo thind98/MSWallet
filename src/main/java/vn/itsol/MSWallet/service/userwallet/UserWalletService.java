@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface UserWalletService {
     List<UserWalletDto> getUserWallet(int wallet_id);
+    List<UserWalletDto> getUserWalletByUseridWalletid(int wallet_id, int user_id);
     void save(UserWalletDto userWalletDto);
     void delete(int wallet_id);
 }
