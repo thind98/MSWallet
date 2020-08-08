@@ -26,11 +26,32 @@ public class UsersController
         return usersService.GetUser(user_id);
     }
 
-    @GetMapping(path = "findbyusername/{user_name}")
-    public UsersDto getUserName(@PathVariable("user_name") String user_name)
+    @GetMapping(path = "findbyusername")
+    public UsersDto getUserName(@RequestBody UsersDto usersDto)
     {
-        log.info("UsersController: " + usersService.findByUserName(user_name));
-        return usersService.findByUserName(user_name);
+        log.info("UsersController: " + usersService.findByUserName(usersDto.getUserName()));
+        return usersService.findByUserName(usersDto.getUserName());
+    }
+
+    @GetMapping(path = "findbyphone")
+    public UsersDto getByPhone(@RequestBody UsersDto usersDto)
+    {
+        log.info("UsersController: " + usersService.findByPhone((int) usersDto.getPhoneNumber()));
+        return usersService.findByPhone((int) usersDto.getPhoneNumber());
+    }
+
+    @GetMapping(path = "findbyname")
+    public List<UsersDto> getByName(@RequestBody UsersDto usersDto)
+    {
+        log.info("UsersController: " + usersService.findByname(usersDto.getName()));
+        return usersService.findByname(usersDto.getName());
+    }
+
+    @GetMapping(path = "findbysex")
+    public List<UsersDto> getBySex(@RequestBody UsersDto usersDto)
+    {
+        log.info("UsersController: " + usersService.findBySex(usersDto.getGender()));
+        return usersService.findBySex(usersDto.getGender());
     }
 
     @GetMapping(path = "findbyusernamepass")

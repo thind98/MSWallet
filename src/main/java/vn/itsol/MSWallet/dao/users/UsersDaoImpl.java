@@ -41,6 +41,34 @@ public class UsersDaoImpl implements UsersDao
     }
 
     @Override
+    public Users findByPhone(int phone_number) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "Select u From Users u Where u.phoneNumber = \'" + phone_number + "\'";
+        Query<Users> query = session.createQuery(hql);
+        Users user = query.getSingleResult();
+        return user;
+    }
+
+    @Override
+    public List<Users> findByname(String name) {
+        Session session = entityManager.unwrap(Session.class);
+        //select * from users where UPPER(name) = upper('thi');
+        String hql = "Select u From Users u Where UPPER(u.name) = UPPER(\'" + name + "\')";
+        Query<Users> query = session.createQuery(hql);
+        List<Users> users = query.getResultList();
+        return users;
+    }
+
+    @Override
+    public List<Users> findBySex(String sex) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "Select u From Users u Where UPPER(u.gender) = UPPER(\'" + sex + "\')";
+        Query<Users> query = session.createQuery(hql);
+        List<Users> users = query.getResultList();
+        return users;
+    }
+
+    @Override
     public Users findByUserNamePass(String user_name, String password) {
         Session session = entityManager.unwrap(Session.class);
         String hql = "Select u From Users u Where u.userName = \'" + user_name + "\' And u.passWord = \'"+ password + "\'";

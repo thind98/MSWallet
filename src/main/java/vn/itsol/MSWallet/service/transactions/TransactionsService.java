@@ -2,8 +2,6 @@ package vn.itsol.MSWallet.service.transactions;
 
 import vn.itsol.MSWallet.dto.TransactionsDisplay;
 import vn.itsol.MSWallet.dto.TransactionsDto;
-import vn.itsol.MSWallet.dto.WalletDto;
-import vn.itsol.MSWallet.entities.Transactions;
 
 import java.util.List;
 

@@ -55,6 +55,50 @@ public class UsersServiceImpl implements UsersService
     }
 
     @Override
+    public UsersDto findByPhone(int phone_number) {
+        Users u = usersDao.findByPhone(phone_number);
+        UsersDto usersDto = new UsersDto();
+
+        usersDto.setUserId(u.getUserId());
+        usersDto.setUserName(u.getUserName());
+        usersDto.setName(u.getName());
+        usersDto.setGender(u.getGender());
+        usersDto.setPassWord(u.getPassWord());
+        usersDto.setPhoneNumber(u.getPhoneNumber());
+        usersDto.setPathAva(u.getPathAva());
+
+        return usersDto;
+    }
+
+    @Override
+    public List<UsersDto> findByname(String name) {
+        List<Users> usersList = usersDao.findByname(name);
+        List<UsersDto> usersDtoList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        for(Users u : usersList) {
+            UsersDto usersDto = modelMapper.map(u, UsersDto.class);
+
+            usersDtoList.add(usersDto);
+        }
+        return usersDtoList;
+    }
+
+    @Override
+    public List<UsersDto> findBySex(String sex) {
+        List<Users> usersList = usersDao.findBySex(sex);
+        List<UsersDto> usersDtoList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        for(Users u : usersList) {
+            UsersDto usersDto = modelMapper.map(u, UsersDto.class);
+
+            usersDtoList.add(usersDto);
+        }
+        return usersDtoList;
+    }
+
+    @Override
     public UsersDto findByUserNamePass(String user_name, String password) {
         Users u = usersDao.findByUserNamePass(user_name, password);
         UsersDto usersDto = new UsersDto();
