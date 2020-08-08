@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between">
+  <h4>Xác nhận thông tin</h4>
+  <button (click)="onClose()">Close</button>
+</div>
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="infoConfirm()" autocomplete="off">
+
+    <!-- username -->
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Tên đăng nhập</mat-label>
+      <input matInput type="text " name="user" #user="ngModel" [(ngModel)]="username" required>
+    </mat-form-field>
+
+    <!--name-->
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Họ và tên</mat-label>
+      <input matInput type="text" name="name" #name="ngModel" [(ngModel)]="fullname" required>
+    </mat-form-field>
+
+    <!-- tel -->
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Số điện thoại</mat-label>
+      <input matInput type="text" name="tel" #tel="ngModel" [(ngModel)]="phone" required>
+    </mat-form-field>
+    <br>
+    <mat-radio-group name="sex" [(ngModel)]="sex">
+      <mat-radio-button style="margin-right: 8px;" value="true" required>Nam</mat-radio-button>
+      <mat-radio-button value="false">Nữ</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-outline-primary"> Xác nhận </button>
+    <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
+  </form>
+</div>

@@ -9,17 +9,20 @@
         <div class="right-aside">
           <div class="right-page-header">
             <div class="d-flex mr-4 ml-4">
-              <div class="align-self-center">
-                <input type="text" name="search" id="demo-input-search2" placeholder="&#xf002; Nhập tên ví"
-                  class="form-control">
-              </div>
-              <div class="mr-auto" style="margin-left: 10px;">
-                <!-- Nút tìm kiếm -->
-                <br>
-                <button type="button" class="btn btn-outline-primary">Tìm kiếm</button>
-                <br>
-                <br>
-              </div>
+              <form #form="ngForm" (ngSubmit)="searchWallet()">
+                <!-- <div class="align-self-center"> -->
+                  <input type="text" name="search" id="demo-input-search2" placeholder="&#xf002; Nhập tên ví"
+                    class="form-control" [(ngModel)]="walletName">
+                    <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+                <!-- </div> -->
+                <div class="mr-auto" style="margin-left: 10px;">
+                  <!-- Nút tìm kiếm -->
+                  <!-- <br> -->
+                  
+                  <!-- <br>
+                  <br> -->
+                </div>
+              </form>
             </div>
           </div>
 
@@ -53,14 +56,14 @@
                         <input type="checkbox" [disabled]="w.role==false" />
                         <a href="" routerLink="/wallet/{{w.wallet_id}}"> {{w.wallet_name}}</a>
                         <button class="btn btn-sm btn-outline-lightning rounded-0 ml-4" [disabled]="w.role==false"
-                        (click)="deleteWallet(w.wallet_id)">
+                          (click)="deleteWallet(w.wallet_id)">
                           <i class="far fa-window-close"></i>
                         </button>
                       </div>
                       <div class="card-body text-secondary">
                         <h5 class="card-title">+{{w.currency | currency:' ':'code':'4.0-0'}}đ
-                          <button class="btn btn-sm btn-outline-lightning rounded-0 mr-2" (click)="updateWalletDialog(w)"
-                            [disabled]="w.role==false">
+                          <button class="btn btn-sm btn-outline-lightning rounded-0 mr-2"
+                            (click)="updateWalletDialog(w)" [disabled]="w.role==false">
                             <i class="far fa-edit"></i>
                           </button>
                         </h5>

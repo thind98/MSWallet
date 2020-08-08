@@ -6,6 +6,7 @@ import { User_Wallet_display } from 'src/app/models/user_wallet_display';
 import { WalletAddComponent } from "../wallet-add/wallet-add.component";
 import { WalletUpdateComponent } from "../wallet-update/wallet-update.component";
 import { WalletService } from "src/app/services/wallet.service";
+import { UserWalletService } from 'src/app/services/user-wallet.service';
 import { TransService } from 'src/app/services/trans.service';
 import { Wallet } from 'src/app/models/wallet';
 // import { UserService } from "src/app/services/user.service";
@@ -18,22 +19,35 @@ import { Wallet } from 'src/app/models/wallet';
 export class WalletListComponent implements OnInit {
 
   public wallets: User_Wallet_display[];
+  walletName: string;
 
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public service: WalletService,
-    public transService: TransService
-    // public Uservice: UserService
+    public transService: TransService,
+    public uwService: UserWalletService
   ) { }
 
   ngOnInit() {
     this.getGrid();
-    // console.log(this.Uservice.currentUser)
+  }
+
+  searchWallet() {
+    let a = this.walletName.trim();
+    console.log(a)
+    if (a == "" || a == undefined) {
+      this.getGrid();
+    } else {
+      this.wallets = this.wallets.filter(w => {
+        w.wallet_name == a;
+      })
+      console.log(this.wallets)
+    }
   }
 
   getGrid() {
-    this.service.findAll().subscribe(data => {
+    this.uwService.findAll(+sessionStorage.getItem('id')).subscribe(data => {
       console.log(data)
       return this.wallets = data;
     })
@@ -58,7 +72,7 @@ export class WalletListComponent implements OnInit {
     this.dialog.open(WalletUpdateComponent, dialogConfig);
   }
 
-  deleteWallet(wallet_id) {
+  deleteWallet(wallet_id) { //will update with backend process later
     if (confirm("Delete Wallet No." + wallet_id + "?")) {
       console.log('initiating delete process...')
       console.log('deleting all transactions...')
@@ -74,11 +88,11 @@ export class WalletListComponent implements OnInit {
       })
       console.log('deleting all users in wallet...')
       //find all users winthin the wallet (user_wallet)
-      this.service.getUserWallet(wallet_id).subscribe(data => {
+      this.uwService.getUserWallet(wallet_id).subscribe(data => {
         //delete each user from wallet one by one
         data.forEach(element => {
           console.log(element);
-          this.service.deleteUserWallet(element.id).subscribe(delta => {
+          this.uwService.deleteUserWallet(element.id).subscribe(delta => {
             console.log('deleted one user!')
           })
         })

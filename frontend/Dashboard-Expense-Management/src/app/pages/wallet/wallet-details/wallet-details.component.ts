@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User_Wallet_display } from 'src/app/models/user_wallet_display';
 import { User_Wallet } from 'src/app/models/user_wallet'
-import { WalletService } from 'src/app/services/wallet.service';
+import { UserWalletService } from 'src/app/services/user-wallet.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -19,7 +19,7 @@ export class WalletDetailsComponent implements OnInit {
   user_wallet: User_Wallet;
 
   constructor(
-    public service: WalletService,
+    public uwService: UserWalletService,
     private ActivatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -31,7 +31,7 @@ export class WalletDetailsComponent implements OnInit {
 
   getUsers() {
     this.ActivatedRoute.params.subscribe(param => {
-      this.service.findAllUser(param.wallet_id).subscribe(data => {
+      this.uwService.findAllUser(param.wallet_id).subscribe(data => {
         return this.users = data;
       })
     })
@@ -43,7 +43,7 @@ export class WalletDetailsComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.width = "40%";
+      dialogConfig.width = "25%";
       dialogConfig.data = {
         id: param.wallet_id
       }
@@ -56,12 +56,12 @@ export class WalletDetailsComponent implements OnInit {
       // get user_wallet with current wallet_id and chosen user_id
       console.log('Initiating delete process...');
       this.ActivatedRoute.params.subscribe(param => {
-        this.service.getUserWalletBy2Id(user_id, param.wallet_id).subscribe(data => {
+        this.uwService.getUserWalletBy2Id(user_id, param.wallet_id).subscribe(data => {
           console.log(data);
           this.user_wallet = data;
           console.log('Deleting record...');
           //Delete user_wallet 
-          this.service.deleteUserWallet(this.user_wallet[0].id).subscribe(delta => {
+          this.uwService.deleteUserWallet(this.user_wallet[0].id).subscribe(delta => {
             console.log('Deleted user from wallet!')
           })
         })
@@ -70,7 +70,7 @@ export class WalletDetailsComponent implements OnInit {
   }
 
   delTest() {
-    this.service.deleteUserWallet(1).subscribe(data => {
+    this.uwService.deleteUserWallet(1).subscribe(data => {
       console.log('lol')
     })
   }

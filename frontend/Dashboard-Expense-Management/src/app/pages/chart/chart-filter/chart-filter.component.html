@@ -8,33 +8,45 @@
         <!-- /.left-aside-column-->
         <div class="right-aside">
           <form #form="ngForm" (ngSubmit)="getChart()">
-            <input matInput [matDatepicker]="picker1" name="from" #from="ngModel" [(ngModel)]="fromDate">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+            <div class="date-range-picker">
+              <mat-form-field appearance="legacy">
+                <mat-label>From:</mat-label>
+                <input matInput [matDatepicker]="picker1" name="from" #from="ngModel" [(ngModel)]="fromDate" placeholder="Ex: 12/12/2019">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
 
-            <input matInput [matDatepicker]="picker2" name="to" #to="ngModel" [(ngModel)]="toDate">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
+              <mat-form-field appearance="legacy">
+                <mat-label>To:</mat-label>
+                <input matInput [matDatepicker]="picker2" name="to" #to="ngModel" [(ngModel)]="toDate" placeholder="Ex: 12/12/2020">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
             <br />
-            <select name="wallet" #wallet="ngModel" [(ngModel)]="id">
-              <option *ngFor="let w of wallets" value="{{w.wallet_id}}">{{w.wallet_name}}</option>
-            </select>
+            <mat-form-field appearance="legacy">
+              <mat-label>Chọn ví:</mat-label>
+              <mat-select name="wallet" #wallet="ngModel" [(ngModel)]="id">
+                <mat-option *ngFor="let w of wallets" value="{{w.wallet_id}}">{{w.wallet_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            
             <button type="submit">Check</button>
           </form>
 
           <div class="col-12 col-xl-12 mb-4">
             <div class="card border-0 rounded-0">
-                <div class="card-title mb-1 p-3 d-flex">
-                    <h6>Chart Bar</h6>
-                    <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
+              <div class="card-title mb-1 p-3 d-flex">
+                <h6>Chart Bar</h6>
+                <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
+              </div>
+              <div class="card-body">
+                <div class="chart-container" style="position: relative;">
+                  <canvas id="chart-bar" width="2" height="1"></canvas>
                 </div>
-                <div class="card-body">
-                    <div class="chart-container" style="position: relative;">
-                        <canvas id="chart-bar" width="2" height="1"></canvas>
-                    </div>
-                </div>
+              </div>
             </div>
-        </div>
+          </div>
 
           <div class="col-12 col-xl-6 mb-6 align-items-stretch">
             <div class="card h-100 border-0 rounded-0">

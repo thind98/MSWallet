@@ -9,26 +9,42 @@ import { WalletDetailsComponent } from './pages/wallet/wallet-details/wallet-det
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { TransactionListComponent } from './pages/transaction/transaction-list/transaction-list.component';
 import { ChartComponent } from './pages/chart/chart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { UserComponent } from './pages/user/user.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { TransListGuard } from './guard/trans-list.guard';
+import { MainComponent } from './main/main.component';
+import { LoginGuard } from './guard/login.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'maps', component: MapsComponent },
-  { path: 'notifications', component: NotificationsComponent },
+  { path: 'login', component: LoginComponent },
   {
-    path: 'wallet', component: WalletComponent, children:
+    path: '', component: MainComponent, canActivate: [LoginGuard], children:
       [
-        { path: '', component: WalletListComponent },
-        { path: ':wallet_id', component: WalletDetailsComponent }
+        { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+        { path: 'dashboard', component: DashboardComponent },
+        { path: 'maps', component: MapsComponent },
+        { path: 'notifications', component: NotificationsComponent },
+        {
+          path: 'wallet', component: WalletComponent, children:
+            [
+              { path: '', component: WalletListComponent },
+              { path: ':wallet_id', component: WalletDetailsComponent }
+            ]
+        },
+        {
+          path: 'transaction', component: TransactionComponent, children:
+            [
+              { path: ':wallet_id', component: TransactionListComponent }
+            ]
+        },
+        { path: 'chart', component: ChartComponent },
+        { path: 'signup', component: SignupComponent },
+        { path: 'user', component: UserComponent },
+        { path: 'notfound', component: PageNotFoundComponent }
       ]
-  },
-  {
-    path: 'transaction', component: TransactionComponent, children:
-      [
-        { path: ':wallet_id', component: TransactionListComponent }
-      ]
-  },
-  { path: 'chart', component: ChartComponent }
+  }
 ];
 
 @NgModule({

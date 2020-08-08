@@ -44,7 +44,7 @@ export class TransactionListComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.width = "40%";
+      dialogConfig.width = "35%";
       dialogConfig.data = {
         id: param.wallet_id
       }
@@ -65,7 +65,11 @@ export class TransactionListComponent implements OnInit {
   deleteTransaction(id) {
     if (confirm("Delete transaction No." + id + "?")) {
       this.transService.deleteById(id).subscribe(delta => {
-        console.log('Transaction deleted successfully!')
+        this.snackBar.open("Delate Successfully!","Close",{
+          duration: 3000,
+          verticalPosition: "bottom",
+          horizontalPosition: "center"
+        });
         this.getList();
       })
     }

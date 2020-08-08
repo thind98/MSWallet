@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TransService } from 'src/app/services/trans.service';
 import { WalletService } from 'src/app/services/wallet.service';
+import { UserWalletService } from 'src/app/services/user-wallet.service'
 import { User_Wallet_display } from 'src/app/models/user_wallet_display';
-import { Transaction } from 'src/app/models/transaction';
 import { Transaction_display } from 'src/app/models/transaction_display';
 import { Chart } from 'chart.js';
-import { ChartComponent } from '../chart.component';
 
 @Component({
   selector: 'app-chart-filter',
@@ -31,12 +30,13 @@ export class ChartFilterComponent implements OnInit {
 
   constructor(
     public transService: TransService,
-    public walletService: WalletService
+    public walletService: WalletService,
+    public uwService: UserWalletService
   ) { }
 
 
   getWalletList() {
-    this.walletService.findAll().subscribe(data => {
+    this.uwService.findAll(+sessionStorage.getItem('id')).subscribe(data => {
       return this.wallets = data;
     })
   }

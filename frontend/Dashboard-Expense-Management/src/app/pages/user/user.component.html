@@ -1,0 +1,52 @@
+<h4 class="text-muted mb-4">Quản Lý Người Dùng</h4>
+<div class="col-md-12">
+  <div class="card border-1 rounded-0">
+    <div class="card-body">
+      <div class="right-aside" style="margin-top: 20px;">
+        <div class="d-flex mr-4 ml-4">
+          <!-- 1 thẻ ví -->
+          <div style="margin:auto;">
+            <div class="card border-secondary mb-3" style="width: 25rem;">
+              <div class="card-header">
+                <b>Thông tin cá nhân</b>
+              </div>
+              <div class="card-body">
+
+                <form #form="ngForm" (ngSubmit)="userUpdate()">
+                  <div class="form-group">
+                    <mat-form-field style="width: 100%;">
+                      <mat-label>Tên đầy đủ</mat-label>
+                      <input matInput type="text" name="name" placeholder="Ex: Hồ Tuấn Anh"
+                        [(ngModel)]="currentUser.name" required>
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field style="width: 100%;">
+                      <mat-label>Số điện thoại</mat-label>
+                      <input matInput type="tel" name="tel" [(ngModel)]="currentUser.phone_number"
+                        placeholder="Ex: 0987654321" required>
+                    </mat-form-field>
+                    <br />
+                    <mat-radio-group name="sex" [(ngModel)]="currentUser.sex">
+                      <mat-radio-button style="margin-right: 8px;" value="true">Nam
+                      </mat-radio-button>
+                      <mat-radio-button value="false">Nữ</mat-radio-button>
+                    </mat-radio-group>
+                    <br /><br />
+                    <div class="d-flex">
+                      <input type="submit" class="btn btn-outline-primary" value=" Chỉnh sửa">
+                      <div class="ml-auto">
+                        <input type="button" class="btn btn-outline-primary" value=" Đổi mật khẩu"
+                          (click)="changePass()">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

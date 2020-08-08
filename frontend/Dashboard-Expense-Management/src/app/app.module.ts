@@ -35,9 +35,20 @@ import { TransactionUpdateComponent } from './pages/transaction/transaction-upda
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 import { ChartFilterComponent } from './pages/chart/chart-filter/chart-filter.component'
-import { BarChartComponent } from './pages/chart/bar-chart/bar-chart.component';
-import { PieChartComponent } from './pages/chart/pie-chart/pie-chart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { UserComponent } from './pages/user/user.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component'
+import { TransListGuard } from './guard/trans-list.guard';
+import { MainComponent } from './main/main.component';
+import { LoginGuard } from './guard/login.guard';
+import { ChangePassComponent } from './pages/user/change-pass/change-pass.component';
+import { ForgetPassComponent } from './pages/login/forget-pass/forget-pass.component';
+import { NewPassComponent } from './pages/login/new-pass/new-pass.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,8 +71,14 @@ import { PieChartComponent } from './pages/chart/pie-chart/pie-chart.component';
     TransactionAddComponent,
     TransactionUpdateComponent,
     ChartFilterComponent,
-    BarChartComponent,
-    PieChartComponent
+    LoginComponent,
+    SignupComponent,
+    UserComponent,
+    PageNotFoundComponent,
+    MainComponent,
+    ChangePassComponent,
+    ForgetPassComponent,
+    NewPassComponent
   ],
   imports: [
     BrowserModule,
@@ -78,8 +95,11 @@ import { PieChartComponent } from './pages/chart/pie-chart/pie-chart.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule
     ],
-  providers: [],
+  providers: [TransListGuard, LoginGuard],
   bootstrap: [AppComponent],
   entryComponents: 
   [
@@ -87,7 +107,10 @@ import { PieChartComponent } from './pages/chart/pie-chart/pie-chart.component';
     WalletUpdateComponent,
     WalletUserAddComponent,
     TransactionAddComponent,
-    TransactionUpdateComponent
+    TransactionUpdateComponent,
+    ChangePassComponent,
+    ForgetPassComponent,
+    NewPassComponent
   ]
 })
 export class AppModule { }

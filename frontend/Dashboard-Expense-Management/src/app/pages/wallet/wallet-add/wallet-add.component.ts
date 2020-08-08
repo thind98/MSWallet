@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Wallet } from 'src/app/models/wallet';
 import { User_Wallet } from 'src/app/models/user_wallet';
 import { WalletService } from 'src/app/services/wallet.service';
+import { UserWalletService } from 'src/app/services/user-wallet.service';
 
 @Component({
   selector: 'app-wallet-add',
@@ -18,7 +19,8 @@ export class WalletAddComponent implements OnInit {
   constructor(
     public dialog: MatDialogRef<WalletAddComponent>,
     private snackBar: MatSnackBar,
-    public service: WalletService
+    public service: WalletService,
+    public uwService: UserWalletService,
   ) { }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class WalletAddComponent implements OnInit {
         wallet_id: data.id,
         role: true
       }
-      this.service.addUserWallet(this.user_wallet).subscribe(dota => {
+      this.uwService.addUserWallet(this.user_wallet).subscribe(dota => {
         console.log('Add User_Wallet Successfully!');
         this.snackBar.open("Add Successfully!","Close",{
           duration: 3000,

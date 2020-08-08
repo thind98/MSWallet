@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between">
+  <h4>Đổi mật khẩu</h4>
+  <button (click)="onClose()">Close</button>
+</div>
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="changePass()" autocomplete="off">
+
+    <!-- old pass -->
+    <div class="form-group ">
+      <mat-form-field style="width: 100%;">
+        <mat-label for=" ">Mật khẩu cũ</mat-label>
+        <input matInput type="password" name="old" #old="ngModel" [(ngModel)]="oldPass" required>
+      </mat-form-field>
+    </div>
+
+    <!--new pass-->
+    <div class="form-group ">
+      <mat-form-field style="width: 100%;">
+        <mat-label for=" ">Mật khẩu mới</mat-label>
+        <input matInput type="password" name="new" #new="ngModel" [(ngModel)]="newPass" required>
+      </mat-form-field>
+    </div>
+
+    <!-- confirm pass -->
+    <div class="form-group ">
+      <mat-form-field style="width: 100%;">
+        <mat-label for=" ">Nhập lại mật khẩu</mat-label>
+        <input matInput type="password" name="re" #re="ngModel" [(ngModel)]="rePass" required>
+      </mat-form-field>
+    </div>
+    <button type="submit" class="btn btn-outline-primary"> Lưu </button>
+    <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
+  </form>
+</div>

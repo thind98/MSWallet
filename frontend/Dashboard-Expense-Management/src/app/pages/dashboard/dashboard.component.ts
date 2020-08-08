@@ -119,17 +119,21 @@ export class DashboardComponent implements OnInit {
 
   constructor(private service: UserService, private ActivatedRoute: ActivatedRoute) { }
 
-  getUser() {
-    this.service.getUser(2).subscribe(data => {
-      console.log('initiating current user');
-      console.log(data);
-      return this.service.currentUser = data;
-    })
+  testGuard(){
+    var a;
+    const b = !!this.service.getUser(900).subscribe(data => {
+      a = data
+    });
+    console.log(a)
+    if(a == undefined){
+      console.log(false)
+    }else{
+      console.log(true)
+    }
   }
 
   ngOnInit() {
-
-    this.getUser();
+    // this.testGuard();
 
     new Chart('chart-line', {
       type: 'line',
