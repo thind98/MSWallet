@@ -3,31 +3,52 @@
   <button (click)="onClose()">Close</button>
 </div>
 <div class="container">
+  <mat-error *ngIf="wrong">
+    Nhập sai mật khẩu
+  </mat-error>
   <form #form="ngForm" (ngSubmit)="changePass()" autocomplete="off">
-
     <!-- old pass -->
-    <div class="form-group ">
-      <mat-form-field style="width: 100%;">
-        <mat-label for=" ">Mật khẩu cũ</mat-label>
-        <input matInput type="password" name="old" #old="ngModel" [(ngModel)]="oldPass" required>
-      </mat-form-field>
-    </div>
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Mật khẩu cũ</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" name="old" [(ngModel)]="oldPass" [formControl]="oPass">
+      <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">
+        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="oPass.hasError('required')">
+        Mật khẩu cần được điền
+      </mat-error>
+    </mat-form-field>
 
     <!--new pass-->
-    <div class="form-group ">
-      <mat-form-field style="width: 100%;">
-        <mat-label for=" ">Mật khẩu mới</mat-label>
-        <input matInput type="password" name="new" #new="ngModel" [(ngModel)]="newPass" required>
-      </mat-form-field>
-    </div>
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Mật khẩu mới</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" name="new" [(ngModel)]="newPass" [formControl]="nPass">
+      <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">
+        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="nPass.hasError('required')">
+        Mật khẩu cần được điền
+      </mat-error>
+      <mat-error *ngIf="!nPass.hasError('required') && nPass.hasError('minlength')">
+        Mật khẩu phải nhiều hơn 7 ký tự
+      </mat-error>
+      <mat-error *ngIf="!nPass.hasError('required') && nPass.hasError('maxlength')">
+        Mật khẩu phải ít hơn 31 ký tự
+      </mat-error>
+      <mat-error *ngIf="!nPass.hasError('required') && nPass.hasError('pattern')">
+        Mật khẩu không được chứa dấu cách
+      </mat-error>
+    </mat-form-field>
 
     <!-- confirm pass -->
-    <div class="form-group ">
-      <mat-form-field style="width: 100%;">
-        <mat-label for=" ">Nhập lại mật khẩu</mat-label>
-        <input matInput type="password" name="re" #re="ngModel" [(ngModel)]="rePass" required>
-      </mat-form-field>
-    </div>
+    <mat-form-field style="width: 100%;">
+      <mat-label for=" ">Nhập lại mật khẩu</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" name="re" [(ngModel)]="rePass" [formControl]="rPass">
+      <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">
+        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="rPass.hasError('required')">
+        Cần nhập lại mật khẩu
+      </mat-error>
+    </mat-form-field>
+    <br>
     <button type="submit" class="btn btn-outline-primary"> Lưu </button>
     <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
   </form>

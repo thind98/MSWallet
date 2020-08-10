@@ -3,23 +3,42 @@
   <button (click)="onClose()">Close</button>
 </div>
 <div class="container">
-  <form #form="ngForm" (ngSubmit)="setNewPass()" autocomplete="off">
-
+  <form [formGroup]="form" (ngSubmit)="setNewPass()" autocomplete="off">
     <!--new pass-->
     <div class="form-group ">
       <mat-form-field style="width: 100%;">
         <mat-label for=" ">Mật khẩu mới</mat-label>
-        <input matInput type="password" name="new" #new="ngModel" [(ngModel)]="newPass" required>
+        <input matInput [type]="hide ? 'password' : 'text'" name="new" 
+        [(ngModel)]="newPass" formControlName="nPass">
+        <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">
+          {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="form.controls['nPass'].errors?.required">
+          Mật khẩu cần được điền
+        </mat-error>
+        <mat-error *ngIf="form.controls['nPass'].errors?.minlength">
+          Mật khẩu phải nhiều hơn 7 ký tự
+        </mat-error>
+        <mat-error *ngIf="form.controls['nPass'].errors?.maxlength">
+          Mật khẩu phải ít hơn 31 ký tự
+        </mat-error>
+        <mat-error *ngIf="form.controls['nPass'].errors?.pattern">
+          Mật khẩu không được chứa dấu cách
+        </mat-error>
       </mat-form-field>
 
       <!-- confirm pass -->
       <mat-form-field style="width: 100%;">
         <mat-label for=" ">Nhập lại mật khẩu</mat-label>
-        <input matInput type="password" name="re" #re="ngModel" [(ngModel)]="rePass" required>
+        <input matInput [type]="hide ? 'password' : 'text'" name="re" 
+        [(ngModel)]="rePass" formControlName="rPass">
+        <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">
+          {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="form.controls['rPass'].errors?.required">
+          Cần nhập lại mật khẩu
+        </mat-error>
       </mat-form-field>
     </div>
-    <br>
-    <button type="submit" class="btn btn-outline-primary"> Lưu </button>
+    <button type="submit" class="btn btn-outline-primary" [disabled]="form.invalid"> Lưu </button>
     <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
   </form>
 </div>

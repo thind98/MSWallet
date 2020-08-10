@@ -5,42 +5,38 @@
 
 <div class="container">
 
-  <form #form="ngForm" (ngSubmit)="addWallet()" autocomplete="off">
+  <form [formGroup]="form" (ngSubmit)="addWallet()" autocomplete="off">
 
-    <div class="form-group "> <label for=" ">Tên ví</label>
-      <input type="text " class="form-control" name="name" #name="ngModel" [(ngModel)]="wallet.wallet_name" required
-        minlength="6" maxlength="20">
-
-      <!-- <div *ngIf="wallet_name.invalid && (wallet_name.dirty || wallet_name.touched)" class="alert alert-danger">
-        <div *ngIf="wallet_name.errors.required">
-          Walletname is required.
-        </div>
-        <div *ngIf="name.errors.minlength">
-          Walletname must be at least 6 characters long.
-        </div>
-      </div> -->
+    <div class="form-group ">
+      <mat-form-field style="width: 100%;">
+        <mat-label for=" ">Tên ví</mat-label>
+        <input matInput type="text" name="name" [(ngModel)]="wallet.wallet_name" formControlName="name">
+        <mat-error *ngIf="form.controls['name'].errors?.required">
+          Tên ví cần được điền
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <!--balance-->
-    <div class="form-group "> <label for=" ">Tiền khởi tạo</label>
-      <input type="number" class="form-control" name="balance" #balance="ngModel" [(ngModel)]="wallet.balance" required
-        min="50000">
-
-      <input type="hidden" class="form-control" name="balance" #balance="ngModel" [(ngModel)]="wallet.currency">
-
-      <!-- <div class="validation-error" *ngIf="phone.errors.required&&phone.touched">
-        Phone numbers is required
-      </div>
-
-      <div class="validation-error" *ngIf="phone.errors?.pattern">
-        Invalid phone numbers.
-      </div> -->
+    <div class="form-group ">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Tiền khởi tạo</mat-label>
+        <input matInput type="number" name="balance" [(ngModel)]="wallet.balance" formControlName="balance">
+        <mat-error *ngIf="form.controls['balance'].errors?.required">
+          Tiền khởi tạo cần được điền
+        </mat-error>
+        <mat-error *ngIf="form.controls['balance'].errors?.min">
+          Tiền khởi tạo ít nhất 50,000đ
+        </mat-error>
+        <mat-error *ngIf="form.controls['balance'].errors?.max">
+          Tiền khởi tạo nhiều nhất 500,000,000đ
+        </mat-error>
+        <input type="hidden" name="balance" [(ngModel)]="wallet.currency" formControlName="currency">
+      </mat-form-field>
     </div>
-
     <br>
-    <button type="submit" class="btn btn-outline-primary"> Tạo </button>
+    <button type="submit" class="btn btn-outline-primary" [disabled]="form.invalid"> Tạo </button>
     <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()"> Hủy </button>
   </form>
 
 </div>
-<!-- [disabled]="form.invalid" -->

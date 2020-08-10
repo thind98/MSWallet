@@ -5,6 +5,7 @@ import { Wallet } from 'src/app/models/wallet';
 import { User_Wallet } from 'src/app/models/user_wallet';
 import { WalletService } from 'src/app/services/wallet.service';
 import { UserWalletService } from 'src/app/services/user-wallet.service';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-wallet-add',
@@ -15,6 +16,20 @@ export class WalletAddComponent implements OnInit {
 
   wallet: Wallet;
   user_wallet: User_Wallet;
+
+  form = new FormGroup({
+    name : new FormControl('', [
+      Validators.required
+    ]),
+    
+    balance : new FormControl('', [
+      Validators.required,
+      Validators.min(50000),
+      Validators.max(500000000)
+    ]),
+
+    currency: new FormControl('')
+  })
 
   constructor(
     public dialog: MatDialogRef<WalletAddComponent>,
@@ -27,12 +42,12 @@ export class WalletAddComponent implements OnInit {
     this.wallet = new Wallet;
   }
 
-  onClose(){
+  onClose() {
     this.dialog.close();
     // this.service.filter('click');
   }
 
-  addWallet(){
+  addWallet() {
     console.log(this.wallet);
     this.wallet.currency = this.wallet.balance;
     this.wallet.create_date = new Date().toDateString();
@@ -49,7 +64,7 @@ export class WalletAddComponent implements OnInit {
       }
       this.uwService.addUserWallet(this.user_wallet).subscribe(dota => {
         console.log('Add User_Wallet Successfully!');
-        this.snackBar.open("Add Successfully!","Close",{
+        this.snackBar.open("Add Successfully!", "Close", {
           duration: 3000,
           verticalPosition: "bottom",
           horizontalPosition: "center"

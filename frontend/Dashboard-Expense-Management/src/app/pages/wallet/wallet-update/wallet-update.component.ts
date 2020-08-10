@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Wallet } from 'src/app/models/wallet';
 import { WalletService } from 'src/app/services/wallet.service';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-wallet-update',
@@ -12,6 +14,17 @@ import { WalletService } from 'src/app/services/wallet.service';
 export class WalletUpdateComponent implements OnInit {
 
   wallet: Wallet;
+
+  form = new FormGroup({
+    name : new FormControl('',[
+      Validators.required
+    ]),
+
+    currency : new FormControl('',[
+      Validators.required,
+      Validators.min(50000)
+    ])
+  })
 
   constructor(
     public dialog: MatDialogRef<WalletUpdateComponent>,

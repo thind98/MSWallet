@@ -4,6 +4,17 @@ import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ChangePassComponent } from 'src/app/pages/user/change-pass/change-pass.component';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-user',
@@ -11,6 +22,17 @@ import { ChangePassComponent } from 'src/app/pages/user/change-pass/change-pass.
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+
+  upName = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(100),
+    Validators.pattern('^[a-z ]+$/i')
+  ]);
+
+  upPhone = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9]{10}$')
+  ]);
 
   currentUser: User;
 

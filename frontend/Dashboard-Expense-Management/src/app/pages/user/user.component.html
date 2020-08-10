@@ -17,13 +17,25 @@
                     <mat-form-field style="width: 100%;">
                       <mat-label>Tên đầy đủ</mat-label>
                       <input matInput type="text" name="name" placeholder="Ex: Hồ Tuấn Anh"
-                        [(ngModel)]="currentUser.name" required>
+                        [(ngModel)]="currentUser.name">
+                      <!-- <mat-error *ngIf="upName.hasError('required')">
+                        Họ và tên cần được điền
+                      </mat-error>
+                      <mat-error *ngIf="upName.hasError('pattern') && !regName.hasError('required')">
+                        Họ và tên chỉ gồm chữ
+                      </mat-error> -->
                     </mat-form-field>
                     <br />
                     <mat-form-field style="width: 100%;">
                       <mat-label>Số điện thoại</mat-label>
                       <input matInput type="tel" name="tel" [(ngModel)]="currentUser.phone_number"
-                        placeholder="Ex: 0987654321" required>
+                        placeholder="Ex: 0987654321">
+                      <!-- <mat-error *ngIf="upPhone.hasError('required')">
+                        Số điện thoại cần được điền
+                      </mat-error>
+                      <mat-error *ngIf="upPhone.hasError('pattern') && !regPhone.hasError('required')">
+                        Số điện thoại gồm 10 chữ số
+                      </mat-error> -->
                     </mat-form-field>
                     <br />
                     <mat-radio-group name="sex" [(ngModel)]="currentUser.sex">

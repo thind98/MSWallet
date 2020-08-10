@@ -4,41 +4,61 @@
 </div>
 
 <div class="container">
-  <form #form="ngForm" (ngSubmit)="addTransaction()" autocomplete="off">
-
+  <form [formGroup]="form" (ngSubmit)="addTransaction()" autocomplete="off">
     <div class="form-group row">
       <mat-form-field style="width: 50%;">
         <mat-label>Tên giao dịch</mat-label>
-        <input matInput type="text" id="transname" placeholder="Ex: Mua cây pc" name="name" #name="ngModel"
-          [(ngModel)]="transaction.trans_name">
+        <input matInput type="text" id="transname" placeholder="Ex: Mua cây pc" name="name"
+          [(ngModel)]="transaction.trans_name" FormControlName="name">
+          <mat-error *ngIf="form.controls['name'].errors?.required">
+            Tên giao dịch cần được điền
+          </mat-error>
+          <mat-error *ngIf="form.controls['name'].errors?.minlength">
+            Tên giao dịch phải nhiều hơn 7 ký tự
+          </mat-error>
+          <mat-error *ngIf="form.controls['name'].errors?.maxlength">
+            Tên giao dịch phải ít hơn 31 ký tự
+          </mat-error>
       </mat-form-field>
 
       <mat-form-field style="width: 50%;">
         <mat-label>Danh mục</mat-label>
-        <mat-select type="text" id="cate" name="cate" #cate="ngModel" [(ngModel)]="transaction.category_id">
+        <mat-select type="text" id="cate" name="cate" [(ngModel)]="transaction.category_id" formControlName="cate">
           <mat-option *ngFor="let c of cateList" value="{{c.id}}">{{c.categoryName}}</mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['cate'].errors?.required">
+          Danh mục cần được chọn
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-group row">
       <mat-form-field style="width: 50%;">
         <mat-label>Số tiền</mat-label>
-        <input matInput type="number" id="amount" placeholder="Ex: 16000000" name="amount" #amount="ngModel"
-          [(ngModel)]="transaction.amount">
+        <input matInput type="number" id="amount" placeholder="Ex: 16000000" name="amount"
+          [(ngModel)]="transaction.amount" formControlName="amount">
+          <mat-error *ngIf="form.controls['amount'].errors?.required">
+            Số tiền cần dược điền
+          </mat-error>
+          <mat-error *ngIf="form.controls['amount'].errors?.min">
+            Số tiền phải ít nhất 1,000đ
+          </mat-error>
       </mat-form-field>
 
       <mat-form-field style="width: 50%;">
         <mat-label>Ngày giao dịch</mat-label>
-        <input matInput [matDatepicker]="picker" id="date" placeholder="Ex: 12/12/2020" name="date" #date="ngModel"
-          [(ngModel)]="transaction.date" [max]="today" value="today" style="width: 550px;">
+        <input matInput [matDatepicker]="picker" id="date" placeholder="Ex: 12/12/2020" name="date"
+          [(ngModel)]="transaction.date" [max]="today" value="today" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.controls['date'].errors?.required">
+          Ngày giao dịch cần dược điền
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-group row">
-      <mat-radio-group name="type" [(ngModel)]="transaction.trans_type">
+      <mat-radio-group name="type" [(ngModel)]="transaction.trans_type" formControlName="type">
         <mat-radio-button value="false">Thu</mat-radio-button>
         <mat-radio-button value="true">Chi</mat-radio-button>
       </mat-radio-group>
@@ -47,14 +67,14 @@
     <div class="form-group row">
       <mat-form-field style="width: 100%;">
         <mat-label>Ghi chú</mat-label>
-        <textarea matInput type="text" #note id="note" placeholder="Ex: Lắp thêm 1 ram 8gb +2tr" name="note" #note="ngModel"
-          [(ngModel)]="transaction.note" maxlength="250"></textarea>
+        <textarea matInput type="text" #note id="note" placeholder="Ex: Lắp thêm 1 ram 8gb +2tr" name="note"
+          [(ngModel)]="transaction.note" maxlength="250" formControlName="note"></textarea>
         <mat-hint align="end">{{note.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
     </div>
     <br>
     <div>
-      <button type="submit" class="btn btn-outline-primary"> Thêm </button>
+      <button type="submit" class="btn btn-outline-primary" [disabled]="form.invalid"> Thêm </button>
       <button style="margin-left: 20px;" type="reset" class="btn btn-outline-primary" (click)="onClose()">
         Đóng
       </button>

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { UserService } from 'src/app/services/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-pass',
@@ -10,8 +11,22 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NewPassComponent implements OnInit {
 
+  form = new FormGroup({
+    nPass : new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+      Validators.minLength(8)
+    ]),
+  
+    rPass : new FormControl('', [
+      Validators.required
+    ])
+  })
+
+
   newPass: string;
   rePass: string;
+  hide: boolean = true;
 
   constructor(
     public dialog: MatDialogRef<NewPassComponent>,
