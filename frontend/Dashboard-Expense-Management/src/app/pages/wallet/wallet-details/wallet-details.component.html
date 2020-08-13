@@ -24,9 +24,9 @@
                       <b>Ví cá nhân</b>
                     </div>
                     <div class="card-body text-secondary">
-                      <h5 class="card-title">Người dùng
-                        <button class="btn btn-sm btn-outline-lightning rounded-1" style="margin-left: 120px;"
-                          (click)="addUserDialog()">
+                      <h5 class="card-title d-flex">Người dùng
+                        <button class="btn btn-sm btn-outline-lightning rounded-1 ml-auto" style="margin-left: 120px;"
+                          (click)="addUserDialog()" [disabled]="!owned">
                           <i class="fas fa-plus"></i>
                         </button>
                       </h5>
@@ -38,7 +38,7 @@
                             <td style="width: 100px;" rowspan="2"><label>{{u.role ? "Sở hữu":"Thành viên"}}</label></td>
                             <td rowspan="2">
                               <button class="btn btn-sm btn-outline-lightning rounded-0 ml-4"
-                                (click)="deleteUser(u.user_id)">
+                                (click)="deleteUser(u.user_id)" [disabled]="!owned">
                                 <i class="far fa-window-close"></i>
                               </button>
                             </td>

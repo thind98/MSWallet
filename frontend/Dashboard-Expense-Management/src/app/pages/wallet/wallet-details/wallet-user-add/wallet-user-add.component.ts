@@ -6,7 +6,6 @@ import { UserWalletService } from 'src/app/services/user-wallet.service';
 import { User_Wallet } from 'src/app/models/user_wallet';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-wallet-user-add',
@@ -20,10 +19,6 @@ export class WalletUserAddComponent implements OnInit {
   names: string[];
 
   newWalletsMember: User_Wallet;
-
-  form = new FormGroup({
-    names : new FormControl('', Validators.required)
-  })
 
   constructor(
     public Dialog: MatDialogRef<WalletUserAddComponent>,

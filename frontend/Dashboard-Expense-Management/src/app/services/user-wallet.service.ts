@@ -21,12 +21,12 @@ export class UserWalletService {
 
   // find all wallet by current user id
   findAll(id:number): Observable<User_Wallet_display[]>{
-    return this.http.get<User_Wallet_display[]>(`${this.UWdisplay_Url}/?user_id=${id}`);
+    return this.http.get<User_Wallet_display[]>(`${this.UWdisplay_Url}?user_id=${id}`);
   }
 
   //find all user(member) within a wallet; 'id' is wallet_id
   findAllUser(id:number): Observable<User_Wallet_display[]>{
-    return this.http.get<User_Wallet_display[]>(`${this.UWdisplay_Url}/?wallet_id=${id}`);
+    return this.http.get<User_Wallet_display[]>(`${this.UWdisplay_Url}?wallet_id=${id}`);
   }
 
   // add wallet pt2 (insert into user_wallet)

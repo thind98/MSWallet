@@ -18,6 +18,8 @@ export class WalletDetailsComponent implements OnInit {
 
   user_wallet: User_Wallet;
 
+  owned: boolean;
+
   constructor(
     public uwService: UserWalletService,
     private ActivatedRoute: ActivatedRoute,
@@ -25,8 +27,17 @@ export class WalletDetailsComponent implements OnInit {
     private snackBar: MatSnackBar,
   ) { }
 
-  ngOnInit() {
-    this.getUsers();
+  getRole(){
+    this.ActivatedRoute.params.subscribe(param => {
+      this.uwService.getUserWalletBy2Id(+sessionStorage.getItem('id'),param.wallet_id).subscribe(data => {
+        console.log(data)
+        if(data[0].role == true){
+          this.owned = true;
+        }else{
+          this.owned = false;
+        }
+      })
+    })
   }
 
   getUsers() {
@@ -62,7 +73,13 @@ export class WalletDetailsComponent implements OnInit {
           console.log('Deleting record...');
           //Delete user_wallet 
           this.uwService.deleteUserWallet(this.user_wallet[0].id).subscribe(delta => {
+            this.getUsers();
             console.log('Deleted user from wallet!')
+            this.snackBar.open('Deleted User From Wallet','Close', {
+              duration: 3000,
+              verticalPosition: 'bottom',
+              horizontalPosition: 'center'
+            })
           })
         })
       })
@@ -73,6 +90,11 @@ export class WalletDetailsComponent implements OnInit {
     this.uwService.deleteUserWallet(1).subscribe(data => {
       console.log('lol')
     })
+  }
+
+  ngOnInit() {
+    this.getUsers();
+    this.getRole();
   }
 
 }

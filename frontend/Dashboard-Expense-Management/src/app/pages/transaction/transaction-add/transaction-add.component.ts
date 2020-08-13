@@ -6,8 +6,6 @@ import { Category } from 'src/app/models/category';
 import { TransService } from 'src/app/services/trans.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-
 
 @Component({
   selector: 'app-transaction-add',
@@ -18,29 +16,7 @@ export class TransactionAddComponent implements OnInit {
 
   transaction: Transaction;
   cateList: Category[];
-  today: Date;
-
-  form = new FormGroup({
-    name: new FormControl('',[
-      Validators.required,
-      Validators.minLength(8),
-      Validators.maxLength(30)
-    ]),
-    cate: new FormControl('',[
-      Validators.required
-    ]),
-    amount: new FormControl('',[
-      Validators.required,
-      Validators.min(1000)
-    ]),
-    date: new FormControl('',[
-      Validators.required
-    ]),
-    type: new FormControl('',[
-      Validators.required
-    ]),
-    note: new FormControl('')
-  })
+  today = new Date();
 
   constructor(
     public dialog: MatDialogRef<TransactionAddComponent>,
@@ -53,12 +29,10 @@ export class TransactionAddComponent implements OnInit {
   ngOnInit() {
     this.transaction = new Transaction;
     this.getCateList();
-    this.today = new Date();
   }
 
   onClose(){
     this.dialog.close();
-    // this.service.filter('click');
   }
 
   getCateList(){

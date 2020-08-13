@@ -1,58 +1,59 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <!-- .left-right-aside-column-->
-      <div class="contact-page-aside">
-        <!-- .left-aside-column-->
+      <div class="right-aside">
 
-        <!-- /.left-aside-column-->
-        <div class="right-aside">
+        <div class="px-4 my-4">
           <form #form="ngForm" (ngSubmit)="getChart()">
-            <div class="date-range-picker">
-              <mat-form-field appearance="legacy">
-                <mat-label>From:</mat-label>
-                <input matInput [matDatepicker]="picker1" name="from" #from="ngModel" [(ngModel)]="fromDate" placeholder="Ex: 12/12/2019">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-              </mat-form-field>
+            <mat-form-field class="mr-2 w-25">
+              <mat-label>From:</mat-label>
+              <input matInput [matDatepicker]="picker1" name="from" [(ngModel)]="fromDate" placeholder="Ex: 12/12/2019">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
 
-              <mat-form-field appearance="legacy">
-                <mat-label>To:</mat-label>
-                <input matInput [matDatepicker]="picker2" name="to" #to="ngModel" [(ngModel)]="toDate" placeholder="Ex: 12/12/2020">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <br />
-            <mat-form-field appearance="legacy">
+            <mat-form-field class="mr-2 w-25">
+              <mat-label>To:</mat-label>
+              <input matInput [matDatepicker]="picker2" name="to" [(ngModel)]="toDate" placeholder="Ex: 12/12/2020">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="mr-4 w-25">
               <mat-label>Chọn ví:</mat-label>
-              <mat-select name="wallet" #wallet="ngModel" [(ngModel)]="id">
+              <mat-select name="wallet" #wallet="ngModel" [(ngModel)]="id" required>
                 <mat-option *ngFor="let w of wallets" value="{{w.wallet_id}}">{{w.wallet_name}}</mat-option>
               </mat-select>
+              <mat-error *ngIf="wallet.errors?.required">
+                Cần phải chọn ví thống kê
+              </mat-error>
             </mat-form-field>
-            
-            <button type="submit">Check</button>
+            <button type="submit" class="btn btn-outline-primary" [disabled]="form.invalid">Check</button>
           </form>
+        </div>
 
-          <div class="col-12 col-xl-12 mb-4">
-            <div class="card border-0 rounded-0">
-              <div class="card-title mb-1 p-3 d-flex">
-                <h6>Chart Bar</h6>
-                <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
-              </div>
-              <div class="card-body">
-                <div class="chart-container" style="position: relative;">
-                  <canvas id="chart-bar" width="2" height="1"></canvas>
-                </div>
+        <div class="col-12 col-xl-12 mb-4 mt-4">
+          <div class="card border-1 rounded-0">
+            <div class="card-title mb-1 p-3 d-flex">
+              <h6 class="mx-auto">Tổng thu chi: {{a-b | currency:' ':'code':'4.0-0'}}đ</h6>
+              <!-- <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a> -->
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="position: relative;">
+                <canvas id="chart-bar" width="2" height="1"></canvas>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col-12 col-xl-6 mb-6 align-items-stretch">
-            <div class="card h-100 border-0 rounded-0">
+        <div class="row px-3 mb-4">
+          <div class="col-12 col-xl-6 align-items-stretch">
+            <div class="card h-100 border-1 rounded-0">
               <div class="card-title mb-1 p-3 d-flex">
-                <h6>Chart Doughnut</h6>
-                <!-- <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a> -->
+                <div class="mx-auto">
+                  <h6>Tổng thu</h6>
+                  <h6 style="color: green;">+{{a | currency:' ':'code':'4.0-0'}}đ</h6>
+                </div>
               </div>
               <div class="card-body">
                 <div class="chart-container d-flex h-100 align-items-center justify-content-center"
@@ -60,24 +61,16 @@
                   <canvas id="chart-income" style="height:100%"></canvas>
                 </div>
               </div>
-              <div class="card-footer">
-                <div class="legend d-flex just">
-                  <!-- <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #5b6582;"></span><small>Loading...</small></div>
-                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #98a4c7;"></span><small>CatPanda</small></div>
-                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #36a2eb;"></span><small>Loading...</small></div> -->
-                </div>
-              </div>
             </div>
           </div>
 
-          <div class="col-12 col-xl-6 mb-6 align-items-stretch">
-            <div class="card h-100 border-0 rounded-0">
+          <div class="col-12 col-xl-6 align-items-stretch">
+            <div class="card h-100 border-1 rounded-0">
               <div class="card-title mb-1 p-3 d-flex">
-                <h6>Chart Doughnut</h6>
-                <!-- <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a> -->
+                <div class="mx-auto">
+                  <h6>Tổng chi</h6>
+                  <h6 style="color: red;">-{{b | currency:' ':'code':'4.0-0'}}đ</h6>
+                </div>
               </div>
               <div class="card-body">
                 <div class="chart-container d-flex h-100 align-items-center justify-content-center"
@@ -85,21 +78,9 @@
                   <canvas id="chart-expense" style="height:100%"></canvas>
                 </div>
               </div>
-              <div class="card-footer">
-                <div class="legend d-flex just">
-                  <!-- <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #5b6582;"></span><small>Loading...</small></div>
-                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #98a4c7;"></span><small>CatPanda</small></div>
-                  <div class="flex-fill text-center"><span class="d-inline-block rounded-circle mr-2"
-                      style="background: #36a2eb;"></span><small>Loading...</small></div> -->
-                </div>
-              </div>
             </div>
           </div>
-
         </div>
-        <!-- /.left-right-aside-column-->
       </div>
     </div>
   </div>

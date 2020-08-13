@@ -58,7 +58,7 @@ export class WalletListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "40%";
+    dialogConfig.width = "30%";
     this.dialog.open(WalletAddComponent, dialogConfig);
   }
 
@@ -68,7 +68,7 @@ export class WalletListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "40%";
+    dialogConfig.width = "30%";
     this.dialog.open(WalletUpdateComponent, dialogConfig);
   }
 

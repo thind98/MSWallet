@@ -3,8 +3,8 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router'
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ForgetPassComponent } from 'src/app/pages/login/forget-pass/forget-pass.component';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,58 +13,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
 
-  loginForm = new FormGroup({
-    loginUser: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(8),
-      Validators.pattern('^[A-Za-z0-9!@#$%^&*]+$')
-    ]),
-    loginPass: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(8)
-    ])
-  })
-
-  regForm = new FormGroup({
-    regUser : new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(8)
-    ]),
-
-    regName : new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.maxLength(100),
-      Validators.pattern('^[A-Za-z ]+$')
-    ]),
-
-    regPhone : new FormControl('', [
-      Validators.required,
-      Validators.pattern('^0[0-9]{9}$')
-    ]),
-
-    regSex : new FormControl('', [
-      Validators.required,
-    ]),
-
-    regPass : new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(8),
-      Validators.pattern('^[A-Za-z!@#$%^&*]+$')
-    ]),
-
-    regRepass : new FormControl('', [
-      Validators.required
-    ])
-  })
-
-  constructor(private uService: UserService,
+  constructor(
+    private uService: UserService,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   user: User;
   username: string;
@@ -73,15 +26,30 @@ export class LoginComponent {
   hide: boolean = true;
 
   wrong: boolean = false;
+  existed: boolean = false;
 
   signup() {
-    if (this.repass != this.user.password) {
-      alert('nhap lai mk cho dung')
-    } else {
-      this.uService.register(this.user).subscribe(dta => {
-        console.log('sign up successfully!')
-      })
-    }
+    this.uService.getUserByUsername(this.user.user_name).subscribe(data => {
+      if(data[0] == null){
+        this.existed = false;
+        if (this.repass != this.user.password) {
+          alert('nhap lai mk cho dung')
+        } else {
+          this.uService.register(this.user).subscribe(dta => {
+            console.log('sign up successfully!')
+            this.snackBar.open("Register Successfully!","Close",{
+              duration: 3000,
+              verticalPosition: "bottom",
+              horizontalPosition: "center"
+            });
+          })
+        }
+      }else{
+        this.existed = true;
+      }
+    })
+
+    
   }
 
   login() {

@@ -5,7 +5,6 @@ import { Wallet } from 'src/app/models/wallet';
 import { User_Wallet } from 'src/app/models/user_wallet';
 import { WalletService } from 'src/app/services/wallet.service';
 import { UserWalletService } from 'src/app/services/user-wallet.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-wallet-add',
@@ -16,20 +15,6 @@ export class WalletAddComponent implements OnInit {
 
   wallet: Wallet;
   user_wallet: User_Wallet;
-
-  form = new FormGroup({
-    name : new FormControl('', [
-      Validators.required
-    ]),
-    
-    balance : new FormControl('', [
-      Validators.required,
-      Validators.min(50000),
-      Validators.max(500000000)
-    ]),
-
-    currency: new FormControl('')
-  })
 
   constructor(
     public dialog: MatDialogRef<WalletAddComponent>,

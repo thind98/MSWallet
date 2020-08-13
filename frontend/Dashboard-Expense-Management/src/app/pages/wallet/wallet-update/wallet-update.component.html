@@ -4,24 +4,21 @@
 </div>
 
 <div class="container">
-  <form [formGroup]="form" (ngSubmit)="updateWallet()" autocomplete="off">
+  <form #form="ngForm" (ngSubmit)="updateWallet()" autocomplete="off">
     <!-- wallet_name -->
     <mat-form-field style="width: 100%;">
       <mat-label for=" ">Tên ví</mat-label>
-      <input matInput type="text" name="name" [(ngModel)]="wallet.wallet_name" formControlName="name">
-      <mat-error *ngIf="form.controls['name'].errors?.required">
+      <input matInput type="text" name="name" [(ngModel)]="wallet.wallet_name" #name=ngModel required>
+      <mat-error *ngIf="name.errors?.required">
         Tên ví cần được điền
       </mat-error>
     </mat-form-field>
     <!--currency-->
     <mat-form-field style="width: 100%;">
       <mat-label for=" ">Số tiền hiện tại</mat-label>
-      <input matInput type="number" name="currency" [(ngModel)]="wallet.currency" formControlName="currency">
-      <mat-error *ngIf="form.controls['currency'].errors?.required">
+      <input matInput type="number" name="currency" [(ngModel)]="wallet.currency" #currency="ngModel" required>
+      <mat-error *ngIf="currency.errors?.required">
         Số tiền hiện tại cần được điền
-      </mat-error>
-      <mat-error *ngIf="form.controls['currency'].errors?.min">
-        Số tiền hiện tại ít nhất 50,000đ
       </mat-error>
     </mat-form-field>
     <br><br>
