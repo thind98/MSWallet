@@ -4,6 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.itsol.MSWallet.dao.users.UsersDao;
@@ -21,6 +25,9 @@ public class UsersServiceImpl implements UsersService
     @Autowired
     private UsersDao usersDao;
 
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
+
     @Transactional
     @Override
     public UsersDto GetUser(int user_id) {
@@ -37,7 +44,7 @@ public class UsersServiceImpl implements UsersService
 
         return usersDto;
     }
-
+    @Transactional
     @Override
     public UsersDto findByUserName(String user_name) {
         Users u = usersDao.findByUserName(user_name);
@@ -53,7 +60,7 @@ public class UsersServiceImpl implements UsersService
 
         return usersDto;
     }
-
+    @Transactional
     @Override
     public UsersDto findByPhone(int phone_number) {
         Users u = usersDao.findByPhone(phone_number);
@@ -69,7 +76,7 @@ public class UsersServiceImpl implements UsersService
 
         return usersDto;
     }
-
+    @Transactional
     @Override
     public List<UsersDto> findByname(String name) {
         List<Users> usersList = usersDao.findByname(name);
@@ -83,7 +90,7 @@ public class UsersServiceImpl implements UsersService
         }
         return usersDtoList;
     }
-
+    @Transactional
     @Override
     public List<UsersDto> findBySex(String sex) {
         List<Users> usersList = usersDao.findBySex(sex);
@@ -124,7 +131,7 @@ public class UsersServiceImpl implements UsersService
             users.setUserName(user.getUserName());
             users.setName(user.getName());
             users.setGender(user.getGender());
-            users.setPassWord(user.getPassWord());
+            users.setPassWord(bcryptEncoder.encode(user.getPassWord()));
             users.setPhoneNumber(user.getPhoneNumber());
             users.setPathAva(user.getPathAva());
             usersDao.save(users);
@@ -140,10 +147,20 @@ public class UsersServiceImpl implements UsersService
         users.setUserName(user.getUserName());
         users.setName(user.getName());
         users.setGender(user.getGender());
-        users.setPassWord(user.getPassWord());
+        users.setPassWord(bcryptEncoder.encode(user.getPassWord()));
         users.setPhoneNumber(user.getPhoneNumber());
         users.setPathAva(user.getPathAva());
         usersDao.update(users);
         return "update success";
+    }
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users user = usersDao.findByUserName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassWord(),
+                new ArrayList<>());
     }
 }

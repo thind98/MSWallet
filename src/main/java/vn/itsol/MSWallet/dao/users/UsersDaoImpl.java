@@ -21,14 +21,15 @@ public class UsersDaoImpl implements UsersDao
 
     @Override
     public Boolean checkUserName(String user_name) {
-        Session session = entityManager.unwrap(Session.class);
-        String hql = "Select u From Users u Where u.userName = \'" + user_name + "\'";
-        Query<Users> query = session.createQuery(hql);
-        Users user = query.getSingleResult();
-        if(user.getUserName() == user_name){
-            return true;
+        try {
+            Session session = entityManager.unwrap(Session.class);
+            String hql = "Select u From Users u Where u.userName = \'" + user_name + "\'";
+            Query<Users> query = session.createQuery(hql);
+            Users user = query.getSingleResult();
+        }catch (Exception e) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override

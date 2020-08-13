@@ -1,11 +1,13 @@
 package vn.itsol.MSWallet.service.users;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import vn.itsol.MSWallet.dto.UsersDto;
 import vn.itsol.MSWallet.entities.Users;
 
 import java.util.List;
 
-public interface UsersService
+public interface UsersService extends UserDetailsService
 {
     UsersDto GetUser(int user_id);
     UsersDto findByUserName(String user_name);
@@ -15,4 +17,5 @@ public interface UsersService
     UsersDto findByUserNamePass(String user_name, String password);
     String save(UsersDto user);
     String update(UsersDto users);
+    UserDetails loadUserByUsername(String username);
 }

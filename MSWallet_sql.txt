@@ -1,18 +1,5 @@
---
--- create datase
---
-
---- name database: dbSMWallet
---- name SID: dbSMWallet // note: chu y ten SID
-
---
--- create acc user connect dbSMWallet
--- oracle version: 11g
-
-CREATE USER usertest IDENTIFIED BY 123456;
-GRANT CONNECT, RESOURCE, DBA TO usertest;
-GRANT CREATE SESSION TO usertest;
-GRANT UNLIMITED TABLESPACE TO usertest;
+--- name database: dbSMWall
+--- name SID: dbSMWallet
 
 
 
@@ -71,6 +58,7 @@ create table category
 create table transactions
 (
     trans_id int not null,
+	tran_name int not null,
     amount int not null,
     trans_type int not null,
     datetime date not null,
@@ -181,6 +169,3 @@ Insert Into transactions(trans_id, amount, trans_type, datetime, note, user_id, 
 values(4, 45000000, 0, TO_DATE('13/06/2020', 'dd/mm/yyyy'), 'aad', 4, 1, 5);
 Insert Into transactions(trans_id, amount, trans_type, datetime, note, user_id, wallet_id, category_id)
 values(5, 55000000, 1, TO_DATE('14/07/2020', 'dd/mm/yyyy'), 'aae', 5, 2, 1);
-
-
-
