@@ -35,7 +35,7 @@ public class UsersDaoImpl implements UsersDao
     @Override
     public Users findByUserName(String user_name) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "Select u From Users u Where u.userName = \'" + user_name + "\'";
+        String hql = "From Users u Where u.userName = \'" + user_name + "\'";
         Query<Users> query = session.createQuery(hql);
         Users user = query.getSingleResult();
         return user;

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "userwallet")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsersWalletController
 {
     private static final Logger log = LoggerFactory.getLogger(UsersWalletController.class);
@@ -24,8 +25,8 @@ public class UsersWalletController
     }
 
     @GetMapping(path = "findbyuseridwalletid")
-    public List<UserWalletDto> getUserWalletByUseridWalletid(@RequestBody UserWalletDto userWalletDto){
-        return userWalletService.getUserWalletByUseridWalletid((int) userWalletDto.getWalletId(), (int) userWalletDto.getUserId());
+    public List<UserWalletDto> getUserWalletByUseridWalletid(@RequestParam(name = "walletid") int walletid, @RequestParam(name = "userid") int userid){
+        return userWalletService.getUserWalletByUseridWalletid(walletid, userid);
     }
 
     @PostMapping(path = "save")

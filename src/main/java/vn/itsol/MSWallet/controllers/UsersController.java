@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vn.itsol.MSWallet.dto.UsersDto;
-import vn.itsol.MSWallet.entities.Users;
 import vn.itsol.MSWallet.service.users.UsersService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsersController
 {
     private static final Logger log = LoggerFactory.getLogger(UsersController.class);
@@ -27,38 +27,38 @@ public class UsersController
     }
 
     @GetMapping(path = "findbyusername")
-    public UsersDto getUserName(@RequestBody UsersDto usersDto)
+    public UsersDto getUserName(@RequestParam(name = "username") String username)
     {
-        log.info("UsersController: " + usersService.findByUserName(usersDto.getUserName()));
-        return usersService.findByUserName(usersDto.getUserName());
+        log.info("UsersController: " + usersService.findByUserName(username));
+        return usersService.findByUserName(username);
     }
 
     @GetMapping(path = "findbyphone")
-    public UsersDto getByPhone(@RequestBody UsersDto usersDto)
+    public UsersDto getByPhone(@RequestParam(name = "phone") int phone)
     {
-        log.info("UsersController: " + usersService.findByPhone((int) usersDto.getPhoneNumber()));
-        return usersService.findByPhone((int) usersDto.getPhoneNumber());
+        log.info("UsersController: " + usersService.findByPhone(phone));
+        return usersService.findByPhone(phone);
     }
 
     @GetMapping(path = "findbyname")
-    public List<UsersDto> getByName(@RequestBody UsersDto usersDto)
+    public List<UsersDto> getByName(@RequestParam(name = "name") String name)
     {
-        log.info("UsersController: " + usersService.findByname(usersDto.getName()));
-        return usersService.findByname(usersDto.getName());
+        log.info("UsersController: " + usersService.findByname(name));
+        return usersService.findByname(name);
     }
 
     @GetMapping(path = "findbysex")
-    public List<UsersDto> getBySex(@RequestBody UsersDto usersDto)
+    public List<UsersDto> getBySex(@RequestParam(name = "name") String gender)
     {
-        log.info("UsersController: " + usersService.findBySex(usersDto.getGender()));
-        return usersService.findBySex(usersDto.getGender());
+        log.info("UsersController: " + usersService.findBySex(gender));
+        return usersService.findBySex(gender);
     }
 
     @GetMapping(path = "findbyusernamepass")
-    public UsersDto getUserNamePass(@RequestBody UsersDto usersDto)
+    public UsersDto getUserNamePass(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password)
     {
-        log.info("UsersController: " + usersService.findByUserNamePass(usersDto.getUserName(), usersDto.getPassWord()));
-        return usersService.findByUserNamePass(usersDto.getUserName(), usersDto.getPassWord());
+        log.info("UsersController: " + usersService.findByUserNamePass(username, password));
+        return usersService.findByUserNamePass(username, password);
     }
 
     @PostMapping(path = "save")

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/wallet")
+@CrossOrigin(origins = "http://localhost:4200")
 public class WalletController
 {
     private static final Logger log = LoggerFactory.getLogger(WalletController.class);

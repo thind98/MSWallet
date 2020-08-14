@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/token")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PasswordResetTokenController
 {
     private static final Logger log = LoggerFactory.getLogger(PasswordResetTokenController.class);

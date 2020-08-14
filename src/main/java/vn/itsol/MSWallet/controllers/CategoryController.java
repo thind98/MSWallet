@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vn.itsol.MSWallet.dto.CategoryDto;
-import vn.itsol.MSWallet.entities.Category;
 import vn.itsol.MSWallet.service.category.CategoryService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/category")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController
 {
     private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
