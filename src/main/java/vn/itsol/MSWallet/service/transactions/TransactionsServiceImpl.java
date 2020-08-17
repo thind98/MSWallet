@@ -118,7 +118,7 @@ public class TransactionsServiceImpl implements TransactionsService
 
     @Transactional
     @Override
-    public void save(TransactionsDto tran) {
+    public TransactionsDto save(TransactionsDto tran) {
         Transactions transactions = new Transactions();
 
         Category category = new Category();
@@ -140,11 +140,12 @@ public class TransactionsServiceImpl implements TransactionsService
         transactions.setWallet(wallet);
 
         transactionsDao.save(transactions);
+        return tran;
     }
 
     @Transactional
     @Override
-    public void update(TransactionsDto tran) {
+    public TransactionsDto update(TransactionsDto tran) {
         Transactions transactions = new Transactions();
 
         Category category = new Category();
@@ -166,6 +167,7 @@ public class TransactionsServiceImpl implements TransactionsService
         transactions.setWallet(wallet);
 
         transactionsDao.update(transactions);
+        return tran;
     }
 
     @Transactional

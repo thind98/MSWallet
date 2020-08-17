@@ -25,12 +25,12 @@ public class PasswordResetTokenController
     }
 
     @PostMapping(path = "save")
-    public void savePass(@RequestBody PasswordResetTokenDto passwordResetTokenDto){
-        passwordResetTokenService.save(passwordResetTokenDto);
+    public PasswordResetTokenDto savePass(@RequestBody PasswordResetTokenDto passwordResetTokenDto){
+        return passwordResetTokenService.save(passwordResetTokenDto);
     }
 
     @PutMapping(path = "update")
-    public void updatePass(@RequestBody PasswordResetTokenDto passwordResetTokenDto){
-        passwordResetTokenService.update(passwordResetTokenDto);
+    public PasswordResetTokenDto updatePass(@RequestBody PasswordResetTokenDto passwordResetTokenDto){
+        return passwordResetTokenService.update(passwordResetTokenDto);
     }
 }

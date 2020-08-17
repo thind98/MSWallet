@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
     List<CategoryDto> getCategories();
     CategoryDto getCategory(int category_id);
-    void save(CategoryDto category);
-    void update(CategoryDto category);
+    CategoryDto save(CategoryDto category);
+    CategoryDto update(CategoryDto category);
     void delete(int category_id);
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PasswordResetTokenService {
     PasswordResetTokenDto getPasswordResetToken(int passRT_id);
-    void save(PasswordResetTokenDto passwordResetTokenDto);
-    void update(PasswordResetTokenDto passwordResetTokenDto);
+    PasswordResetTokenDto save(PasswordResetTokenDto passwordResetTokenDto);
+    PasswordResetTokenDto update(PasswordResetTokenDto passwordResetTokenDto);
 }

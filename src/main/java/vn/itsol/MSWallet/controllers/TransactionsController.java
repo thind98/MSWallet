@@ -45,13 +45,13 @@ public class TransactionsController
     }
 
     @PostMapping(path = "save")
-    public void saveTransaction(@RequestBody TransactionsDto transactionsDto) {
-        transactionsService.save(transactionsDto);
+    public TransactionsDto saveTransaction(@RequestBody TransactionsDto transactionsDto) {
+        return transactionsService.save(transactionsDto);
     }
 
     @PutMapping(path = "update")
-    public void updateTransaction(@RequestBody TransactionsDto transactionsDto) {
-        transactionsService.update(transactionsDto);
+    public TransactionsDto updateTransaction(@RequestBody TransactionsDto transactionsDto) {
+        return transactionsService.update(transactionsDto);
     }
 
     @DeleteMapping(path = "delete/{id}")

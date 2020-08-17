@@ -50,20 +50,24 @@ public class CategoryServiceImpl implements CategoryService
 
     @Transactional
     @Override
-    public void save(CategoryDto category) {
+    public CategoryDto save(CategoryDto category) {
         Category category1 = new Category();
 //        category1.setCategoryid(category.getCategoryid());
         category1.setCategoryname(category.getCategoryName());
         categoryDao.save(category1);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        return category;
     }
 
     @Transactional
     @Override
-    public void update(CategoryDto category) {
+    public CategoryDto update(CategoryDto category) {
         Category category1 = new Category();
         category1.setCategoryid(category.getCategoryid());
         category1.setCategoryname(category.getCategoryName());
         categoryDao.update(category1);
+        return category;
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package vn.itsol.MSWallet.controllers;
 
+import org.hibernate.engine.spi.EntityEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,15 @@ public class CategoryController
     }
 
     @PostMapping(path = "save")
-    public void saveCategory(@RequestBody CategoryDto category)
+    public CategoryDto saveCategory(@RequestBody CategoryDto category)
     {
-        categoryService.save(category);
+        return categoryService.save(category);
     }
 
     @PutMapping(path = "update")
-    public void updateCategory(@RequestBody CategoryDto category)
+    public CategoryDto updateCategory(@RequestBody CategoryDto category)
     {
-        categoryService.update(category);
+        return categoryService.update(category);
     }
 
     @DeleteMapping(path = "delete/{category_id}")

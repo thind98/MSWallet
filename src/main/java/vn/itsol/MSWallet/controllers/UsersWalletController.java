@@ -30,9 +30,9 @@ public class UsersWalletController
     }
 
     @PostMapping(path = "save")
-    public void saveUserWallet(@RequestBody UserWalletDto userWalletDto)
+    public UserWalletDto saveUserWallet(@RequestBody UserWalletDto userWalletDto)
     {
-        userWalletService.save(userWalletDto);
+        return userWalletService.save(userWalletDto);
     }
 
     @DeleteMapping(path = "delete/{user_wallet_id}")

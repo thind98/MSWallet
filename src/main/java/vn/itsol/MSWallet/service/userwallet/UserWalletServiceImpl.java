@@ -55,7 +55,7 @@ public class UserWalletServiceImpl implements UserWalletService
 
     @Transactional
     @Override
-    public void save(UserWalletDto userWalletDto) {
+    public UserWalletDto save(UserWalletDto userWalletDto) {
         UserWallet userWallet = new UserWallet();
         Wallet wallet = new Wallet();
         wallet.setWalletId(userWalletDto.getWalletId());
@@ -68,6 +68,7 @@ public class UserWalletServiceImpl implements UserWalletService
         userWallet.setUsers(users);
 
         userWalletDao.save(userWallet);
+        return userWalletDto;
     }
 
     @Transactional

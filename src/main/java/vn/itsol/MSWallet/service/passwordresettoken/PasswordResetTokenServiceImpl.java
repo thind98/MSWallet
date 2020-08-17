@@ -40,7 +40,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
 
     @Transactional
     @Override
-    public void save(PasswordResetTokenDto passwordResetTokenDto) {
+    public PasswordResetTokenDto save(PasswordResetTokenDto passwordResetTokenDto) {
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         Users users = new Users();
         users.setUserId(passwordResetToken.getUsers().getUserId());
@@ -50,11 +50,12 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
         //passwordResetToken.setTokenId(passwordResetTokenDto.getTokenId());
         passwordResetToken.setUsers(users);
         passwordResetTokenDao.save(passwordResetToken);
+        return passwordResetTokenDto;
     }
 
     @Transactional
     @Override
-    public void update(PasswordResetTokenDto passwordResetTokenDto) {
+    public PasswordResetTokenDto update(PasswordResetTokenDto passwordResetTokenDto) {
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         Users users = new Users();
 //        users.setUserId(passwordResetTokenDto.getUser().getUserId());
@@ -63,5 +64,6 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
         passwordResetToken.setTokenId(passwordResetTokenDto.getTokenId());
         passwordResetToken.setUsers(users);
         passwordResetTokenDao.update(passwordResetToken);
+        return passwordResetTokenDto;
     }
 }

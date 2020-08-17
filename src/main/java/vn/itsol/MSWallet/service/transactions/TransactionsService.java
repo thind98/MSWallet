@@ -11,7 +11,7 @@ public interface TransactionsService
     List<TransactionsDto> getTransactionsCategory(int category_id);
     List<TransactionsDto> getTransactionsWallet(int wallet_id);
     TransactionsDto gettran(int tran_id);
-    void save(TransactionsDto tran);
-    void update(TransactionsDto tran);
+    TransactionsDto save(TransactionsDto tran);
+    TransactionsDto update(TransactionsDto tran);
     void delete(int tran_id);
 }
