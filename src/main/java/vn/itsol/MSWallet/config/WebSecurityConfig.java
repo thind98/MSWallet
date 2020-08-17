@@ -52,8 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
         httpSecurity.csrf().disable()
+                .cors().and()
                 // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/authenticate", "/user/save", "/user/findbyid/1").permitAll().
+                .authorizeRequests().antMatchers("/authenticate", "/user/save", "/user/findbyid/1", "/user/findbyusername").permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
                 // make sure we use stateless session; session won't be used to
